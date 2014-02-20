@@ -1,0 +1,16 @@
+#!/bin/bash
+#SBATCH -J  test14.nam
+#SBATCH -o  test14.log
+#SBATCH -e  test14.err
+#SBATCH -N  1  -n  1
+#SBATCH -p  development
+#SBATCH -t 2:00:00
+
+export OMP_NUM_THREADS=16
+export KMP_STACKSIZE=16m
+
+cd /home1/00978/kbartsch/OpenMP/Work/Hyd-Popov
+./work14a-all >& run14a.log
+#rm field.out
+#rm wfn.out
+
