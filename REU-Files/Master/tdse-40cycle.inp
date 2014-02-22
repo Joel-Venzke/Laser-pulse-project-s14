@@ -1,0 +1,5 @@
+ &element    target = ' H'  /
+ &discrete   nf = 10, nn(7)=4, nn(8)=4, nn(9)=4, nn(10)=4, ll(7)=0, ll(8)=1, ll(9)=2, ll(10)=3, nc = 95 /
+ &control    key4 = 2, nprint = 1000 /
+ &numerics   dt = 0.0050d0, h=0.0075d0, nx=140000, gbr=850.00d0, agbr=5.0d0/
+ &energies   emin = 0.0005d0, de = 0.0005d0, nerg = 4000 /
