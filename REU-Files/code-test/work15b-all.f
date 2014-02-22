@@ -1661,6 +1661,8 @@ C**************************************************************
 
 C***************************************************************
 ! new version of subroutine pulse by Klaus; written January 2014
+! fourier transform added by John Emmons; written February 2014
+
       subroutine pulsekb
       use realconstants1
       use extra
@@ -1864,6 +1866,40 @@ C***************************************************************
      >   envelope1(i),envelope2(i),field1(i),field2(i),fieldtot(i)
        end do
 1001  format(1p10e14.6)
+
+!     compute the fourier transform of the total field
+!     added by John Emmons; written February 2014
+
+! TODO change variables to match the ones in program
+!      make output file
+!      correct any loops labels
+
+      do 30 n=1,nomega
+       w(n) = wmin+dble(n-1)*wdel
+       gcos = 0.0d0
+       gsin = 0.0d0
+       do 40 i=0,icount
+        gcos = gcos + cos(w(n)*t(i))*f(i)
+        gsin = gsin + sin(w(n)*t(i))*f(i)
+        if (n.eq.380.and.mod(i,100).eq.0) then
+         print *,'debug for n = ',n,'   i = ',i
+         print *,i,t(i),f(i) 
+         print *,n,w(n)
+         print *,gcos,gsin
+        endif
+40     continue
+       greal(n) = gcos*deltat
+       gimag(n) = gsin*deltat
+30    continue
+
+!     write the fourier transform to a file
+            do 50 n=1,nomega
+        write(2,1000) n,w(n),greal(n),gimag(n),
+     >                sqrt(greal(n)**2+gimag(n)**2)
+50    continue
+
+*
+1000  format(i10,1p10e16.8)
 
       call flush(90)
       return
