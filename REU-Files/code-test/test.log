@@ -801,5 +801,5 @@
   time step:         784
   time step:         785
  === subroutine output: k =          785
- Time elapsed for field propagation:     137.077 seconds.
- Time elapsed for dstrm is      5.266 seconds.
+ Time elapsed for field propagation:     134.911 seconds.
+ Time elapsed for dstrm is      5.156 seconds.

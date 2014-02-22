@@ -135,6 +135,14 @@
       double precision gvalstart2,gvalend2
       double precision correction
       end module pulseparams
+
+      module fieldFT
+!     25000 is hardcoded; should be replaced with a ndim or
+!     or some other variable for dynamical allocation
+      integer n, nomega
+      double precision deltat, wmin, wmax, wdel, gsin, gcos
+      double precision dimension, w(25000),greal(25000),gimag(25000)
+      end module fieldFT
       
       PROGRAM NE1
 C**********************************************************************
@@ -171,7 +179,7 @@ C**********************************************************************
       open(70,file='betas.out',status='unknown')
       open(80,file='pulse.inp',status='old')
       open(90,file='pulse.out',status='unknown')
-
+      open(100,file='fieldFT.out',status='unknown')
   
       call readkb      ! new input subroutine
       if (target == ' H') then
@@ -1670,11 +1678,12 @@ C***************************************************************
       use in1
       use realarray1
       use pulseparams
+      use fieldFT
 
       implicit none
 
       integer i
-      
+
       namelist /pulse1/ ee1,alph1,ww1,rr1,cep1,n1up,n1plat,n1down,
      >                  shape1up,shape1down,nextra
       namelist /pulse2/ ee2,alph2,ww2,rr2,cep2,n2up,n2plat,n2down,
@@ -1874,32 +1883,41 @@ C***************************************************************
 !      make output file
 !      correct any loops labels
 
-      do 30 n=1,nomega
+       wmin = 0.0001d0
+       wmax = 2.000d0
+       wdel = 0.0001d0
+
+       nomega = nint((wmax-wmin)/wdel)
+       deltat = timeval(2)-timeval(1)
+
+      do 31 n=1,nomega
        w(n) = wmin+dble(n-1)*wdel
        gcos = 0.0d0
        gsin = 0.0d0
-       do 40 i=0,icount
-        gcos = gcos + cos(w(n)*t(i))*f(i)
-        gsin = gsin + sin(w(n)*t(i))*f(i)
-        if (n.eq.380.and.mod(i,100).eq.0) then
-         print *,'debug for n = ',n,'   i = ',i
-         print *,i,t(i),f(i) 
-         print *,n,w(n)
-         print *,gcos,gsin
-        endif
-40     continue
+
+       do 41 i=0,ntfinal
+        gcos = gcos + cos(w(n)*timeval(i))*fieldtot(i)
+        gsin = gsin + sin(w(n)*timeval(i))*fieldtot(i)
+!      old debug printing
+       !  if (n.eq.380.and.mod(i,100).eq.0) then
+       !  print *,'debug for n = ',n,'   i = ',i
+       !  print *,i,timeval(i),fieldtot(i) 
+       !  print *,n,w(n)
+       !  print *,gcos,gsin
+       ! endif
+41      continue
+
        greal(n) = gcos*deltat
        gimag(n) = gsin*deltat
-30    continue
+31     continue
 
 !     write the fourier transform to a file
-            do 50 n=1,nomega
-        write(2,1000) n,w(n),greal(n),gimag(n),
+      do 51 n=1,nomega
+        write(100,1011) n,w(n),greal(n),gimag(n),
      >                sqrt(greal(n)**2+gimag(n)**2)
-50    continue
+51    continue
 
-*
-1000  format(i10,1p10e16.8)
+1011  format(i10,1p10e16.8)
 
       call flush(90)
       return

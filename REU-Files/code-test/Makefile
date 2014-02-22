@@ -6,4 +6,4 @@ clean:
 	rm -rf *.mod
 	rm -rf read.me
 	rm -rf *~
-	rm *.out
+	rm -rf *.out
