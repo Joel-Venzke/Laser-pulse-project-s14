@@ -137,8 +137,8 @@
       end module pulseparams
 
       module fieldFT
-!     25000 is hardcoded; should be replaced with a ndim or
-!     or some other variable for dynamical allocation
+C     25000 is hardcoded; should be replaced with a ndim or
+C     or some other variable for dynamical allocation
       integer n, nomega
       double precision deltat, wmin, wmax, wdel, gsin, gcos
       double precision dimension, w(25000),greal(25000),gimag(25000)
@@ -1878,10 +1878,6 @@ C***************************************************************
 
 !     compute the fourier transform of the total field
 !     added by John Emmons; written February 2014
-
-! TODO change variables to match the ones in program
-!      make output file
-!      correct any loops labels
 
        wmin = 0.0001d0
        wmax = 2.000d0
