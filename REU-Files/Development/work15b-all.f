@@ -180,6 +180,7 @@ C**********************************************************************
       open(80,file='pulse.inp',status='old')
       open(90,file='pulse.out',status='unknown')
       open(100,file='fieldFT.out',status='unknown')
+      open(230,file='intermediate.out',status='unknown')
   
       call readkb      ! new input subroutine
       if (target == ' H') then
@@ -1033,6 +1034,158 @@ C**** GEOMETRICAL PART OF MULTIPOLE COEFFICIENTS AND nbmax
 
       return
       end
+
+C**************************************************************************************************************************
+C     written by John Emmons and Sean Buczek 
+C     date Feb 2014
+C
+C**** print data at intermediate time steps (i.e. not just the end
+C**** the columns of the output are listed beloew with | separating each entry:
+C**** OUTPUT FILE: intermediate.out (file number 230)
+C
+C**** timestep | overlap in s1 | overlap in s2 | ... | integral n=1 | integral n=2 | ... | integral betas | sum of integral
+C 
+
+C
+C     TODO
+C     make output acutally write to file 230
+C     make a format statement
+C     compute betas integral
+C     sum the overaps for vairous n
+C     sum the sum of overlap and integral of betas
+C     print timestep (add input parameter)
+C
+
+      subroutine intermediate_output
+      use parameters
+      use in2
+      use complexarray3
+      use realarray1
+      use realconstants2
+      use realconstants1
+      use adis
+      use VDD
+      use pecommon
+      use rpcommon
+      use DAT1
+      use phcommon
+      use keys
+
+      implicit double precision (a-h,o-z)
+      complex*16 tint,be,ct1
+
+      double precision, allocatable :: dcrall(:),phall(:,:),betall(:,:)
+
+      dimension tint(0:ncmax,0:nenmax),bet(0:2*ncmax)
+      dimension dm(0:nenmax),ener(0:nenmax),wr(nxmax),wi(nxmax) 
+      dimension rtp(nxmax+1000),rpe(nxmax+1000)
+
+      allocate(dcrall(nerg),phall(nerg,0:nc),betall(nerg,0:2*nc))
+
+      ncu = nc
+      nrp1 = nrp+1
+
+      dm = 0.d0
+      ener(0) = emin-de
+      rpe(1) = 0.d0
+      rtp(1) = 0.d0
+      
+      do 990 i = 2,nrp1
+        rtp(i) = rp(i-1)
+990       continue        
+
+      write(10,9900)
+9900  format(/,'#  E(au)',6x,'Spectr    bet0    bet1     bet2     bet3',
+     >         '     bet4     bet5     bet6     bet7     bet8')
+
+      call flush(10)
+      
+      do nen = 1,nerg
+        ener(nen) = ener(nen-1) + de
+      end do
+
+c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+      do 390 nen = 1,nerg
+        ep = 2.0d0*ener(nen)
+        do 290 jj=0,nc
+          call dwavekb(jj,ep,phse,dw)         
+          phall(nen,jj) = phse
+          do 119 i=2,nrp1
+            rpe(i)=dw(i-1)              
+119               continue
+          do 129 i=1,ngob
+            call parinv(x(i),rtp,rpe,nrp1,rg)
+            wr(i+1) = rg*dreal(q(i,jj))
+            wi(i+1) = rg*dimag(q(i,jj))
+129               continue
+          call arsimd(ngob1,h,wr,rtr)
+          call arsimd(ngob1,h,wi,rti)
+          tint(jj,nen) = dcmplx(rtr,rti)
+c---- this is for angular distribution:
+          if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
+c----------------------------------------------------------------------
+          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
+290           continue
+9901            format(f9.5,3d15.5)
+390                continue
+c$omp end parallel do
+        
+c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
+c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
+c---- beta parameters
+      do 490 nen = 1,nerg
+        am = dble(mfixed)
+        if (key4.gt.1) then
+         do 259 lam=0,min(2*nc,20)
+          be = dcmplx(0.d0,0.d0)
+          rlam = dble(lam)
+          do 249 j1 = 0,nc
+            j2min = abs(j1-lam)
+            j2max = min(nc,j1+lam)
+            do 239 j2 = j2min,j2max,2
+              rj1 = dble(j1)
+              rj2 = dble(j2)       
+              call clegor(2*j1,2*lam,2*j2,2*mfixed,0,2*mfixed,cgdd,ier)
+              aw = dsqrt((2.d0*rj1+1.d0)/(2.d0*rj2+1.d0))
+     >            *clb(j1,lam,j2)*cgdd
+              rph = phall(nen,j1)-phall(nen,j2)
+              ct1 = (0.d0,1.d0)**(j2-j1) * cdexp(dcmplx(0.d0,rph)) 
+     >            *tint(j1,nen)*dconjg(tint(j2,nen))*dcmplx(aw,0.d0)
+              be = be + ct1
+239                   continue
+249                          continue
+          bet(lam) = dreal(be)*(2.d0*rlam+1.d0)/dm(nen)  
+          betall(nen,lam) = bet(lam)
+259            continue 
+        endif
+        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
+        dcrall(nen) = dcr
+490       continue
+c$omp end parallel do
+      do nen = 1,nerg
+        do jj = 0,nc
+          write(20,9901) ener(nen),phall(nen,jj),tint(jj,nen)
+        end do
+        call flush(20)
+        if (key4.gt.1) then
+          write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
+     >                   (betall(nen,lam),lam=0,min(8,2*nc))
+        else
+           write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
+        endif
+        call flush(10)
+        if (key4.gt.1) then
+          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
+     >                   (betall(nen,lam),lam=0,min(2*nc,20))
+        else
+          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
+        endif
+        call flush(70)
+      end do
+9902   format(f9.5,e10.3,15f9.5)
+9903     format(1p200e14.6)
+      return
+      end  
 
 C*********************************************
 C***energy and angular distribution in the final state
