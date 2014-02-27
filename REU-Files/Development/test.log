@@ -801,5 +801,16 @@
   time step:         784
   time step:         785
  === subroutine output: k =          785
- Time elapsed for field propagation:     135.681 seconds.
- Time elapsed for dstrm is      0.000 seconds.
+ Time elapsed for field propagation:     137.755 seconds.
+forrtl: severe (193): Run-Time Check Failure. The variable 'intermediate_output_$RESULT' is being used without being defined
+Image              PC                Routine            Line        Source             
+work15b-all        00000000004D7531  Unknown               Unknown  Unknown
+work15b-all        00000000004D6505  Unknown               Unknown  Unknown
+work15b-all        000000000047C43A  Unknown               Unknown  Unknown
+work15b-all        000000000043C7D2  Unknown               Unknown  Unknown
+work15b-all        000000000043E848  Unknown               Unknown  Unknown
+work15b-all        000000000042D51A  intermediate_outp        1240  work15b-all.f
+work15b-all        000000000040E2D4  MAIN__                    445  work15b-all.f
+work15b-all        00000000004035AC  Unknown               Unknown  Unknown
+libc.so.6          00000036D621D994  Unknown               Unknown  Unknown
+work15b-all        00000000004034B9  Unknown               Unknown  Unknown
