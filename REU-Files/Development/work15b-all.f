@@ -6,7 +6,7 @@
       
       module realconstants1
       integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,nprint,nc,ngob,ntfin,nbmax,
-     1          ngob1,nerg,mfixed,nnauto,llauto,mprint
+     1          ngob1,nerg,mfixed,nnauto,llauto
       end module realconstants1
       
       module extra
@@ -232,9 +232,9 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
       if(ntfin.eq.0) ntfin = -1
 
       kcount = 0
-      lcount = 0
 ! printout before we even start
       call output(kcount)
+      call intermediate_output(kcount)
 
       call system_clock(itime_start,itime)
 
@@ -275,7 +275,6 @@ C  MAIN TIME LOOP
         print *,' time step:', k
         call flush(6)
         kcount = kcount+1
-        lcount = lcount+1
 
 C***** PROPAGATION FROM PULSE BY dt
 c$omp parallel do private(j,xj,r1,jj,a1,c1,bet,u1,gam1)
@@ -344,12 +343,6 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
         call intermediate_output(0)
         kcount = 0
       endif
-
-C***CALL INTERMEDIATE OUTPUT FOR JON AND SEAN
-      if(lcount.eq.mprint) then
-        call intermediate_output
-        lcount = 0
-      endif
 100   format(10e12.5)
 400   continue
 
@@ -382,9 +375,9 @@ c$omp end parallel do
 
 !  print output at this point
       call output(k)
-      kcount = 0
       call intermediate_output
-      lcount = 0
+      kcount = 0
+      
 
       call system_clock(itime_end)
       write(*,'(1x,a,f11.3,a)') 'Time elapsed for field propagation: ',
@@ -409,7 +402,6 @@ C*** CONTINUE WITH 'FREE' PROPAGATION WITH STEP dt AFTER ntfinal
         print *,' time step:', k
         call flush(6)
         kcount = kcount+1
-        lcount = lcount+1
 c$omp parallel do private(jj,j,bet,u,gam)
         do 700 jj=0,nc
           bet=bb(1,jj)
@@ -430,16 +422,14 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
         if(kcount.eq.nprint) then
           call output(k)
+          call intermediate_output
           kcount = 0
         endif
-        if (lcount.eq.lprint) then
-          call intermediate_output
-          lcount = 0
-        endif 
 800   continue
 
 !     print output at this point
       call output(k)
+      call intermediate_output
       
 C*****end of propagation
 
