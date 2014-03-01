@@ -338,6 +338,9 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
       if(kcount.eq.nprint) then
         call intermediate_output(k)
         call output(k)
+! this is printing for debugging purposes
+! should be deleted once code is runninf
+        call intermediate_output(0)
         kcount = 0
       endif
 100   format(10e12.5)
@@ -444,7 +447,14 @@ C*****end of propagation
  6000 format(1p10e14.6)
  
       call system_clock(itime_start,itime)
+<<<<<<< HEAD
       call intermediate_output(k)
+=======
+
+!     testing code output
+      call intermediate_output(k)
+
+>>>>>>> d3d073bc25500b5f8ad5dcc658e0e8dfece96275
       call dstrm
       call system_clock(itime_end)
       write(*,'(1x,a,f11.3,a)') 'Time elapsed for dstrm is',
@@ -1049,11 +1059,11 @@ C**** the columns of the output are listed beloew with | separating each entry:
 C**** OUTPUT FILE: intermediate.out (file number 230)
 C
 C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , integral betas , sum of integral
-C 
 
 C
 C     TODO
 C     [X] make output acutally write to file 230
+<<<<<<< HEAD
 C     [X] make a format statement
 C     [X] compute betas integral
 C     [X] sum the overaps for vairous n
@@ -1095,6 +1105,7 @@ C     [ ] make code print at nprint intervals
       character*8 probnm
       character*19 genr
       character*27 flpath
+
 
       complex*16, allocatable       :: psi(:,:)
       double precision, allocatable :: prob1(:,:),anorm(:),
@@ -1191,6 +1202,7 @@ c---- beta parameters
         dcrall(nen) = dcr
 490       continue
 c$omp end parallel do
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!OUTPUT CODE!!!!!!!!!
@@ -1338,7 +1350,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         write(230, '(A1)') ''
 
        deallocate(psi,prob1,anorm,auto,conv,vrlp)
-
+       
 ! test output 
      
       flush(230)
