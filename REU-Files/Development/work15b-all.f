@@ -6,7 +6,7 @@
       
       module realconstants1
       integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,nprint,nc,ngob,ntfin,nbmax,
-     1          ngob1,nerg,mfixed,nnauto,llauto
+     1          ngob1,nerg,mfixed,nnauto,llauto,mprint
       end module realconstants1
       
       module extra
@@ -232,6 +232,7 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
       if(ntfin.eq.0) ntfin = -1
 
       kcount = 0
+      lcount = 0
 ! printout before we even start
       call output(kcount)
 
@@ -258,9 +259,9 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
 C*****end of propagation by dt/2
 
-!       call output(-1)
-!       stop
-! reset coefficients to allow for steps of dt by the diagonal term
+C       call output(-1)
+C       stop
+C reset coefficients to allow for steps of dt by the diagonal term
        a = -cst1
        c = -cst1
        a(1) = czero
@@ -274,6 +275,7 @@ C  MAIN TIME LOOP
         print *,' time step:', k
         call flush(6)
         kcount = kcount+1
+        lcount = lcount+1
 
 C***** PROPAGATION FROM PULSE BY dt
 c$omp parallel do private(j,xj,r1,jj,a1,c1,bet,u1,gam1)
@@ -339,6 +341,12 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
         call output(k)
         kcount = 0
       endif
+
+C***CALL INTERMEDIATE OUTPUT FOR JON AND SEAN
+      if(lcount.eq.mprint) then
+        call intermediate_output
+        lcount = 0
+      endif
 100   format(10e12.5)
 400   continue
 
@@ -372,7 +380,9 @@ c$omp end parallel do
 !  print output at this point
       call output(k)
       kcount = 0
-      
+      call intermediate_output
+      lcount = 0
+
       call system_clock(itime_end)
       write(*,'(1x,a,f11.3,a)') 'Time elapsed for field propagation: ',
      >      real(itime_end-itime_start)/real(itime), ' seconds.'       
@@ -396,6 +406,7 @@ C*** CONTINUE WITH 'FREE' PROPAGATION WITH STEP dt AFTER ntfinal
         print *,' time step:', k
         call flush(6)
         kcount = kcount+1
+        lcount = lcount+1
 c$omp parallel do private(jj,j,bet,u,gam)
         do 700 jj=0,nc
           bet=bb(1,jj)
@@ -418,6 +429,10 @@ c$omp end parallel do
           call output(k)
           kcount = 0
         endif
+        if (lcount.eq.lprint) then
+          call intermediate_output
+          lcount = 0
+        endif 
 800   continue
 
 !     print output at this point
@@ -1049,7 +1064,7 @@ C
 C
 C     TODO
 C     make output acutally write to file 230
-C     make a format statement
+C     make a format statement                       
 C     compute betas integral
 C     sum the overaps for vairous n
 C     sum the sum of overlap and integral of betas
@@ -1095,7 +1110,7 @@ C
 990       continue        
 
       write(10,9900)
-9900  format(/,'#  E(au)',6x,'Spectr    bet0    bet1     bet2     bet3',
+ 9900  format(/,'#  E(au)',6x,'Spectr    bet0    bet1     bet2     bet3',
      >         '     bet4     bet5     bet6     bet7     bet8')
 
       call flush(10)

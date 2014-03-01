@@ -40,3 +40,5 @@ def integrate(FILE_NAME):
 	    integral += ((data[i][1] + data[i + 1][1]) / 2) * (data[i + 1][0] - data[i][0])
 
 	return integral
+
+	print integrate("betas.out")
