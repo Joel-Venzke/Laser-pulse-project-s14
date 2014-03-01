@@ -1,0 +1,64 @@
+ === subroutine output: k =            0
+  time step:           0
+  time step:           1
+  time step:           2
+  time step:           3
+  time step:           4
+  time step:           5
+  time step:           6
+  time step:           7
+  time step:           8
+  time step:           9
+  time step:          10
+  time step:          11
+  time step:          12
+  time step:          13
+  time step:          14
+  time step:          15
+  time step:          16
+  time step:          17
+  time step:          18
+  time step:          19
+  time step:          20
+  time step:          21
+  time step:          22
+  time step:          23
+  time step:          24
+  time step:          25
+  time step:          26
+  time step:          27
+  time step:          28
+  time step:          29
+  time step:          30
+  time step:          31
+  time step:          32
+  time step:          33
+  time step:          34
+  time step:          35
+  time step:          36
+  time step:          37
+  time step:          38
+  time step:          39
+  time step:          40
+  time step:          41
+  time step:          42
+  time step:          43
+  time step:          44
+  time step:          45
+  time step:          46
+  time step:          47
+  time step:          48
+  time step:          49
+ === subroutine output: k =           49
+forrtl: severe (193): Run-Time Check Failure. The variable 'intermediate_output_$RESULT' is being used without being defined
+Image              PC                Routine            Line        Source             
+work15b-all        00000000004D6FB1  Unknown               Unknown  Unknown
+work15b-all        00000000004D5F85  Unknown               Unknown  Unknown
+work15b-all        000000000047BEBA  Unknown               Unknown  Unknown
+work15b-all        000000000043C252  Unknown               Unknown  Unknown
+work15b-all        000000000043E2C8  Unknown               Unknown  Unknown
+work15b-all        0000000000416375  intermediate_outp        1266  work15b-all.f
+work15b-all        000000000040BD27  MAIN__                    342  work15b-all.f
+work15b-all        00000000004035AC  Unknown               Unknown  Unknown
+libc.so.6          00000036D621D994  Unknown               Unknown  Unknown
+work15b-all        00000000004034B9  Unknown               Unknown  Unknown

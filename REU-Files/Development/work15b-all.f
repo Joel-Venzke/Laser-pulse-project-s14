@@ -235,7 +235,6 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
 ! printout before we even start
       call output(kcount)
       call intermediate_output(kcount)
-
       call system_clock(itime_start,itime)
 
 C*****  INITIAL PROPAGATION FROM DIAGONAL TERM BY tau = dt/2
@@ -337,10 +336,8 @@ c$omp end parallel do
 
 C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
       if(kcount.eq.nprint) then
+        call intermediate_output(k)
         call output(k)
-! this is printing for debugging purposes
-! should be deleted once code is runninf
-        call intermediate_output(0)
         kcount = 0
       endif
 100   format(10e12.5)
@@ -374,6 +371,7 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
 
 !  print output at this point
+      call intermediate_output(k)
       call output(k)
       call intermediate_output
       kcount = 0
@@ -422,12 +420,13 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
         if(kcount.eq.nprint) then
           call output(k)
-          call intermediate_output
+          call intermediate_output(k)
           kcount = 0
         endif
 800   continue
 
 !     print output at this point
+      call intermediate_output(k)
       call output(k)
       call intermediate_output
       
@@ -448,8 +447,6 @@ C*****end of propagation
  6000 format(1p10e14.6)
  
       call system_clock(itime_start,itime)
-
-!     testing code output
       call intermediate_output(k)
 
       call dstrm
@@ -1061,11 +1058,11 @@ C
 C     TODO
 
 C     [X] make output acutally write to file 230
-C     [ ] make a format statement
-C     [ ] compute betas integral
-C     [ ] sum the overaps for vairous n
-C     [ ] sum the sum of overlap and integral of betas
-C     [ ] print timestep (add input parameter)
+C     [X] make a format statement
+C     [X] compute betas integral
+C     [X] sum the overaps for vairous n
+C     [X] sum the sum of overlap and integral of betas
+C     [X] print timestep (add input parameter)
 C     [ ] make code print at nprint intervals
 
       subroutine intermediate_output (k)
@@ -1102,6 +1099,8 @@ C     [ ] make code print at nprint intervals
       character*3 zchar
       character*8 probnm
       character*19 genr
+      character*27 flpath
+
 
       complex*16, allocatable       :: psi(:,:)
       double precision, allocatable :: prob1(:,:),anorm(:),
@@ -1197,6 +1196,8 @@ c---- beta parameters
         dcr = dm(nen)*dsqrt(2.d0/ener(nen))
         dcrall(nen) = dcr
 490       continue
+c$omp end parallel do
+
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!!!OUTPUT CODE!!!!!!!!!
@@ -1230,7 +1231,6 @@ C*** PROBABILITY DENSITY (r^2*|psi|^2) BY DIRECT SQUARE
 
 ! orbital probabilities
 C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
-!      if(key1 /= 0) then
         do kd=1,nf
           auto = 0.d0
           do i=1,ngob1                    
@@ -1242,39 +1242,113 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           end do
           call arsimd(ngob1,h,auto,aie)
           vrlp(kd) = are**2 + aie**2
-          write(230,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
+          overlap_output(kd) = vrlp(kd)
         end do          
-!      endif
- 1001   format(/,' Overlap with state',i2,' : n =',i3,'  l =',i2,
-     1 ' Re =',d12.4 ,' Im =',d12.4,'  Square = ',d12.4)   
 
-! sean's beta integral garbage
-      do nen=1, nerg, 1
-         if (nen < nerg) then
-            result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
-         else
-            result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
-         endif
-      end do
+!!!!!!!! if first run through print the column headers
+        if(k .eq. 0) then
+           ! find the max n level
+           max_n = 0
+           do i = 1, nf
+              if(nn(i) > max_n) then
+                 max_n = nn(i)
+              endif
+           end do
 
-C tie up loose ends of integration
-      result = result + ((2*(sqrt(2.d0*ener(1))*dcrall(1)))-
-     >    (2.d0*ener(2)*dcrall(2)))
-      result= result*ener(1)
+           ! print time step column header
+           write(230, '(A5)', advance='no') 'tStep'
+           write(230, '(A1)', advance='no') char(9) 
 
-      write(230,*) 'Integration is equal to', result
+           ! print the n,l column headers
+           do i = 1, nf
+              write(230, '(A2)', advance='no') 'n='
+              write(230, '(I2)', advance='no') nn(i)
+              write(230, '(A3)', advance='no') ' l='
+              write(230, '(I2)', advance='no') ll(i)
+              write(230, '(A3)', advance='no') '   '
+              write(230, '(A1)', advance='no') char(9)
+           end do
 
-c$omp end parallel do
-      do nen = 1,nerg
+           ! print the n column headers
+           do i = 1, max_n
+              write(230, '(A2)', advance='no') 'n='
+              write(230, '(I2)', advance='no') nn(i)
+              write(230, '(A8)', advance='no') '        '
+              write(230, '(A1)', advance='no') char(9)
+           end do
 
-      end do
+           ! print the betas integral column header
+           write(230, '(A4)', advance='no') 'bInt'
+           write(230, '(A7)', advance='no') '       '
+           write(230, '(A2)', advance='no') char(9)
 
-      deallocate(psi,prob1,anorm,auto,conv,vrlp)
+           ! print the total integral column header
+           write(230, '(A4)', advance='no') 'tInt'
+           write(230, '(A1)') ''
+        endif
+
+
+!       print the timestep and space character before the data
+        write(230, '(I5.5)', advance='no') k
+
+!       print the square of the overlap (i.e. probability of state)
+        do i = 1, nf
+           write(230, '(A1)', advance='no') char(9)
+           write(230,'(E12.6)', advance='no') overlap_output(i)
+        end do
+
+!       calculate and print the probability of being in n=1, n=2, ...
+!       intitalize the array
+        do i = 1, nf
+           energy_level_output(i) = 0
+        end do
+
+        max_n = 0
+        do i = 1, nf
+          energy_level_output(nn(i)) = energy_level_output(nn(i)) 
+     >    + overlap_output(i)
+          if(nn(i) > max_n) then
+             max_n = nn(i)
+          endif
+        end do
+        
+        do i = 1, max_n
+           write(230, '(A1)', advance='no') char(9)
+           write(230, '(E12.6)', advance='no') energy_level_output(i)
+        end do
+
+!       calculate and print ionization integral
+        result = 0
+        do nen=1, nerg, 1
+           if (nen < nerg) then
+              result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
+           else
+              result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+           endif
+        end do
+!       tie up loose ends of integration
+        result= result*(ener(2)-ener(1))
+        result= result + (ener(1)*(.5*((2*(sqrt(
+     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
+
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.6)', advance='no') result
+
+!       print the sum of ionization and each orbital (should be 1)
+        do i = 1, max_n
+           result = result + energy_level_output(i)
+        end do
+
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.6)', advance='no') result
+!       advnace to the next line
+        write(230, '(A1)') ''
+
+       deallocate(psi,prob1,anorm,auto,conv,vrlp)
 
 ! test output 
      
       flush(230)
-      close(230)
 
       return
       end  
