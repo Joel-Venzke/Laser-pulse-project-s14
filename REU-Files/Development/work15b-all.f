@@ -234,7 +234,7 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
       kcount = 0
 ! printout before we even start
       call output(kcount)
-
+      call intermediate_output(kcount)
       call system_clock(itime_start,itime)
 
 C*****  INITIAL PROPAGATION FROM DIAGONAL TERM BY tau = dt/2
@@ -336,6 +336,7 @@ c$omp end parallel do
 
 C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
       if(kcount.eq.nprint) then
+        call intermediate_output(k)
         call output(k)
         kcount = 0
       endif
@@ -370,6 +371,7 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
 
 !  print output at this point
+      call intermediate_output(k)
       call output(k)
       kcount = 0
       
@@ -416,11 +418,13 @@ c$omp parallel do private(jj,j,bet,u,gam)
 c$omp end parallel do
         if(kcount.eq.nprint) then
           call output(k)
+          call intermediate_output(k)
           kcount = 0
         endif
 800   continue
 
 !     print output at this point
+      call intermediate_output(k)
       call output(k)
       
 C*****end of propagation
@@ -440,6 +444,7 @@ C*****end of propagation
  6000 format(1p10e14.6)
  
       call system_clock(itime_start,itime)
+      call intermediate_output(k)
       call dstrm
       call system_clock(itime_end)
       write(*,'(1x,a,f11.3,a)') 'Time elapsed for dstrm is',
@@ -1035,7 +1040,7 @@ C**** GEOMETRICAL PART OF MULTIPOLE COEFFICIENTS AND nbmax
       return
       end
 
-C**************************************************************************************************************************
+C********************************************************************
 C     written by John Emmons and Sean Buczek 
 C     date Feb 2014
 C
@@ -1043,22 +1048,23 @@ C**** print data at intermediate time steps (i.e. not just the end
 C**** the columns of the output are listed beloew with | separating each entry:
 C**** OUTPUT FILE: intermediate.out (file number 230)
 C
-C**** timestep | overlap in s1 | overlap in s2 | ... | integral n=1 | integral n=2 | ... | integral betas | sum of integral
+C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , integral betas , sum of integral
 C 
 
 C
 C     TODO
-C     make output acutally write to file 230
-C     make a format statement
-C     compute betas integral
-C     sum the overaps for vairous n
-C     sum the sum of overlap and integral of betas
-C     print timestep (add input parameter)
-C
+C     [X] make output acutally write to file 230
+C     [X] make a format statement
+C     [X] compute betas integral
+C     [X] sum the overaps for vairous n
+C     [X] sum the sum of overlap and integral of betas
+C     [X] print timestep (add input parameter)
+C     [ ] make code print at nprint intervals
 
-      subroutine intermediate_output
+      subroutine intermediate_output (k)
       use parameters
       use in2
+      use discr
       use complexarray3
       use realarray1
       use realconstants2
@@ -1070,7 +1076,12 @@ C
       use DAT1
       use phcommon
       use keys
+! modules from the output subroutine
+      use cmplxconstants
+      use pgcommon
+      use realarray1
 
+! dstrm variables
       implicit double precision (a-h,o-z)
       complex*16 tint,be,ct1
 
@@ -1079,8 +1090,32 @@ C
       dimension tint(0:ncmax,0:nenmax),bet(0:2*ncmax)
       dimension dm(0:nenmax),ener(0:nenmax),wr(nxmax),wi(nxmax) 
       dimension rtp(nxmax+1000),rpe(nxmax+1000)
+! output variables
+      character*3 zchar
+      character*8 probnm
+      character*19 genr
+      character*27 flpath
 
+      complex*16, allocatable       :: psi(:,:)
+      double precision, allocatable :: prob1(:,:),anorm(:),
+     >                                 vrlp(:),auto(:),conv(:)
+
+! variables for overlap calculations 
+      double precision dimension, overlap_output(nf),
+     > energy_level_output(nf)
+      double precision result
+      integer max_n
+
+! dstrm memory allocation
       allocate(dcrall(nerg),phall(nerg,0:nc),betall(nerg,0:2*nc))
+
+! output memory allocation
+      allocate (psi(0:nx+1,0:ntet),prob1(0:nx+1,0:ntet),anorm(nx+1),
+     >          auto(nx+1),conv(0:nx+1),vrlp(0:nfmax))
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!dstrm code!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
       ncu = nc
       nrp1 = nrp+1
@@ -1094,12 +1129,6 @@ C
         rtp(i) = rp(i-1)
 990       continue        
 
-      write(10,9900)
-9900  format(/,'#  E(au)',6x,'Spectr    bet0    bet1     bet2     bet3',
-     >         '     bet4     bet5     bet6     bet7     bet8')
-
-      call flush(10)
-      
       do nen = 1,nerg
         ener(nen) = ener(nen-1) + de
       end do
@@ -1162,28 +1191,158 @@ c---- beta parameters
         dcrall(nen) = dcr
 490       continue
 c$omp end parallel do
-      do nen = 1,nerg
-        do jj = 0,nc
-          write(20,9901) ener(nen),phall(nen,jj),tint(jj,nen)
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!OUTPUT CODE!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      k1 = k+1
+
+      psi = czero
+      prob1 = zero
+
+C*** WAVEFUNCTION (WAVEPACKET)  r * psi (psi = prob1 for saving memory)
+      do n=0,nc                
+        cek = dsqrt((2.d0*dble(n)+1.d0)/(4.d0*pi))
+        do j=0,ntet
+          sh = cek * pg(j,n)
+          do i=0,ngob1
+            psi(i,j) = q(i,n)*dcmplx(sh,0.d0) + psi(i,j)
+          end do
         end do
-        call flush(20)
-        if (key4.gt.1) then
-          write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
-     >                   (betall(nen,lam),lam=0,min(8,2*nc))
-        else
-           write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
-        endif
-        call flush(10)
-        if (key4.gt.1) then
-          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
-     >                   (betall(nen,lam),lam=0,min(2*nc,20))
-        else
-          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
-        endif
-        call flush(70)
       end do
-9902   format(f9.5,e10.3,15f9.5)
-9903     format(1p200e14.6)
+
+C*** PROBABILITY DENSITY (r^2*|psi|^2) BY DIRECT SQUARE
+      do j=0,ntet
+        do i=0,ngob1
+          prob1(i,j) = cdabs(psi(i,j))**2 
+        end do
+      end do
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!BEGIN OUTPUTING!!!!!!!!!!  
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! orbital probabilities
+C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
+        do kd=1,nf
+          auto = 0.d0
+          do i=1,ngob1                    
+            auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,are)
+          do i=1,ngob1                    
+            auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,aie)
+          vrlp(kd) = are**2 + aie**2
+          overlap_output(kd) = vrlp(kd)
+        end do          
+
+!!!!!!!! if first run through print the column headers
+        if(k .eq. 0) then
+           ! find the max n level
+           max_n = 0
+           do i = 1, nf
+              if(nn(i) > max_n) then
+                 max_n = nn(i)
+              endif
+           end do
+
+           ! print time step column header
+           write(230, '(A5)', advance='no') 'tStep'
+           write(230, '(A1)', advance='no') char(9) 
+
+           ! print the n,l column headers
+           do i = 1, nf
+              write(230, '(A2)', advance='no') 'n='
+              write(230, '(I2)', advance='no') nn(i)
+              write(230, '(A3)', advance='no') ' l='
+              write(230, '(I2)', advance='no') ll(i)
+              write(230, '(A3)', advance='no') '   '
+              write(230, '(A1)', advance='no') char(9)
+           end do
+
+           ! print the n column headers
+           do i = 1, max_n
+              write(230, '(A2)', advance='no') 'n='
+              write(230, '(I2)', advance='no') nn(i)
+              write(230, '(A8)', advance='no') '        '
+              write(230, '(A1)', advance='no') char(9)
+           end do
+
+           ! print the betas integral column header
+           write(230, '(A4)', advance='no') 'bInt'
+           write(230, '(A7)', advance='no') '       '
+           write(230, '(A2)', advance='no') char(9)
+
+           ! print the total integral column header
+           write(230, '(A4)', advance='no') 'tInt'
+           write(230, '(A1)') ''
+        endif
+
+
+!       print the timestep and space character before the data
+        write(230, '(I5.5)', advance='no') k
+
+!       print the square of the overlap (i.e. probability of state)
+        do i = 1, nf
+           write(230, '(A1)', advance='no') char(9)
+           write(230,'(E12.6)', advance='no') overlap_output(i)
+        end do
+
+!       calculate and print the probability of being in n=1, n=2, ...
+!       intitalize the array
+        do i = 1, nf
+           energy_level_output(i) = 0
+        end do
+
+        max_n = 0
+        do i = 1, nf
+          energy_level_output(nn(i)) = energy_level_output(nn(i)) 
+     >    + overlap_output(i)
+          if(nn(i) > max_n) then
+             max_n = nn(i)
+          endif
+        end do
+        
+        do i = 1, max_n
+           write(230, '(A1)', advance='no') char(9)
+           write(230, '(E12.6)', advance='no') energy_level_output(i)
+        end do
+
+!       calculate and print ionization integral
+        result = 0
+        do nen=1, nerg, 1
+           if (nen < nerg) then
+              result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
+           else
+              result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+           endif
+        end do
+!       tie up loose ends of integration
+        result= result*(ener(2)-ener(1))
+        result= result + (ener(1)*(.5*((2*(sqrt(
+     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
+
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.6)', advance='no') result
+
+!       print the sum of ionization and each orbital (should be 1)
+        do i = 1, max_n
+           result = result + energy_level_output(i)
+        end do
+
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.6)', advance='no') result
+!       advnace to the next line
+        write(230, '(A1)') ''
+
+       deallocate(psi,prob1,anorm,auto,conv,vrlp)
+
+! test output 
+     
+      flush(230)
+
       return
       end  
 
@@ -2062,7 +2221,7 @@ C***************************************************************
 
 !     write the fourier transform to a file
       do 51 n=1,nomega
-        write(100,1011) n,w(n),greal(n),gimag(n),
+        write(1030,1011) n,w(n),greal(n),gimag(n),
      >                sqrt(greal(n)**2+gimag(n)**2)
 51    continue
 

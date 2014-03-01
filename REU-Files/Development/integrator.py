@@ -28,15 +28,11 @@ def integrate(FILE_NAME):
 	# insert 0 at the front of the list
 	data.insert(0, [0.0, y0])
 
-
-	# debugging output
-	#for pair in data:
-	#    sys.stdout.write(str(pair[0]) + " " + str(pair[1]) + "\n")
-
-
 	# compute the integral using trapezoids
 	integral = 0.0;
 	for i in range(len(data) - 1):
 	    integral += ((data[i][1] + data[i + 1][1]) / 2) * (data[i + 1][0] - data[i][0])
 
 	return integral
+
+print integrate("betas.out")
