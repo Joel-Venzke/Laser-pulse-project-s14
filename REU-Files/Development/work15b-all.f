@@ -1051,7 +1051,6 @@ C**** the columns of the output are listed beloew with | separating each entry:
 C**** OUTPUT FILE: intermediate.out (file number 230)
 C
 C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , integral betas , sum of integral
-C 
 
 C
 C     TODO
@@ -1096,7 +1095,6 @@ C     [ ] make code print at nprint intervals
       character*3 zchar
       character*8 probnm
       character*19 genr
-      character*27 flpath
 
       complex*16, allocatable       :: psi(:,:)
       double precision, allocatable :: prob1(:,:),anorm(:),
@@ -1217,6 +1215,7 @@ C*** PROBABILITY DENSITY (r^2*|psi|^2) BY DIRECT SQUARE
         do i=0,ngob1
           prob1(i,j) = cdabs(psi(i,j))**2 
         end do
+<<<<<<< HEAD
       end do
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1339,6 +1338,56 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         write(230, '(A1)') ''
 
        deallocate(psi,prob1,anorm,auto,conv,vrlp)
+=======
+      end do
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!BEGIN OUTPUTING!!!!!!!!!!  
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! orbital probabilities
+C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
+!      if(key1 /= 0) then
+        do kd=1,nf
+          auto = 0.d0
+          do i=1,ngob1                    
+            auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,are)
+          do i=1,ngob1                    
+            auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,aie)
+          vrlp(kd) = are**2 + aie**2
+          write(230,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
+        end do          
+!      endif
+ 1001   format(/,' Overlap with state',i2,' : n =',i3,'  l =',i2,
+     1 ' Re =',d12.4 ,' Im =',d12.4,'  Square = ',d12.4)   
+
+! sean's beta integral garbage
+      do nen=1, nerg, 1
+         if (nen < nerg) then
+            result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
+         else
+            result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+         endif
+      end do
+
+C tie up loose ends of integration
+      result = result + ((2*(sqrt(2.d0*ener(1))*dcrall(1)))-
+     >    (2.d0*ener(2)*dcrall(2)))
+      result= result*ener(1)
+
+      write(230,*) 'Integration is equal to', result
+
+c$omp end parallel do
+      do nen = 1,nerg
+
+      end do
+
+      deallocate(psi,prob1,anorm,auto,conv,vrlp)
+>>>>>>> 785ddb1fbb0181a627da31c1c7ab4d5fdb501268
 
 ! test output 
      
