@@ -339,6 +339,9 @@ c$omp end parallel do
 C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
       if(kcount.eq.nprint) then
         call output(k)
+! this is printing for debugging purposes
+! should be deleted once code is runninf
+        call intermediate_output(0)
         kcount = 0
       endif
 
@@ -455,6 +458,10 @@ C*****end of propagation
  6000 format(1p10e14.6)
  
       call system_clock(itime_start,itime)
+
+!     testing code output
+      call intermediate_output(k)
+
       call dstrm
       call system_clock(itime_end)
       write(*,'(1x,a,f11.3,a)') 'Time elapsed for dstrm is',
@@ -1050,7 +1057,7 @@ C**** GEOMETRICAL PART OF MULTIPOLE COEFFICIENTS AND nbmax
       return
       end
 
-C**************************************************************************************************************************
+C********************************************************************
 C     written by John Emmons and Sean Buczek 
 C     date Feb 2014
 C
@@ -1058,22 +1065,24 @@ C**** print data at intermediate time steps (i.e. not just the end
 C**** the columns of the output are listed beloew with | separating each entry:
 C**** OUTPUT FILE: intermediate.out (file number 230)
 C
-C**** timestep | overlap in s1 | overlap in s2 | ... | integral n=1 | integral n=2 | ... | integral betas | sum of integral
-C 
+C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , integral betas , sum of integral
 
 C
 C     TODO
-C     make output acutally write to file 230
-C     make a format statement                       
-C     compute betas integral
-C     sum the overaps for vairous n
-C     sum the sum of overlap and integral of betas
-C     print timestep (add input parameter)
-C
 
-      subroutine intermediate_output
+C     [X] make output acutally write to file 230
+C     [ ] make a format statement
+C     [ ] compute betas integral
+C     [ ] sum the overaps for vairous n
+C     [ ] sum the sum of overlap and integral of betas
+C     [ ] print timestep (add input parameter)
+C     [ ] make code print at nprint intervals
+
+      subroutine intermediate_output (k)
+
       use parameters
       use in2
+      use discr
       use complexarray3
       use realarray1
       use realconstants2
@@ -1085,7 +1094,12 @@ C
       use DAT1
       use phcommon
       use keys
+! modules from the output subroutine
+      use cmplxconstants
+      use pgcommon
+      use realarray1
 
+! dstrm variables
       implicit double precision (a-h,o-z)
       complex*16 tint,be,ct1
 
@@ -1094,8 +1108,31 @@ C
       dimension tint(0:ncmax,0:nenmax),bet(0:2*ncmax)
       dimension dm(0:nenmax),ener(0:nenmax),wr(nxmax),wi(nxmax) 
       dimension rtp(nxmax+1000),rpe(nxmax+1000)
+! output variables
+      character*3 zchar
+      character*8 probnm
+      character*19 genr
 
+      complex*16, allocatable       :: psi(:,:)
+      double precision, allocatable :: prob1(:,:),anorm(:),
+     >                                 vrlp(:),auto(:),conv(:)
+
+! variables for overlap calculations 
+      double precision dimension, overlap_output(nf),
+     > energy_level_output(nf)
+      double precision result
+      integer max_n
+
+! dstrm memory allocation
       allocate(dcrall(nerg),phall(nerg,0:nc),betall(nerg,0:2*nc))
+
+! output memory allocation
+      allocate (psi(0:nx+1,0:ntet),prob1(0:nx+1,0:ntet),anorm(nx+1),
+     >          auto(nx+1),conv(0:nx+1),vrlp(0:nfmax))
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!dstrm code!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
       ncu = nc
       nrp1 = nrp+1
@@ -1109,12 +1146,6 @@ C
         rtp(i) = rp(i-1)
 990       continue        
 
-      write(10,9900)
- 9900  format(/,'#  E(au)',6x,'Spectr    bet0    bet1     bet2     bet3',
-     >         '     bet4     bet5     bet6     bet7     bet8')
-
-      call flush(10)
-      
       do nen = 1,nerg
         ener(nen) = ener(nen-1) + de
       end do
@@ -1176,29 +1207,85 @@ c---- beta parameters
         dcr = dm(nen)*dsqrt(2.d0/ener(nen))
         dcrall(nen) = dcr
 490       continue
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!OUTPUT CODE!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      k1 = k+1
+
+      psi = czero
+      prob1 = zero
+
+C*** WAVEFUNCTION (WAVEPACKET)  r * psi (psi = prob1 for saving memory)
+      do n=0,nc                
+        cek = dsqrt((2.d0*dble(n)+1.d0)/(4.d0*pi))
+        do j=0,ntet
+          sh = cek * pg(j,n)
+          do i=0,ngob1
+            psi(i,j) = q(i,n)*dcmplx(sh,0.d0) + psi(i,j)
+          end do
+        end do
+      end do
+
+C*** PROBABILITY DENSITY (r^2*|psi|^2) BY DIRECT SQUARE
+      do j=0,ntet
+        do i=0,ngob1
+          prob1(i,j) = cdabs(psi(i,j))**2 
+        end do
+      end do
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!BEGIN OUTPUTING!!!!!!!!!!  
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+! orbital probabilities
+C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
+!      if(key1 /= 0) then
+        do kd=1,nf
+          auto = 0.d0
+          do i=1,ngob1                    
+            auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,are)
+          do i=1,ngob1                    
+            auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
+          end do
+          call arsimd(ngob1,h,auto,aie)
+          vrlp(kd) = are**2 + aie**2
+          write(230,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
+        end do          
+!      endif
+ 1001   format(/,' Overlap with state',i2,' : n =',i3,'  l =',i2,
+     1 ' Re =',d12.4 ,' Im =',d12.4,'  Square = ',d12.4)   
+
+! sean's beta integral garbage
+      do nen=1, nerg, 1
+         if (nen < nerg) then
+            result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
+         else
+            result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+         endif
+      end do
+
+C tie up loose ends of integration
+      result = result + ((2*(sqrt(2.d0*ener(1))*dcrall(1)))-
+     >    (2.d0*ener(2)*dcrall(2)))
+      result= result*ener(1)
+
+      write(230,*) 'Integration is equal to', result
+
 c$omp end parallel do
       do nen = 1,nerg
-        do jj = 0,nc
-          write(20,9901) ener(nen),phall(nen,jj),tint(jj,nen)
-        end do
-        call flush(20)
-        if (key4.gt.1) then
-          write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
-     >                   (betall(nen,lam),lam=0,min(8,2*nc))
-        else
-           write(10,9902) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
-        endif
-        call flush(10)
-        if (key4.gt.1) then
-          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen),
-     >                   (betall(nen,lam),lam=0,min(2*nc,20))
-        else
-          write(70,9903) ener(nen),sqrt(2.d0*ener(nen))*dcrall(nen)
-        endif
-        call flush(70)
+
       end do
-9902   format(f9.5,e10.3,15f9.5)
-9903     format(1p200e14.6)
+
+      deallocate(psi,prob1,anorm,auto,conv,vrlp)
+
+! test output 
+     
+      flush(230)
+      close(230)
+
       return
       end  
 
@@ -2077,7 +2164,7 @@ C***************************************************************
 
 !     write the fourier transform to a file
       do 51 n=1,nomega
-        write(100,1011) n,w(n),greal(n),gimag(n),
+        write(1030,1011) n,w(n),greal(n),gimag(n),
      >                sqrt(greal(n)**2+gimag(n)**2)
 51    continue
 

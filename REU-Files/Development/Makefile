@@ -1,9 +1,6 @@
 all:
 	ifort -o work15b-all -C -traceback work15b-all.f
+	rm -rf *.mod *.pyc
 
 clean:
-	rm -rf work15b-all
-	rm -rf *.mod
-	rm -rf read.me
-	rm -rf *~
-	rm -rf *.out
+	rm -rf work15b-all *.mod read.me *~ *.out
