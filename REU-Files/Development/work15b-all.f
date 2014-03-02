@@ -1049,7 +1049,7 @@ C**** print data at intermediate time steps (i.e. not just the end
 C**** the columns of the output are listed beloew with | separating each entry:
 C**** OUTPUT FILE: intermediate.out (file number 230)
 C
-C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , integral betas , sum of integral
+C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , sum of energies, integral betas , sum of integral
 
 C
 C     TODO
@@ -1059,7 +1059,7 @@ C     [X] compute betas integral
 C     [X] sum the overaps for vairous n
 C     [X] sum the sum of overlap and integral of betas
 C     [X] print timestep (add input parameter)
-C     [ ] make code print at nprint intervals
+C     [X] make code print at nprint intervals
 
       subroutine intermediate_output (k)
       use parameters
@@ -1104,7 +1104,7 @@ C     [ ] make code print at nprint intervals
 ! variables for overlap calculations 
       double precision dimension, overlap_output(nf),
      > energy_level_output(nf)
-      double precision result
+      double precision betas_sum, energy_sum
       integer max_n
 
 ! dstrm memory allocation
@@ -1272,6 +1272,11 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
               write(230, '(A1)', advance='no') char(9)
            end do
 
+           ! print the sum of energies column header
+           write(230, '(A4)', advance='no') 'eInt'
+           write(230, '(A7)', advance='no') '       '
+           write(230, '(A2)', advance='no') char(9)
+
            ! print the betas integral column header
            write(230, '(A4)', advance='no') 'bInt'
            write(230, '(A7)', advance='no') '       '
@@ -1312,30 +1317,35 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(E12.6)', advance='no') energy_level_output(i)
         end do
 
+!       print the sum of all energy levels
+        energy_sum = 0.0
+        do i = 1, max_n
+           energy_sum = energy_sum + energy_level_output(i)
+        end do
+
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.6)', advance='no') energy_sum
+
 !       calculate and print ionization integral
-        result = 0
+        betas_sum = 0.0
         do nen=1, nerg, 1
            if (nen < nerg) then
-              result = result + (sqrt(2.d0*ener(nen))*dcrall(nen))
+              betas_sum = betas_sum + (sqrt(2.d0*ener(nen))*dcrall(nen))
            else
-              result =result+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+             betas_sum=betas_sum+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
            endif
         end do
 !       tie up loose ends of integration
-        result= result*(ener(2)-ener(1))
-        result= result + (ener(1)*(.5*((2*(sqrt(
+        betas_sum= betas_sum*(ener(2)-ener(1))
+        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
      >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
 
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') result
+        write(230,'(E12.6)', advance='no') betas_sum
 
 !       print the sum of ionization and each orbital (should be 1)
-        do i = 1, max_n
-           result = result + energy_level_output(i)
-        end do
-
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') result
+        write(230,'(E12.6)', advance='no') betas_sum + energy_sum 
 !       advnace to the next line
         write(230, '(A1)') ''
 
