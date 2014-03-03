@@ -1,5 +1,5 @@
       module parameters
-      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=19)
+      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=21)
       parameter(ntet=1)   ! This will save a lot of space !!!
       parameter(zero=0.0d0,one=1.0d0,two=2.0d0,half=0.5d0,ifak=500)
       end module parameters
@@ -1267,7 +1267,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            ! print the n column headers
            do i = 1, max_n
               write(230, '(A2)', advance='no') 'n='
-              write(230, '(I2)', advance='no') nn(i)
+              write(230, '(I2)', advance='no') i
               write(230, '(A8)', advance='no') '        '
               write(230, '(A1)', advance='no') char(9)
            end do
@@ -1317,7 +1317,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(E12.6)', advance='no') energy_level_output(i)
         end do
 
-!       print the sum of all energy levels
+!       calculated and print the sum of all energy levels
         energy_sum = 0.0
         do i = 1, max_n
            energy_sum = energy_sum + energy_level_output(i)
