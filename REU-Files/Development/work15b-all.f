@@ -1273,7 +1273,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            end do
 
            ! print the sum of energies column header
-           write(230, '(A4)', advance='no') 'eInt'
+           write(230, '(A4)', advance='no') 'oInt'
            write(230, '(A7)', advance='no') '       '
            write(230, '(A2)', advance='no') char(9)
 
