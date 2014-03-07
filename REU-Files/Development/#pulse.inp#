@@ -1,0 +1,2 @@
+exi &pulse1  ee1 = 1.688d-1, ww1 = 0.4d0, n1up = 2, n1down = 2 /
+ &pulse2  alph2 = 0.d0 /
