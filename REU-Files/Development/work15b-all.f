@@ -1274,6 +1274,10 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
               write(230, '(A1)', advance='no') char(9)
            end do
 
+           write(230, '(A2)', advance='no') 'n+'
+           write(230, '(A10)', advance='no') '        '
+           write(230, '(A1)', advance='no') char(9)
+
            ! print the sum of energies column header
            write(230, '(A4)', advance='no') 'oInt'
            write(230, '(A7)', advance='no') '       '
@@ -1282,8 +1286,8 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 ! we do not need to calculate the betas in the middle of the run
            ! print the betas integral column header
 
-!           write(230, '(A4)', advance='no') 'bInt'
-!           write(230, '(A7)', advance='no') '       '
+           write(230, '(A4)', advance='no') 'bInt'
+           write(230, '(A7)', advance='no') '       '
 
            write(230, '(A2)', advance='no') char(9)
 
@@ -1322,6 +1326,12 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(E12.5)', advance='no') energy_level_output(i)
         end do
 
+
+        write(230, '(A1)', advance='no') char(9)
+        write(230, '(E12.5)', advance='no') (2.5 * 
+     >        energy_level_output(max_n))
+
+
 !       calculated and print the sum of all energy levels
         energy_sum = 0.0
         do i = 1, max_n
@@ -1332,7 +1342,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         write(230,'(E12.5)', advance='no') energy_sum
 
 !       calculate and print ionization integral
-        betas_sum = 0.0
+        betas_sum = 1.0 - energy_sum - 2.5*energy_level_output(max_n)
 C        do nen=1, nerg, 1
 C           if (nen < nerg) then
 C              betas_sum = betas_sum + (sqrt(2.d0*ener(nen))*dcrall(nen))
@@ -1346,13 +1356,14 @@ C        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
 C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
 
 
-C        write(230,'(A1)', advance='no') char(9)
-C        write(230,'(E12.6)', advance='no') betas_sum
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.5)', advance='no') betas_sum
 
 
 !       print the sum of ionization and each orbital (should be 1)
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.5)', advance='no') betas_sum + energy_sum 
+        write(230,'(E12.5)', advance='no') betas_sum + energy_sum
+     >  + 2.5*energy_level_output(max_n)
 !       advnace to the next line
         write(230, '(A1)') ''
 
