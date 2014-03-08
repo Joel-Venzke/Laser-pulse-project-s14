@@ -1277,14 +1277,15 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(A7)', advance='no') '       '
            write(230, '(A2)', advance='no') char(9)
 
+! we do not need to calculate the betas in the middle of the run
            ! print the betas integral column header
-           write(230, '(A4)', advance='no') 'bInt'
-           write(230, '(A7)', advance='no') '       '
-           write(230, '(A2)', advance='no') char(9)
+!           write(230, '(A4)', advance='no') 'bInt'
+!           write(230, '(A7)', advance='no') '       '
+!           write(230, '(A2)', advance='no') char(9)
 
            ! print the total integral column header
-           write(230, '(A4)', advance='no') 'tInt'
-           write(230, '(A1)') ''
+!           write(230, '(A4)', advance='no') 'tInt'
+!           write(230, '(A1)') ''
         endif
 
 
