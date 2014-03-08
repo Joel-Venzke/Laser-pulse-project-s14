@@ -1,5 +1,5 @@
       module parameters
-      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=21)
+      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=36)
       parameter(ntet=1)   ! This will save a lot of space !!!
       parameter(zero=0.0d0,one=1.0d0,two=2.0d0,half=0.5d0,ifak=500)
       end module parameters
