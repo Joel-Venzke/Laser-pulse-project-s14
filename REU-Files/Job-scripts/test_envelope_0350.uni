@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J  test_envelope_350.nam
-#SBATCH -o  test_envelope_350.log
-#SBATCH -e  test_envelope_350.err
+#SBATCH -J  test_envelope_0350.nam
+#SBATCH -o  test_envelope_0350.log
+#SBATCH -e  test_envelope_0350.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
 #SBATCH -t 48:00:00
@@ -10,7 +10,7 @@ export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
 
 cd /home1/02603/jemmons/physics-capstone/REU-Files/Job-scripts
-./test_envelope_350.sh
+./test_envelope_0350.sh
 
 #rm field.out
 #rm wfn.out

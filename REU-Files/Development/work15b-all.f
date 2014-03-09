@@ -1136,7 +1136,7 @@ C      do nen = 1,nerg
 C        ener(nen) = ener(nen-1) + de
 C      end do
 C
-c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+!c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
 C      do 390 nen = 1,nerg
 C        ep = 2.0d0*ener(nen)
 C        do 290 jj=0,nc
@@ -1160,10 +1160,10 @@ C          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
 C290           continue
 C9901            format(f9.5,3d15.5)
 C390                continue
-c$omp end parallel do
+!c$omp end parallel do
         
-c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
-c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
+!c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
+!c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
 c---- beta parameters
 C      do 490 nen = 1,nerg
 C        am = dble(mfixed)
@@ -1193,7 +1193,7 @@ C        endif
 C        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
 C        dcrall(nen) = dcr
 C490       continue
-c$omp end parallel do
+!c$omp end parallel do
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!

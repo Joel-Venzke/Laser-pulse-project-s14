@@ -3,8 +3,8 @@
 TEST_DESCRIPTION=Env-test-0350
 COMPILED_CODE=work15b-all
 
-PARAMETER_1=(s g t)
-PARAMETER_2=(s g t)
+PARAMETER_1=(\'s\' \'g\' \'t\')
+PARAMETER_2=(\'s\' \'g\' \'t\')
 NUMERICS_INPUT=tdse-40cycle.inp
 
 CODE_DIR=/home1/02603/jemmons/physics-capstone/REU-Files/Development
