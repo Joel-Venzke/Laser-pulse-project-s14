@@ -1,5 +1,5 @@
       module parameters
-      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=21)
+      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=36)
       parameter(ntet=1)   ! This will save a lot of space !!!
       parameter(zero=0.0d0,one=1.0d0,two=2.0d0,half=0.5d0,ifak=500)
       end module parameters
@@ -445,6 +445,8 @@ C*****end of propagation
  
       call system_clock(itime_start,itime)
       call intermediate_output(k)
+
+
 
       call dstrm
       call system_clock(itime_end)
@@ -1118,80 +1120,80 @@ C     [X] make code print at nprint intervals
 !!!!!!!!!!dstrm code!!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-      ncu = nc
-      nrp1 = nrp+1
-
-      dm = 0.d0
-      ener(0) = emin-de
-      rpe(1) = 0.d0
-      rtp(1) = 0.d0
-      
-      do 990 i = 2,nrp1
-        rtp(i) = rp(i-1)
-990       continue        
-
-      do nen = 1,nerg
-        ener(nen) = ener(nen-1) + de
-      end do
-
-c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
-      do 390 nen = 1,nerg
-        ep = 2.0d0*ener(nen)
-        do 290 jj=0,nc
-          call dwavekb(jj,ep,phse,dw)         
-          phall(nen,jj) = phse
-          do 119 i=2,nrp1
-            rpe(i)=dw(i-1)              
-119               continue
-          do 129 i=1,ngob
-            call parinv(x(i),rtp,rpe,nrp1,rg)
-            wr(i+1) = rg*dreal(q(i,jj))
-            wi(i+1) = rg*dimag(q(i,jj))
-129               continue
-          call arsimd(ngob1,h,wr,rtr)
-          call arsimd(ngob1,h,wi,rti)
-          tint(jj,nen) = dcmplx(rtr,rti)
+C      ncu = nc
+C      nrp1 = nrp+1
+C
+C      dm = 0.d0
+C      ener(0) = emin-de
+C      rpe(1) = 0.d0
+C      rtp(1) = 0.d0
+C      
+C      do 990 i = 2,nrp1
+C        rtp(i) = rp(i-1)
+C990       continue        
+C
+C      do nen = 1,nerg
+C        ener(nen) = ener(nen-1) + de
+C      end do
+C
+!c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+C      do 390 nen = 1,nerg
+C        ep = 2.0d0*ener(nen)
+C        do 290 jj=0,nc
+C          call dwavekb(jj,ep,phse,dw)         
+C          phall(nen,jj) = phse
+C          do 119 i=2,nrp1
+C            rpe(i)=dw(i-1)              
+C119               continue
+C          do 129 i=1,ngob
+C            call parinv(x(i),rtp,rpe,nrp1,rg)
+C            wr(i+1) = rg*dreal(q(i,jj))
+C            wi(i+1) = rg*dimag(q(i,jj))
+C129               continue
+C          call arsimd(ngob1,h,wr,rtr)
+C          call arsimd(ngob1,h,wi,rti)
+C          tint(jj,nen) = dcmplx(rtr,rti)
 c---- this is for angular distribution:
-          if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
+C          if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
 c----------------------------------------------------------------------
-          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
-290           continue
-9901            format(f9.5,3d15.5)
-390                continue
-c$omp end parallel do
+C          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
+C290           continue
+C9901            format(f9.5,3d15.5)
+C390                continue
+!c$omp end parallel do
         
-c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
-c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
+!c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
+!c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
 c---- beta parameters
-      do 490 nen = 1,nerg
-        am = dble(mfixed)
-        if (key4.gt.1) then
-         do 259 lam=0,min(2*nc,20)
-          be = dcmplx(0.d0,0.d0)
-          rlam = dble(lam)
-          do 249 j1 = 0,nc
-            j2min = abs(j1-lam)
-            j2max = min(nc,j1+lam)
-            do 239 j2 = j2min,j2max,2
-              rj1 = dble(j1)
-              rj2 = dble(j2)       
-              call clegor(2*j1,2*lam,2*j2,2*mfixed,0,2*mfixed,cgdd,ier)
-              aw = dsqrt((2.d0*rj1+1.d0)/(2.d0*rj2+1.d0))
-     >            *clb(j1,lam,j2)*cgdd
-              rph = phall(nen,j1)-phall(nen,j2)
-              ct1 = (0.d0,1.d0)**(j2-j1) * cdexp(dcmplx(0.d0,rph)) 
-     >            *tint(j1,nen)*dconjg(tint(j2,nen))*dcmplx(aw,0.d0)
-              be = be + ct1
-239                   continue
-249                          continue
-          bet(lam) = dreal(be)*(2.d0*rlam+1.d0)/dm(nen)  
-          betall(nen,lam) = bet(lam)
-259            continue 
-        endif
-        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
-        dcrall(nen) = dcr
-490       continue
-c$omp end parallel do
+C      do 490 nen = 1,nerg
+C        am = dble(mfixed)
+C        if (key4.gt.1) then
+C         do 259 lam=0,min(2*nc,20)
+C          be = dcmplx(0.d0,0.d0)
+C          rlam = dble(lam)
+C          do 249 j1 = 0,nc
+C            j2min = abs(j1-lam)
+C            j2max = min(nc,j1+lam)
+C            do 239 j2 = j2min,j2max,2
+C              rj1 = dble(j1)
+C              rj2 = dble(j2)       
+C              call clegor(2*j1,2*lam,2*j2,2*mfixed,0,2*mfixed,cgdd,ier)
+C              aw = dsqrt((2.d0*rj1+1.d0)/(2.d0*rj2+1.d0))
+C     >            *clb(j1,lam,j2)*cgdd
+C              rph = phall(nen,j1)-phall(nen,j2)
+C              ct1 = (0.d0,1.d0)**(j2-j1) * cdexp(dcmplx(0.d0,rph)) 
+C     >            *tint(j1,nen)*dconjg(tint(j2,nen))*dcmplx(aw,0.d0)
+C              be = be + ct1
+C239                   continue
+C249                          continue
+C          bet(lam) = dreal(be)*(2.d0*rlam+1.d0)/dm(nen)  
+C          betall(nen,lam) = bet(lam)
+C259            continue 
+C        endif
+C        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
+C        dcrall(nen) = dcr
+C490       continue
+!c$omp end parallel do
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1272,6 +1274,10 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
               write(230, '(A1)', advance='no') char(9)
            end do
 
+           write(230, '(A2)', advance='no') 'n+'
+           write(230, '(A10)', advance='no') '        '
+           write(230, '(A1)', advance='no') char(9)
+
            ! print the sum of energies column header
            write(230, '(A4)', advance='no') 'oInt'
            write(230, '(A7)', advance='no') '       '
@@ -1279,13 +1285,15 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 
 ! we do not need to calculate the betas in the middle of the run
            ! print the betas integral column header
-!           write(230, '(A4)', advance='no') 'bInt'
-!           write(230, '(A7)', advance='no') '       '
-!           write(230, '(A2)', advance='no') char(9)
+
+           write(230, '(A4)', advance='no') 'bInt'
+           write(230, '(A7)', advance='no') '       '
+
+           write(230, '(A2)', advance='no') char(9)
 
            ! print the total integral column header
-!           write(230, '(A4)', advance='no') 'tInt'
-!           write(230, '(A1)') ''
+           write(230, '(A4)', advance='no') 'tInt'
+           write(230, '(A1)') ''
         endif
 
 
@@ -1295,7 +1303,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 !       print the square of the overlap (i.e. probability of state)
         do i = 1, nf
            write(230, '(A1)', advance='no') char(9)
-           write(230,'(E12.6)', advance='no') overlap_output(i)
+           write(230,'(E12.5)', advance='no') overlap_output(i)
         end do
 
 !       calculate and print the probability of being in n=1, n=2, ...
@@ -1315,8 +1323,14 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         
         do i = 1, max_n
            write(230, '(A1)', advance='no') char(9)
-           write(230, '(E12.6)', advance='no') energy_level_output(i)
+           write(230, '(E12.5)', advance='no') energy_level_output(i)
         end do
+
+
+        write(230, '(A1)', advance='no') char(9)
+        write(230, '(E12.5)', advance='no') (2.5 * 
+     >        energy_level_output(max_n))
+
 
 !       calculated and print the sum of all energy levels
         energy_sum = 0.0
@@ -1325,28 +1339,31 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         end do
 
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') energy_sum
+        write(230,'(E12.5)', advance='no') energy_sum
 
 !       calculate and print ionization integral
-        betas_sum = 0.0
-        do nen=1, nerg, 1
-           if (nen < nerg) then
-              betas_sum = betas_sum + (sqrt(2.d0*ener(nen))*dcrall(nen))
-           else
-             betas_sum=betas_sum+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
-           endif
-        end do
+        betas_sum = 1.0 - energy_sum - 2.5*energy_level_output(max_n)
+C        do nen=1, nerg, 1
+C           if (nen < nerg) then
+C              betas_sum = betas_sum + (sqrt(2.d0*ener(nen))*dcrall(nen))
+C           else
+C             betas_sum=betas_sum+(.5*(sqrt(2.d0*ener(nen))*dcrall(nen)))
+C           endif
+C        end do
 !       tie up loose ends of integration
-        betas_sum= betas_sum*(ener(2)-ener(1))
-        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
-     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
+C        betas_sum= betas_sum*(ener(2)-ener(1))
+C        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
+C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
+
 
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') betas_sum
+        write(230,'(E12.5)', advance='no') betas_sum
+
 
 !       print the sum of ionization and each orbital (should be 1)
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') betas_sum + energy_sum 
+        write(230,'(E12.5)', advance='no') betas_sum + energy_sum
+     >  + 2.5*energy_level_output(max_n)
 !       advnace to the next line
         write(230, '(A1)') ''
 
