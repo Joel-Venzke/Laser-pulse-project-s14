@@ -137,11 +137,10 @@
       end module pulseparams
 
       module fieldFT
-C     25000 is hardcoded; should be replaced with a ndim or
-C     or some other variable for dynamical allocation
       integer n, nomega
       double precision deltat, wmin, wmax, wdel, gsin, gcos
-      double precision dimension, w(25000),greal(25000),gimag(25000)
+      double precision, allocatable :: w(:),greal(:)
+      double precision, allocatable ::  gimag(:)
       end module fieldFT
       
       PROGRAM NE1
@@ -2020,6 +2019,7 @@ C***************************************************************
       use in1
       use realarray1
       use pulseparams
+      use parameters
       use fieldFT
 
       implicit none
@@ -2098,6 +2098,9 @@ C***************************************************************
      >         envelope2(0:ntfinal),field1(0:ntfinal),
      >         field2(0:ntfinal),fieldtot(0:ntfinal),
      >         f(0:ntfinal))
+
+      allocate(w(nxmax+1000), greal(nxmax+1000),
+     >         gimag(nxmax+1000))
 !
 !   define the time array and the zeros of the envelope function
       envelope1 = 0.d0
@@ -2251,13 +2254,14 @@ C***************************************************************
 
 !     write the fourier transform to a file
       do 51 n=1,nomega
-        write(1030,1011) n,w(n),greal(n),gimag(n),
-     >                sqrt(greal(n)**2+gimag(n)**2)
+        write(100,1011) n,w(n),greal(n),gimag(n),
+     >               sqrt(greal(n)**2+gimag(n)**2)
 51    continue
 
 1011  format(i10,1p10e16.8)
 
       call flush(90)
+      call flush(100)
       return
       end
 
