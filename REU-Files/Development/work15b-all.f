@@ -1,5 +1,5 @@
       module parameters
-      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=21)
+      parameter(nxmax=500200,ncmax=99,nenmax=10000,nfmax=36)
       parameter(ntet=1)   ! This will save a lot of space !!!
       parameter(zero=0.0d0,one=1.0d0,two=2.0d0,half=0.5d0,ifak=500)
       end module parameters
@@ -1281,8 +1281,10 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 
 ! we do not need to calculate the betas in the middle of the run
            ! print the betas integral column header
+
 !           write(230, '(A4)', advance='no') 'bInt'
 !           write(230, '(A7)', advance='no') '       '
+
            write(230, '(A2)', advance='no') char(9)
 
            ! print the total integral column header
@@ -1297,7 +1299,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 !       print the square of the overlap (i.e. probability of state)
         do i = 1, nf
            write(230, '(A1)', advance='no') char(9)
-           write(230,'(E12.6)', advance='no') overlap_output(i)
+           write(230,'(E12.5)', advance='no') overlap_output(i)
         end do
 
 !       calculate and print the probability of being in n=1, n=2, ...
@@ -1317,7 +1319,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         
         do i = 1, max_n
            write(230, '(A1)', advance='no') char(9)
-           write(230, '(E12.6)', advance='no') energy_level_output(i)
+           write(230, '(E12.5)', advance='no') energy_level_output(i)
         end do
 
 !       calculated and print the sum of all energy levels
@@ -1327,7 +1329,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         end do
 
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') energy_sum
+        write(230,'(E12.5)', advance='no') energy_sum
 
 !       calculate and print ionization integral
         betas_sum = 0.0
@@ -1343,12 +1345,14 @@ C        betas_sum= betas_sum*(ener(2)-ener(1))
 C        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
 C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
 
+
 C        write(230,'(A1)', advance='no') char(9)
 C        write(230,'(E12.6)', advance='no') betas_sum
 
+
 !       print the sum of ionization and each orbital (should be 1)
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.6)', advance='no') betas_sum + energy_sum 
+        write(230,'(E12.5)', advance='no') betas_sum + energy_sum 
 !       advnace to the next line
         write(230, '(A1)') ''
 
