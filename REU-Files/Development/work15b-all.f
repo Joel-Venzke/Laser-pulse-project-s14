@@ -137,11 +137,10 @@
       end module pulseparams
 
       module fieldFT
-C     25000 is hardcoded; should be replaced with a ndim or
-C     or some other variable for dynamical allocation
       integer n, nomega
       double precision deltat, wmin, wmax, wdel, gsin, gcos
-      double precision dimension, w(25000),greal(25000),gimag(25000)
+      double precision, allocatable :: w(:),greal(:)
+      double precision, allocatable ::  gimag(:)
       end module fieldFT
       
       PROGRAM NE1
@@ -1136,7 +1135,7 @@ C      do nen = 1,nerg
 C        ener(nen) = ener(nen-1) + de
 C      end do
 C
-c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+!c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
 C      do 390 nen = 1,nerg
 C        ep = 2.0d0*ener(nen)
 C        do 290 jj=0,nc
@@ -1160,10 +1159,10 @@ C          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
 C290           continue
 C9901            format(f9.5,3d15.5)
 C390                continue
-c$omp end parallel do
+!c$omp end parallel do
         
-c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
-c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
+!c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
+!c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
 c---- beta parameters
 C      do 490 nen = 1,nerg
 C        am = dble(mfixed)
@@ -1193,7 +1192,7 @@ C        endif
 C        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
 C        dcrall(nen) = dcr
 C490       continue
-c$omp end parallel do
+!c$omp end parallel do
 
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1274,6 +1273,10 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
               write(230, '(A1)', advance='no') char(9)
            end do
 
+           write(230, '(A2)', advance='no') 'n+'
+           write(230, '(A10)', advance='no') '        '
+           write(230, '(A1)', advance='no') char(9)
+
            ! print the sum of energies column header
            write(230, '(A4)', advance='no') 'oInt'
            write(230, '(A7)', advance='no') '       '
@@ -1282,8 +1285,8 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 ! we do not need to calculate the betas in the middle of the run
            ! print the betas integral column header
 
-!           write(230, '(A4)', advance='no') 'bInt'
-!           write(230, '(A7)', advance='no') '       '
+           write(230, '(A4)', advance='no') 'bInt'
+           write(230, '(A7)', advance='no') '       '
 
            write(230, '(A2)', advance='no') char(9)
 
@@ -1322,6 +1325,12 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(E12.5)', advance='no') energy_level_output(i)
         end do
 
+
+        write(230, '(A1)', advance='no') char(9)
+        write(230, '(E12.5)', advance='no') (2.5 * 
+     >        energy_level_output(max_n))
+
+
 !       calculated and print the sum of all energy levels
         energy_sum = 0.0
         do i = 1, max_n
@@ -1332,7 +1341,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         write(230,'(E12.5)', advance='no') energy_sum
 
 !       calculate and print ionization integral
-        betas_sum = 0.0
+        betas_sum = 1.0 - energy_sum - 2.5*energy_level_output(max_n)
 C        do nen=1, nerg, 1
 C           if (nen < nerg) then
 C              betas_sum = betas_sum + (sqrt(2.d0*ener(nen))*dcrall(nen))
@@ -1346,13 +1355,14 @@ C        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
 C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
 
 
-C        write(230,'(A1)', advance='no') char(9)
-C        write(230,'(E12.6)', advance='no') betas_sum
+        write(230,'(A1)', advance='no') char(9)
+        write(230,'(E12.5)', advance='no') betas_sum
 
 
 !       print the sum of ionization and each orbital (should be 1)
         write(230,'(A1)', advance='no') char(9)
-        write(230,'(E12.5)', advance='no') betas_sum + energy_sum 
+        write(230,'(E12.5)', advance='no') betas_sum + energy_sum
+     >  + 2.5*energy_level_output(max_n)
 !       advnace to the next line
         write(230, '(A1)') ''
 
@@ -2009,6 +2019,7 @@ C***************************************************************
       use in1
       use realarray1
       use pulseparams
+      use parameters
       use fieldFT
 
       implicit none
@@ -2087,6 +2098,9 @@ C***************************************************************
      >         envelope2(0:ntfinal),field1(0:ntfinal),
      >         field2(0:ntfinal),fieldtot(0:ntfinal),
      >         f(0:ntfinal))
+
+      allocate(w(nxmax+1000), greal(nxmax+1000),
+     >         gimag(nxmax+1000))
 !
 !   define the time array and the zeros of the envelope function
       envelope1 = 0.d0
@@ -2240,13 +2254,14 @@ C***************************************************************
 
 !     write the fourier transform to a file
       do 51 n=1,nomega
-        write(1030,1011) n,w(n),greal(n),gimag(n),
-     >                sqrt(greal(n)**2+gimag(n)**2)
+        write(100,1011) n,w(n),greal(n),gimag(n),
+     >               sqrt(greal(n)**2+gimag(n)**2)
 51    continue
 
 1011  format(i10,1p10e16.8)
 
       call flush(90)
+      call flush(100)
       return
       end
 
