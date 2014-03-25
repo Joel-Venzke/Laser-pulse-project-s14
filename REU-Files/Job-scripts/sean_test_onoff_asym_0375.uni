@@ -9,7 +9,7 @@
 export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
 
-cd /home1/02603/jemmons/physics-capstone/REU-Files/Job-scripts
+cd /home1/02869/smbuczek/physics-capstone/REU-Files/Job-scripts
 ./test_onoff_asym_0375.sh
 
 #rm field.out

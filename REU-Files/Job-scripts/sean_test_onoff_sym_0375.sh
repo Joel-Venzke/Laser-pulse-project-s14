@@ -7,8 +7,8 @@ PARAMETER_1=(2 3 4 7 10 20)
 PARAMETER_2=(s t)
 NUMERICS_INPUT=tdse-40cycle.inp
 
-CODE_DIR=/home1/02603/jemmons/physics-capstone/REU-Files/Development
-WORK_DIR=/work/02603/jemmons
+CODE_DIR=/home1/02869/smbuczek/physics-capstone/REU-Files/Development
+WORK_DIR=/work/02869/smbuczek
 
 # copy code to the work dir
 mkdir $WORK_DIR/$TEST_DESCRIPTION-src
