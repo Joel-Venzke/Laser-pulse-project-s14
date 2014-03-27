@@ -3,7 +3,9 @@
 TEST_DESCRIPTION=Onoff-sym-test-0350
 COMPILED_CODE=work15b-all
 
-PARAMETER_1=(2 3 4 7 10 20)
+# rerunning with the last few trials because code did not finish
+#PARAMETER_1=(2 3 4 7 10 20)
+PARAMETER_1=(7 10 20)
 PARAMETER_2=(s t)
 NUMERICS_INPUT=tdse-40cycle.inp
 

@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J  test_onoff_sym_0375.nam
-#SBATCH -o  test_onoff_sym_0375.log
-#SBATCH -e  test_onoff_sym_0375.err
+#SBATCH -J  john_test_onoff_sym_0375.nam
+#SBATCH -o  john_test_onoff_sym_0375.log
+#SBATCH -e  john_test_onoff_sym_0375.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
 #SBATCH -t 48:00:00
@@ -10,7 +10,7 @@ export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
 
 cd /home1/02603/jemmons/physics-capstone/REU-Files/Job-scripts
-./test_onoff_sym_0375.sh
+./john_test_onoff_sym_0375.sh
 
 #rm field.out
 #rm wfn.out
