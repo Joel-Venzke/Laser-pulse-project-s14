@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J  sean_test_envelope_0375.nam
+#SBATCH -o  sean_test_envelope_0375.log
+#SBATCH -e  sean_test_envelope_0375.err
+#SBATCH -N  1  -n  1
+#SBATCH -p  normal
+#SBATCH -t 48:00:00
+
+export OMP_NUM_THREADS=16
+export KMP_STACKSIZE=16m
+
+cd /home1/02869/smbuczek/physics-capstone/REU-Files/Job-scripts
+./sean_test_envelope_0375.sh
+
+#rm field.out
+#rm wfn.out
+

@@ -1,10 +1,12 @@
 #!/bin/bash
 
-TEST_DESCRIPTION=Env-test-0375
+TEST_DESCRIPTION=Onoff-sym-test-0350
 COMPILED_CODE=work15b-all
 
-PARAMETER_1=(\'s\' \'g\' \'t\')
-PARAMETER_2=(\'s\' \'g\' \'t\')
+# rerunning with the last few trials because code did not finish
+#PARAMETER_1=(2 3 4 7 10 20)
+PARAMETER_1=(7 10 20)
+PARAMETER_2=(s t)
 NUMERICS_INPUT=tdse-40cycle.inp
 
 CODE_DIR=/home1/02603/jemmons/physics-capstone/REU-Files/Development
@@ -24,15 +26,18 @@ cd ..
 for p1 in ${PARAMETER_1[*]}; do
     for p2 in ${PARAMETER_2[*]}; do	
 
-	mkdir $WORK_DIR/$TEST_DESCRIPTION-$p1-$p2
-	cd $WORK_DIR/$TEST_DESCRIPTION-$p1-$p2
+# compute the number of cycles for the plateau from the ramp up/down
+	let "plat = 40 - (2 * $p1)"
+
+	mkdir $WORK_DIR/$TEST_DESCRIPTION-$p1-$plat-$p1-$p2-$p2
+	cd $WORK_DIR/$TEST_DESCRIPTION-$p1-$plat-$p1-$p2-$p2
 		
 # copy and create input files
 	cp $local_code_path/$NUMERICS_INPUT ./tdse.inp 
-	python $CODE_DIR/input_generator.py --ee1=1.0676d-1 --ww1=0.375d0 --n1up=2 --n1plat=36 --n1down=2 --s1up=$p1 --s1down=$p2 > pulse.inp
+	python $CODE_DIR/input_generator.py --ee1=1.0676d-1 --ww1=0.350d0 --n1up=$p1 --n1plat=$plat --n1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
 
 # run the code 
-	$local_code_path/$COMPILED_CODE > $COMPILED_CODE-$p1-$p2.log 
+	$local_code_path/$COMPILED_CODE > $COMPILED_CODE-$p1-$plat-$p1-$p2-$p2.log 
 
 # go up a dir and run the next test
 	cd ..
