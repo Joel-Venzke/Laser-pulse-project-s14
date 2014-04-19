@@ -1,0 +1,2 @@
+ &pulse1  shape1down = 's', shape1up = 's', ww1 = 0.37625d0, ee1 = 0.2669d-1, n1plat = 36, n1up = 2, n1down = 2 /
+ &pulse2  alph2=0.0d0 /
