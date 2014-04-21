@@ -1,10 +1,13 @@
 #!/bin/bash
 
-TEST_DESCRIPTION=Env-test-0350-cep1-90
+TEST_DESCRIPTION=1.0676d-1-Env-test-0350-cep1-90
 COMPILED_CODE=work15b-all
 
-PARAMETER_1=(s g t)
-PARAMETER_2=(s g t)
+#Have to rerun one trial
+#PARAMETER_1=(s g t)
+PARAMETER_1=(t)
+#PARAMETER_2=(s g t)
+PARAMETER_2=(t)
 NUMERICS_INPUT=tdse-40cycle.inp
 
 CODE_DIR=/home1/02869/smbuczek/physics-capstone/REU-Files/Development
@@ -29,7 +32,7 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 # copy and create input files
 	cp $local_code_path/$NUMERICS_INPUT ./tdse.inp 
-	python $CODE_DIR/input_generator.py --cep1=90.0d0 --ee1=1.0676d-1 --ww1=0.350d0 --n1up=2 --n1plat=36 --n1down=2 --s1up=\'$p1\' --s1down=\'$p2\' > pulse.inp
+	python $CODE_DIR/input_generator.py --cept1=90.0d0 --ee1=1.0676d-1 --ww1=0.350d0 --n1up=2 --n1plat=36 --n1down=2 --s1up=\'$p1\' --s1down=\'$p2\' > pulse.inp
 
 # run the code 
 	$local_code_path/$COMPILED_CODE > $COMPILED_CODE-$p1-$p2.log 

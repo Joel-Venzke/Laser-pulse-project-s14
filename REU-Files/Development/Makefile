@@ -1,5 +1,5 @@
 all:
-	ifort -o work15b-all -C -traceback work15b-all.f
+	ifort -o work15b-all -openmp work15b-all.f
 	rm -rf *.mod *.pyc
 
 clean:
