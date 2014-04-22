@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J  test_onoff_asym_0350.nam
+#SBATCH -o  test_onoff_asym_0350.log
+#SBATCH -e  test_onoff_asym_0350.err
+#SBATCH -N  1  -n  1
+#SBATCH -p  normal
+#SBATCH -t 48:00:00
+
+export OMP_NUM_THREADS=16
+export KMP_STACKSIZE=16m
+
+cd /home1/02869/smbuczek/physics-capstone/REU-Files/Job-scripts
+./test_onoff_asym_0350.sh
+
+#rm field.out
+#rm wfn.out
+

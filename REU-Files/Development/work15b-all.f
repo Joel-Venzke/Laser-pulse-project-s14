@@ -1257,7 +1257,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            end do
 
            ! print time step column header
-           write(230, '(A5)', advance='no') 'tStep'
+           write(230, '(A7)', advance='no') 'tStep  '
            write(230, '(A1)', advance='no') char(9) 
 
            ! print the n,l column headers
@@ -1302,7 +1302,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 
 
 !       print the timestep and space character before the data
-        write(230, '(I5.5)', advance='no') k
+        write(230, '(I7.7)', advance='no') k
 
 !       print the square of the overlap (i.e. probability of state)
         do i = 1, nf
