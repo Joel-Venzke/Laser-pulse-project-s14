@@ -1241,7 +1241,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           overlap_output(kd) = vrlp(kd)
         end do          
 
-!!!!!!!! if first run through print the column headers
+! if first run through print the column headers
         if(k .eq. 0) then
            ! find the max n level
            max_n = 0
@@ -1252,7 +1252,7 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            end do
 
            ! print time step column header
-           write(230, '(A7)', advance='no') 'tStep  '
+           write(230, '(A12)', advance='no') 'time (fs)   '
            write(230, '(A1)', advance='no') char(9) 
 
            ! print the n,l column headers
@@ -1297,7 +1297,9 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
 
 
 !       print the timestep and space character before the data
-        write(230, '(I7.7)', advance='no') k
+!       April 18th, 2014: fixed to print time in femtoseconds
+        write(230, '(E12.5)', advance='no') DBLE(k) * 
+     >        (2.418884326505E-17) * dt / (1E-15)
 
 !       print the square of the overlap (i.e. probability of state)
         do i = 1, nf
@@ -1353,7 +1355,6 @@ C        end do
 C        betas_sum= betas_sum*(ener(2)-ener(1))
 C        betas_sum= betas_sum + (ener(1)*(.5*((2*(sqrt(
 C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
-
 
         write(230,'(A1)', advance='no') char(9)
         write(230,'(E12.5)', advance='no') betas_sum
