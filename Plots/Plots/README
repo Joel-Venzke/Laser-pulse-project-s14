@@ -1,0 +1,11 @@
+The plots in this directory show the projections of the wavefunction onto the various orbitals over time. The naming scheme for the plots may not be the best, but it is consist. Below is a description for one of the files.
+
+EXAMPLE:
+c_overlap_37625_025.ps
+
+this file plots the projections (overlaps) of the 40 cycle pulse with
+	energy: .37625 a.u. or (~10.23 eV)
+	intensity: 0.25 * 10^14 W/cm^2
+
+NOTE:
+All plots use a 40 cycle pulse. The shape is 2 cycles ramp up, 36 cycle plateau, and 2 cycle ramp off. Both the ramp on and ramp off use the sin^2 envelope.
