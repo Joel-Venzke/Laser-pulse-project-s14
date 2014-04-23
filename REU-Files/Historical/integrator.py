@@ -35,4 +35,6 @@ def integrate(FILE_NAME):
 
 	return integral
 
+
 print integrate("betas.out")
+

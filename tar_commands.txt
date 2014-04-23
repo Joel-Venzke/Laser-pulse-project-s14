@@ -1,5 +1,0 @@
-### to tar up ###
-tar -zcvpf ARCHIVE.tar.gx DIR1-to-zip DIR2-to-zip ...
-
-### to untar ###
-tar -xvpzf ARCHIVE.tar.gz
