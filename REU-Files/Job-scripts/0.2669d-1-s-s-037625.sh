@@ -1,12 +1,10 @@
 #!/bin/bash
 
-TEST_DESCRIPTION=Onoff-sym-test-0375
+TEST_DESCRIPTION=0.2669d-1-s-s-037625
 COMPILED_CODE=work15b-all
 
-# rerunning because the code did not finish
-#PARAMETER_1=(2 3 4 7 10 20)
-PARAMETER_1=(7 10 20) 
-PARAMETER_2=(s t)
+PARAMETER_1=(2)
+PARAMETER_2=(s)
 NUMERICS_INPUT=tdse-40cycle.inp
 
 CODE_DIR=/home1/02603/jemmons/physics-capstone/REU-Files/Development
@@ -34,7 +32,7 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 # copy and create input files
 	cp $local_code_path/$NUMERICS_INPUT ./tdse.inp 
-	python $CODE_DIR/input_generator.py --ee1=1.0676d-1 --ww1=0.375d0 --n1up=$p1 --n1plat=$plat --n1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
+	python $CODE_DIR/input_generator.py --ee1=0.2669d-1 --ww1=0.37625d0 --n1up=$p1 --n1plat=$plat --n1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
 
 # run the code 
 	$local_code_path/$COMPILED_CODE > $COMPILED_CODE-$p1-$plat-$p1-$p2-$p2.log 
