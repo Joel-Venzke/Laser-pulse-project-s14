@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J  0444_05_s-s.nam
+#SBATCH -o  0.5338d-1-s-s-0444.log
+#SBATCH -e  0.5338d-1-s-s-0444.err
+#SBATCH -N  1  -n  1
+#SBATCH -p  normal
+#SBATCH -t  8:00:00
+
+export OMP_NUM_THREADS=16
+export KMP_STACKSIZE=16m
+
+cd /home1/02603/jemmons/physics-capstone/REU-Files/Job-scripts
+./0.5338d-1-s-s-0444.sh
+
+#rm field.out
+#rm wfn.out
+
