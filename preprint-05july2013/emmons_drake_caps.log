@@ -1,25 +1,27 @@
-This is LuaTeX, Version beta-0.76.0-2013061708 (rev 4627)  (format=lualatex 2014.3.9)  16 APR 2014 11:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.3.9)  26 APR 2014 20:00
+entering extended mode
  \write18 enabled.
+ %&-line parsing enabled.
 **emmons_drake_caps.tex
 (./emmons_drake_caps.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/revtex/revtex4-1.cls
-Document Class: revtex4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revte
-x4/ for documentation)
+Document Class: revtex4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revt
+ex4/ for documentation)
  Copyright (c) 2009 The American Physical Society.
  mailto:revtex@aps.org
  Licensed under the LPPL:
 http://www.ctan.org/tex-archive/macros/latex/base/lppl.txt
  Arthur Ogawa <arthur_ogawa at sbcglobal dot net>
  Based on work by David Carlisle <david at dcarlisle.demon.co.uk>.
-ltxutil[2010/07/25/20:33:00 4.1r utilities package (portions licensed from W. E.
- Baxter web at superscript.com)]
+ltxutil[2010/07/25/20:33:00 4.1r utilities package (portions licensed from W. E
+. Baxter web at superscript.com)]
 LaTeX Info: Redefining \@centercr on input line 308.
 Class revtex4-1 Info: Repairing broken LaTeX eqnarray on input line 358.
 \eqncolsep=\skip41
-Class revtex4-1 Info: Repairing hyperref-unfriendly LaTeX definition of \mpfootn
-ote on input line 433.
+Class revtex4-1 Info: Repairing hyperref-unfriendly LaTeX definition of \mpfoot
+note on input line 433.
 Class revtex4-1 Info: Repairing broken LateX \@sect on input line 755.
 \intertabularlinepenalty=\count79
 \@tbpen=\count80
@@ -30,8 +32,8 @@ ltxfront[2010/07/25/20:33:00 4.1r frontmatter package (AO,DPC)]
 \c@affil=\count81
 \c@collab=\count82
 \absbox=\box27
-ltxgrid[2010/07/25/20:33:00 4.1r page grid package (portions licensed from W. E.
- Baxter web at superscript.com)]
+ltxgrid[2010/07/25/20:33:00 4.1r page grid package (portions licensed from W. E
+. Baxter web at superscript.com)]
 \c@linecount=\count83
 \output@latex=\toks14
 \box@size@1=\box28
@@ -44,8 +46,8 @@ ltxgrid[2010/07/25/20:33:00 4.1r page grid package (portions licensed from W. E.
 \pagesofar=\box34
 \footsofar=\box35
 \pagegrid@col=\count84
-Class revtex4-1 Info: Overriding \@vspace, \@vspacer, \@no@pgbk, \@newline, and 
-\\  on input line 5578.
+Class revtex4-1 Info: Overriding \@vspace, \@vspacer, \@no@pgbk, \@newline, and
+ \\  on input line 5578.
 \c@part=\count85
 \c@section=\count86
 \c@subsection=\count87
@@ -65,16 +67,16 @@ Class revtex4-1 Info: Overriding \@vspace, \@vspacer, \@no@pgbk, \@newline, and
 \widetext@bot=\box40
 Class revtex4-1 Info: Selecting society aps on input line 7542.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/revtex/aps4-1.rtx
-File: aps4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for docum
-entation)
+File: aps4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for docu
+mentation)
 Class revtex4-1 Info: RevTeX society APS selected on input line 31.
 )
 Class revtex4-1 Info: Selecting journal pra on input line 7544.
 Class revtex4-1 Info: APS journal PRA selected on input line 7545.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/revtex/aps12pt4-1.rtx
-File: aps12pt4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for d
-ocumentation)
+File: aps12pt4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ for 
+documentation)
 Class revtex4-1 Info: RevTeX pointsize 12pt selected on input line 30.
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/textcase/textcase.sty
@@ -165,8 +167,8 @@ LaTeX Info: Redefining \cite on input line 694.
 Class revtex4-1 Info: Repairing natbib's \BibitemShut on input line 7549.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/revtex/revsymb4-1.sty
-Package: revsymb4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ fo
-r documentation)
+Package: revsymb4-1 2010/07/25/20:33:00 4.1r (http://publish.aps.org/revtex4/ f
+or documentation)
 LaTeX Info: Redefining \frak on input line 95.
 LaTeX Info: Redefining \Bbb on input line 111.
 LaTeX Info: Redefining \REV@mathfrak on input line 119.
@@ -209,28 +211,6 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO)
-
-
-(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX detected.
-)
-(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-
-(/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/luatex-loader.sty
-Package: luatex-loader 2010/03/09 v0.4 Lua module loader (HO)
-
-(/usr/local/texlive/2013/texmf-dist/scripts/oberdiek/oberdiek.luatex.lua))
-\pdftexcmds@toks=\toks23
-)
 \Gread@gobject=\count107
 ))
 \Gin@req@height=\dimen111
@@ -238,7 +218,8 @@ Package: luatex-loader 2010/03/09 v0.4 Lua module loader (HO)
 )
 \epsfxsize=\dimen113
 \epsfysize=\dimen114
-) (/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/color.sty
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/latexconfig/color.cfg
@@ -280,7 +261,27 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 \rotFPtop=\skip49
 \rotFPbot=\skip50
 \rot@float@box=\box44
-\rot@mess@toks=\toks24
+\rot@mess@toks=\toks23
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/subfigure/subfigure.sty
+Package: subfigure 2002/03/15 v2.1.5 subfigure package
+\subfigtopskip=\skip51
+\subfigcapskip=\skip52
+\subfigcaptopadj=\dimen121
+\subfigbottomskip=\skip53
+\subfigcapmargin=\dimen122
+\subfiglabelskip=\skip54
+\c@subfigure=\count117
+\c@lofdepth=\count118
+\c@subtable=\count119
+\c@lotdepth=\count120
+
+****************************************
+* Local config file subfigure.cfg used *
+****************************************
+(/usr/local/texlive/2013/texmf-dist/tex/latex/subfigure/subfigure.cfg)
+\subfig@top=\skip55
+\subfig@bottom=\skip56
 )
 (/usr/local/texlive/2013/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
@@ -288,24 +289,35 @@ Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
 Package: hobsub-hyperref 2012/05/28 v1.13 Bundle oberdiek, subset hyperref (HO)
 
+
 (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty
 Package: hobsub-generic 2012/05/28 v1.13 Bundle oberdiek, subset generic (HO)
 Package: hobsub 2012/05/28 v1.13 Construct package bundles (HO)
 Package hobsub Info: Skipping package `infwarerr' (already loaded).
 Package hobsub Info: Skipping package `ltxcmds' (already loaded).
-Package hobsub Info: Skipping package `ifluatex' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
-Package hobsub Info: Skipping package `ifpdf' (already loaded).
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
-Package hobsub Info: Skipping package `luatex-loader' (already loaded).
-Package hobsub Info: Skipping package `pdftexcmds' (already loaded).
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
 Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO)
-
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
+)
 Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
 Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
 )
@@ -327,14 +339,14 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 (/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
-\@linkdim=\dimen121
-\Hy@linkcounter=\count117
-\Hy@pagecounter=\count118
+\@linkdim=\dimen123
+\Hy@linkcounter=\count121
+\Hy@pagecounter=\count122
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 )
-\Hy@SavedSpaceFactor=\count119
+\Hy@SavedSpaceFactor=\count123
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -347,12 +359,12 @@ Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
 LaTeX Info: Redefining \href on input line 4952.
-\c@Hy@tempcnt=\count120
+\c@Hy@tempcnt=\count124
 LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen122
-\Fld@menulength=\count121
-\Field@Width=\dimen123
-\Fld@charsize=\dimen124
+\XeTeXLinkMargin=\dimen124
+\Fld@menulength=\count125
+\Field@Width=\dimen125
+\Fld@charsize=\dimen126
 Package hyperref Info: Hyper figures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
@@ -362,440 +374,574 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count122
-\c@Item=\count123
-\c@Hfootnote=\count124
+\Hy@abspage=\count126
+\c@Item=\count127
+\c@Hfootnote=\count128
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count125
-\c@bookmark@seq@number=\count126
+\Fld@listcount=\count129
+\c@bookmark@seq@number=\count130
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 28
-2.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+82.
 )
-\Hy@SectionHShift=\skip51
+\Hy@SectionHShift=\skip57
 )
-(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/epstopdf.sty
-Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
 
-(/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package hyperref Warning: Option `bookmarks' has already been used,
+(hyperref)                setting the option has no effect on input line 36.
+
+Package hyperref Info: Option `unicode' set `false' on input line 36.
+Package hyperref Info: Option `pdftoolbar' set `true' on input line 36.
+Package hyperref Info: Option `pdfmenubar' set `true' on input line 36.
+Package hyperref Info: Option `pdffitwindow' set `false' on input line 36.
+Package hyperref Info: Option `pdfnewwindow' set `true' on input line 36.
+Package hyperref Info: Option `colorlinks' set `true' on input line 36.
+Class revtex4-1 Info: Patching LaTeX tabular. on input line 51.
+Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 51.
+
+Class revtex4-1 Info: cite was not loaded (OK!) on input line 51.
+Class revtex4-1 Info: mcite was not loaded (OK!) on input line 51.
+Class revtex4-1 Info: multicol was not loaded (OK!) on input line 51.
+(./emmons_drake_caps.aux
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+
+LaTeX Warning: Label `fig:c-detune' multiply defined.
+
+)
+\openout1 = `emmons_drake_caps.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
+LaTeX Font Info:    ... okay on input line 51.
+ (/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count131
+\scratchdimen=\dimen127
+\scratchbox=\box45
+\nofMPsegments=\count132
+\nofMParguments=\count133
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count134
+\MPscratchDim=\dimen128
+\MPnumerator=\count135
+\makeMPintoPDFobject=\count136
+\everyMPtoPDFconversion=\toks25
+) (/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 )
 Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPEG
-,.JBIG2,.JB2,.eps]
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-
-)))
-
-Package hyperref Warning: Option `bookmarks' has already been used,
-(hyperref)                setting the option has no effect on input line 39.
-
-Package hyperref Info: Option `unicode' set `false' on input line 39.
-Package hyperref Info: Option `pdftoolbar' set `false' on input line 39.
-Package hyperref Info: Option `pdfmenubar' set `false' on input line 39.
-Package hyperref Info: Option `pdffitwindow' set `false' on input line 39.
-Package hyperref Info: Option `pdfnewwindow' set `true' on input line 39.
-Package hyperref Info: Option `colorlinks' set `true' on input line 39.
-Class revtex4-1 Info: Patching LaTeX tabular. on input line 60.
-Class revtex4-1 Info: Robustifying \LaTeX's \boldmath command on input line 60.
-Class revtex4-1 Info: cite was not loaded (OK!) on input line 60.
-Class revtex4-1 Info: mcite was not loaded (OK!) on input line 60.
-Class revtex4-1 Info: multicol was not loaded (OK!) on input line 60.
-(./emmons_drake_caps.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-
-(/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count127
-\scratchdimen=\dimen125
-\scratchbox=\box45
-\nofMPsegments=\count128
-\nofMParguments=\count129
-\everyMPshowfont=\toks25
-\MPscratchCnt=\count130
-\MPscratchDim=\dimen126
-\MPnumerator=\count131
-\makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks26
-)
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
 \AtBeginShipoutBox=\box46
-Package hyperref Info: Link coloring ON on input line 60.
- (/usr/local/texlive/2013/texmf-dist/tex/latex/hyperref/nameref.sty
+Package hyperref Info: Link coloring ON on input line 51.
+
+(/usr/local/texlive/2013/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 (/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count133
+\c@section@level=\count137
 )
-LaTeX Info: Redefining \ref on input line 60.
-LaTeX Info: Redefining \pageref on input line 60.
-LaTeX Info: Redefining \nameref on input line 60.
+LaTeX Info: Redefining \ref on input line 51.
+LaTeX Info: Redefining \pageref on input line 51.
+LaTeX Info: Redefining \nameref on input line 51.
 
 (./emmons_drake_caps.out) (./emmons_drake_caps.out)
 \@outlinefile=\write4
-Class revtex4-1 Info: Taking \maketitle back from hyperref on input line 60.
+\openout4 = `emmons_drake_caps.out'.
+
+Class revtex4-1 Info: Taking \maketitle back from hyperref on input line 51.
+\openout3 = `emmons_drake_capsNotes.bib'.
 
 
-Class revtex4-1 Warning: If you want your keywords to appear in your output, use
- document class option showkeys.
+
+Package natbib Warning: Citation `PhysRevA.87.013405' on page 1 undefined on in
+put line 80.
 
 
-Package natbib Warning: Citation `PhysRevA.87.013405' on page 1 undefined on inp
-ut line 91.
+Package natbib Warning: Citation `PhysRevA.87.013421' on page 1 undefined on in
+put line 80.
 
 
-Package natbib Warning: Citation `PhysRevA.87.013421' on page 1 undefined on inp
-ut line 91.
+Package natbib Warning: Citation `PhysRevA.87.043405' on page 1 undefined on in
+put line 80.
 
 
-Package natbib Warning: Citation `PhysRevA.87.043405' on page 1 undefined on inp
-ut line 91.
+Package natbib Warning: Citation `PhysRevA.87.043411' on page 1 undefined on in
+put line 80.
 
 
-Package natbib Warning: Citation `PhysRevA.87.043411' on page 1 undefined on inp
-ut line 91.
+Package natbib Warning: Citation `PhysRevA.87.053411' on page 1 undefined on in
+put line 80.
 
 
-Package natbib Warning: Citation `PhysRevA.87.053411' on page 1 undefined on inp
-ut line 91.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on in
+put line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on inp
-ut line 93.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on in
+put line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on inp
-ut line 93.
+Package natbib Warning: Citation `PhysRevA.80.033409' on page 1 undefined on in
+put line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.80.033409' on page 1 undefined on inp
-ut line 93.
+Package natbib Warning: Citation `PhysRevA.81.043408' on page 1 undefined on in
+put line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.81.043408' on page 1 undefined on inp
-ut line 93.
+Package natbib Warning: Citation `PhysRevA.60.3125' on page 1 undefined on inpu
+t line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.60.3125' on page 1 undefined on input
- line 94.
+Package natbib Warning: Citation `Pullen:11' on page 1 undefined on input line 
+82.
 
 
-Package natbib Warning: Citation `Pullen:11' on page 1 undefined on input line 9
-4.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on in
+put line 82.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 1 undefined on inp
-ut line 94.
-
-
-Underfull \hbox (badness 1082) in paragraph at lines 93--95
+Underfull \hbox (badness 1082) in paragraph at lines 82--83
 \OT1/cmr/m/n/12 tioned above was re-cently in-tro-duced by
  []
 
 
-Underfull \hbox (badness 1735) in paragraph at lines 93--95
-\OT1/cmr/m/n/12 dependent Schrodinger equa-tion (TDSE).
+Underfull \hbox (badness 1852) in paragraph at lines 82--83
+\OT1/cmr/m/n/12 dependent Schr^^?odinger equa-tion (TDSE).
  []
 
 [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on inp
-ut line 96.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on in
+put line 84.
 
 
-Package natbib Warning: Citation `PhysRev.100.703' on page 2 undefined on input 
-line 96.
+Package natbib Warning: Citation `PhysRev.100.703' on page 2 undefined on input
+ line 84.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 97.
+LaTeX Font Info:    Try loading font information for U+msa on input line 84.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 97.
+LaTeX Font Info:    Try loading font information for U+msb on input line 84.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on inp
-ut line 100.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on in
+put line 86.
 
 
-Package natbib Warning: Citation `otherpapers' on page 2 undefined on input line
- 100.
+Package natbib Warning: Citation `otherpapers' on page 2 undefined on input lin
+e 86.
 
 
-Package natbib Warning: Citation `PhysRevA.81.043408' on page 2 undefined on inp
-ut line 106.
+Package natbib Warning: Citation `PhysRevA.81.043408' on page 2 undefined on in
+put line 91.
 
 
-Package natbib Warning: Citation `PhysRevA.60.3125' on page 2 undefined on input
- line 106.
-
-
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on inp
-ut line 111.
-
-
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 2 undefined on inp
-ut line 116.
+Package natbib Warning: Citation `PhysRevA.60.3125' on page 2 undefined on inpu
+t line 91.
 
 [2]
+
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on in
+put line 96.
+
+
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on in
+put line 99.
+
 Package epstopdf Info: Source file: <figure_one-mod.eps>
 (epstopdf)                    date: 2013-07-04 03:15:09
 (epstopdf)                    size: 1573019 bytes
 (epstopdf)             Output file: <figure_one-mod-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:52
+(epstopdf)                    date: 2014-04-26 18:43:31
 (epstopdf)                    size: 263265 bytes
-(epstopdf)             Command: <epstopdf --outfile=figure_one-mod-eps-converted
--to.pdf figure_one-mod.eps>
-(epstopdf)             \includegraphics on input line 120.
+(epstopdf)             Command: <epstopdf --outfile=figure_one-mod-eps-converte
+d-to.pdf figure_one-mod.eps>
+(epstopdf)             \includegraphics on input line 104.
 Package epstopdf Info: Output file is already uptodate.
- <figure_one-mod-eps-converted-to.pdf, id=71, 908.39375pt x 687.56876pt>
+<figure_one-mod-eps-converted-to.pdf, id=70, 908.39375pt x 687.56876pt>
 File: figure_one-mod-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figure_one-mod-eps-converted-to.pdf>
-Package pdftex.def Info: figure_one-mod-eps-converted-to.pdf used on input line 
-120.
+Package pdftex.def Info: figure_one-mod-eps-converted-to.pdf used on input line
+ 104.
 (pdftex.def)             Requested size: 229.32257pt x 173.57039pt.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on inp
-ut line 123.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on in
+put line 106.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on inp
-ut line 123.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on in
+put line 106.
 
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on inp
-ut line 127.
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on in
+put line 110.
 
 
-Package natbib Warning: Citation `PhysRevA.80.033409' on page 3 undefined on inp
-ut line 127.
+Package natbib Warning: Citation `PhysRevA.80.033409' on page 3 undefined on in
+put line 110.
 
 
-Package natbib Warning: Citation `PhysRevA.81.043408' on page 3 undefined on inp
-ut line 127.
+Package natbib Warning: Citation `PhysRevA.81.043408' on page 3 undefined on in
+put line 110.
 
 Package epstopdf Info: Source file: <figure_two-mod.eps>
 (epstopdf)                    date: 2013-07-04 03:18:02
 (epstopdf)                    size: 1198212 bytes
 (epstopdf)             Output file: <figure_two-mod-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:52
+(epstopdf)                    date: 2014-04-26 18:43:31
 (epstopdf)                    size: 170529 bytes
-(epstopdf)             Command: <epstopdf --outfile=figure_two-mod-eps-converted
--to.pdf figure_two-mod.eps>
-(epstopdf)             \includegraphics on input line 131.
+(epstopdf)             Command: <epstopdf --outfile=figure_two-mod-eps-converte
+d-to.pdf figure_two-mod.eps>
+(epstopdf)             \includegraphics on input line 114.
 Package epstopdf Info: Output file is already uptodate.
-<figure_two-mod-eps-converted-to.pdf, id=74, 1000.73875pt x 674.52pt>
+<figure_two-mod-eps-converted-to.pdf, id=73, 1000.73875pt x 674.52pt>
 File: figure_two-mod-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figure_two-mod-eps-converted-to.pdf>
-Package pdftex.def Info: figure_two-mod-eps-converted-to.pdf used on input line 
-131.
+Package pdftex.def Info: figure_two-mod-eps-converted-to.pdf used on input line
+ 114.
 (pdftex.def)             Requested size: 229.32257pt x 154.55997pt.
+ [3 <./figure_one-mod-eps-converted-to.pdf>]
 
+Package natbib Warning: Citation `PhysRevA.83.013401' on page 4 undefined on in
+put line 119.
 
-Package natbib Warning: Citation `PhysRevA.83.013401' on page 3 undefined on inp
-ut line 136.
+<c-shape-intens.pdf, id=89, 358.33875pt x 704.6325pt>
+File: c-shape-intens.pdf Graphic file (type pdf)
+ <use c-shape-intens.pdf>
+Package pdftex.def Info: c-shape-intens.pdf used on input line 125.
+(pdftex.def)             Requested size: 210.59857pt x 414.12756pt.
 
-Package epstopdf Info: Source file: <c-shape-intens.eps>
-(epstopdf)                    date: 2013-07-04 02:32:19
-(epstopdf)                    size: 141110 bytes
-(epstopdf)             Output file: <c-shape-intens-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:53
-(epstopdf)                    size: 17707 bytes
-(epstopdf)             Command: <epstopdf --outfile=c-shape-intens-eps-converted
--to.pdf c-shape-intens.eps>
-(epstopdf)             \includegraphics on input line 142.
-Package epstopdf Info: Output file is already uptodate.
-<c-shape-intens-eps-converted-to.pdf, id=79, 614.295pt x 794.97pt>
-File: c-shape-intens-eps-converted-to.pdf Graphic file (type pdf)
-
-<use c-shape-intens-eps-converted-to.pdf>
-Package pdftex.def Info: c-shape-intens-eps-converted-to.pdf used on input line 
-142.
-(pdftex.def)             Requested size: 229.0pt x 296.35413pt.
- [3 <./figure_one-mod-eps-converted-to.pdf> <./figure_two-mod-eps-converted-to.p
-df>]
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 150.
-
-
-LaTeX Warning: A float is stuck (cannot be placed) on input line 150.
-
-
-Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
-
+[4 <./figure_two-mod-eps-converted-to.pdf> <./c-shape-intens.pdf>]
 Package epstopdf Info: Source file: <fourier.eps>
 (epstopdf)                    date: 2013-07-04 12:23:34
 (epstopdf)                    size: 1336485 bytes
 (epstopdf)             Output file: <fourier-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:55
+(epstopdf)                    date: 2014-04-26 18:43:33
 (epstopdf)                    size: 171670 bytes
-(epstopdf)             Command: <epstopdf --outfile=fourier-eps-converted-to.pdf
- fourier.eps>
-(epstopdf)             \includegraphics on input line 155.
+(epstopdf)             Command: <epstopdf --outfile=fourier-eps-converted-to.pd
+f fourier.eps>
+(epstopdf)             \includegraphics on input line 138.
 Package epstopdf Info: Output file is already uptodate.
-<fourier-eps-converted-to.pdf, id=104, 923.45pt x 686.565pt>
+
+<fourier-eps-converted-to.pdf, id=123, 923.45pt x 686.565pt>
 File: fourier-eps-converted-to.pdf Graphic file (type pdf)
 
 <use fourier-eps-converted-to.pdf>
-Package pdftex.def Info: fourier-eps-converted-to.pdf used on input line 155.
+Package pdftex.def Info: fourier-eps-converted-to.pdf used on input line 138.
 (pdftex.def)             Requested size: 229.32257pt x 170.48845pt.
-Package epstopdf Info: Source file: <c-ramp.eps>
-(epstopdf)                    date: 2013-07-04 02:41:32
-(epstopdf)                    size: 103619 bytes
-(epstopdf)             Output file: <c-ramp-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:55
-(epstopdf)                    size: 14331 bytes
-(epstopdf)             Command: <epstopdf --outfile=c-ramp-eps-converted-to.pdf 
-c-ramp.eps>
-(epstopdf)             \includegraphics on input line 164.
-Package epstopdf Info: Output file is already uptodate.
 
-<c-ramp-eps-converted-to.pdf, id=106, 614.295pt x 794.97pt>
-File: c-ramp-eps-converted-to.pdf Graphic file (type pdf)
+<c-ramp.pdf, id=125, 358.33875pt x 250.9375pt>
+File: c-ramp.pdf Graphic file (type pdf)
+ <use c-ramp.pdf>
+Package pdftex.def Info: c-ramp.pdf used on input line 147.
+(pdftex.def)             Requested size: 229.32257pt x 160.59178pt.
 
-<use c-ramp-eps-converted-to.pdf>
-Package pdftex.def Info: c-ramp-eps-converted-to.pdf used on input line 164.
-(pdftex.def)             Requested size: 229.32257pt x 296.76656pt.
- [4 <./c-shape-intens-eps-converted-to.pdf> <./fourier-eps-converted-to.pdf>]
+<c_fourier_350_2_36_2.pdf, id=127, 366.03752pt x 252.93497pt>
+File: c_fourier_350_2_36_2.pdf Graphic file (type pdf)
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 171.
+<use c_fourier_350_2_36_2.pdf>
+Package pdftex.def Info: c_fourier_350_2_36_2.pdf used on input line 155.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_pulse_350_2_36_2.pdf, id=129, 366.03752pt x 252.93497pt>
+File: c_pulse_350_2_36_2.pdf Graphic file (type pdf)
+
+<use c_pulse_350_2_36_2.pdf>
+Package pdftex.def Info: c_pulse_350_2_36_2.pdf used on input line 156.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_fourier_350_10_20_10.pdf, id=131, 366.03752pt x 252.93497pt>
+File: c_fourier_350_10_20_10.pdf Graphic file (type pdf)
+
+<use c_fourier_350_10_20_10.pdf>
+Package pdftex.def Info: c_fourier_350_10_20_10.pdf used on input line 163.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_pulse_350_10_20_10.pdf, id=133, 366.03752pt x 252.93497pt>
+File: c_pulse_350_10_20_10.pdf Graphic file (type pdf)
+
+<use c_pulse_350_10_20_10.pdf>
+Package pdftex.def Info: c_pulse_350_10_20_10.pdf used on input line 164.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_fourier_350_20_0_20.pdf, id=135, 366.03752pt x 252.93497pt>
+File: c_fourier_350_20_0_20.pdf Graphic file (type pdf)
+
+<use c_fourier_350_20_0_20.pdf>
+Package pdftex.def Info: c_fourier_350_20_0_20.pdf used on input line 170.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_pulse_350_20_0_20.pdf, id=137, 366.03752pt x 252.93497pt>
+File: c_pulse_350_20_0_20.pdf Graphic file (type pdf)
+
+<use c_pulse_350_20_0_20.pdf>
+Package pdftex.def Info: c_pulse_350_20_0_20.pdf used on input line 171.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+ [5 <./fourier-eps-converted-to.pdf>]
+
+LaTeX Warning: A float is stuck (cannot be placed) on input line 179.
 
 
-LaTeX Warning: A float is stuck (cannot be placed) on input line 171.
+LaTeX Warning: A float is stuck (cannot be placed) on input line 179.
 
 
 Class revtex4-1 Warning: Deferred float stuck during \clearpage processing.
 
-Package epstopdf Info: Source file: <c-detune.eps>
-(epstopdf)                    date: 2013-07-04 02:43:08
-(epstopdf)                    size: 121753 bytes
-(epstopdf)             Output file: <c-detune-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-04-16 10:23:56
-(epstopdf)                    size: 22407 bytes
-(epstopdf)             Command: <epstopdf --outfile=c-detune-eps-converted-to.pd
-f c-detune.eps>
-(epstopdf)             \includegraphics on input line 176.
-Package epstopdf Info: Output file is already uptodate.
-<c-detune-eps-converted-to.pdf, id=145, 614.295pt x 794.97pt>
-File: c-detune-eps-converted-to.pdf Graphic file (type pdf)
+<c-detune.pdf, id=153, 358.33875pt x 250.9375pt>
+File: c-detune.pdf Graphic file (type pdf)
+ <use c-detune.pdf>
+Package pdftex.def Info: c-detune.pdf used on input line 182.
+(pdftex.def)             Requested size: 229.32257pt x 160.59178pt.
 
-<use c-detune-eps-converted-to.pdf>
-Package pdftex.def Info: c-detune-eps-converted-to.pdf used on input line 176.
-(pdftex.def)             Requested size: 229.32257pt x 296.76656pt.
- [5 <./c-ramp-eps-converted-to.pdf> <./c-detune-eps-converted-to.pdf>]
-Underfull \hbox (badness 1960) in paragraph at lines 196--197
-[][]\OT1/cmr/m/n/12 We would like to thank Yuri Popov
+<c_spectrum_350_2_36_2_highin.pdf, id=155, 366.03752pt x 252.93497pt>
+File: c_spectrum_350_2_36_2_highin.pdf Graphic file (type pdf)
+
+<use c_spectrum_350_2_36_2_highin.pdf>
+Package pdftex.def Info: c_spectrum_350_2_36_2_highin.pdf used on input line 19
+0.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_spectrum_350_2_36_2_lowin.pdf, id=157, 366.03752pt x 252.93497pt>
+File: c_spectrum_350_2_36_2_lowin.pdf Graphic file (type pdf)
+
+<use c_spectrum_350_2_36_2_lowin.pdf>
+Package pdftex.def Info: c_spectrum_350_2_36_2_lowin.pdf used on input line 191
+.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_spectrum_375_2_36_2_highin.pdf, id=159, 366.03752pt x 252.93497pt>
+File: c_spectrum_375_2_36_2_highin.pdf Graphic file (type pdf)
+
+<use c_spectrum_375_2_36_2_highin.pdf>
+Package pdftex.def Info: c_spectrum_375_2_36_2_highin.pdf used on input line 19
+8.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_spectrum_375_2_36_2_lowin.pdf, id=161, 366.03752pt x 252.93497pt>
+File: c_spectrum_375_2_36_2_lowin.pdf Graphic file (type pdf)
+
+<use c_spectrum_375_2_36_2_lowin.pdf>
+Package pdftex.def Info: c_spectrum_375_2_36_2_lowin.pdf used on input line 199
+.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_spectrum_350_3_34_3_highin.pdf, id=163, 366.03752pt x 252.93497pt>
+File: c_spectrum_350_3_34_3_highin.pdf Graphic file (type pdf)
+
+<use c_spectrum_350_3_34_3_highin.pdf>
+Package pdftex.def Info: c_spectrum_350_3_34_3_highin.pdf used on input line 20
+6.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+
+<c_spectrum_350_4_32_4_highin.pdf, id=165, 366.03752pt x 252.93497pt>
+File: c_spectrum_350_4_32_4_highin.pdf Graphic file (type pdf)
+
+<use c_spectrum_350_4_32_4_highin.pdf>
+Package pdftex.def Info: c_spectrum_350_4_32_4_highin.pdf used on input line 20
+7.
+(pdftex.def)             Requested size: 229.32257pt x 158.46603pt.
+ [6 <./c-ramp.pdf>]
+Underfull \hbox (badness 1960) in paragraph at lines 225--229
+[]\OT1/cmr/m/n/12 We would like to thank Yuri Popov
  []
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 201.
+(hyperref)                removing `math shift' on input line 233.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 201.
+(hyperref)                removing `superscript' on input line 233.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 201.
+(hyperref)                removing `math shift' on input line 233.
 
 
-Overfull \hbox (34.79462pt too wide) in alignment at lines 204--209
+Overfull \hbox (34.79462pt too wide) in alignment at lines 236--241
+ [][][] []
+ []
+
+[7 <./c_fourier_350_2_36_2.pdf> <./c_pulse_350_2_36_2.pdf> <./c_fourier_350_10_
+20_10.pdf> <./c_pulse_350_10_20_10.pdf>]
+Overfull \hbox (63.07886pt too wide) in alignment at lines 246--251
  [][][] []
  []
 
 
-Overfull \hbox (63.07886pt too wide) in alignment at lines 214--219
+Overfull \hbox (10.23648pt too wide) in alignment at lines 253--258
  [][][] []
  []
 
-
-Overfull \hbox (10.23648pt too wide) in alignment at lines 221--226
- [][][] []
+[8 <./c_fourier_350_20_0_20.pdf> <./c_pulse_350_20_0_20.pdf> <./c-detune.pdf>]
+Underfull \hbox (badness 3769) in paragraph at lines 269--274
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
  []
 
-[6] (./emmons_drake_caps.bbl
 
-LaTeX Warning: Reference `LastBibItem' on page 7 undefined on input line 9.
+Underfull \hbox (badness 3769) in paragraph at lines 276--281
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
 
 
-Package natbib Warning: Empty `thebibliography' environment on input line 53.
+Underfull \hbox (badness 3769) in paragraph at lines 283--288
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
 
-)
+
+Underfull \hbox (badness 3769) in paragraph at lines 290--295
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 297--302
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 304--309
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 311--316
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 318--323
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 325--330
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+[9 <./c_spectrum_350_2_36_2_highin.pdf> <./c_spectrum_350_2_36_2_lowin.pdf> <./
+c_spectrum_375_2_36_2_highin.pdf> <./c_spectrum_375_2_36_2_lowin.pdf>]
+Underfull \hbox (badness 3769) in paragraph at lines 332--337
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 339--344
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+
+Underfull \hbox (badness 3769) in paragraph at lines 346--351
+ []\OT1/cmr/m/n/10.95 Leslie Lam-port, \OT1/cmr/m/it/10.95 L[]T[]X: A Doc-u-men
+t
+ []
+
+(./emmons_drake_caps.bbl)
 
 Package natbib Warning: There were undefined citations.
 
-[7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 238.
- (./emmons_drake_caps.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 238.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 238.
+[10 <./c_spectrum_350_3_34_3_highin.pdf> <./c_spectrum_350_4_32_4_highin.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 357.
+
+(./emmons_drake_caps.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 357.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 357.
 Package rerunfilecheck Info: File `emmons_drake_caps.out' has not changed.
 (rerunfilecheck)             Checksum: 8711DEC6D6611DAD5143238BC7E671E1;838.
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: There were multiply-defined labels.
 
- )
-
-Here is how much of LuaTeX's memory you used:
- 8769 strings out of 494698
- 100000,266212 words of node,token memory allocated
- 396 words of node memory still in use:
-   9 hlist, 2 vlist, 2 rule, 1 glue, 1 kern, 41 glue_spec nodes
-   avail lists: 2:20,3:217,4:1687,5:363,6:5298,7:303,8:16,9:766,10:480
- 12093 multiletter control sequences out of 65536+600000
- 55 fonts using 2172975 bytes
- 41i,11n,31p,1146b,398s stack positions out of 5000i,500n,10000p,200000b,100000s
-</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></
-usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
-r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/
-local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/lo
-cal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/loca
-l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/t
-exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
-2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2013
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2013/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2013/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2013/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on emmons_drake_caps.pdf (7 pages, 823405 bytes).
-
-PDF statistics: 255 PDF objects out of 1000 (max. 8388607)
- 202 compressed objects within 3 object streams
- 28 named destinations out of 1000 (max. 131072)
- 125 words of extra memory for PDF output out of 10000 (max. 10000000)
+ ) 
+Here is how much of TeX's memory you used:
+ 8577 strings out of 493308
+ 122494 string characters out of 6137817
+ 248160 words of memory out of 5000000
+ 11856 multiletter control sequences out of 15000+600000
+ 15173 words of font info for 55 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 34i,11n,31p,1622b,499s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
+/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
+usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
+sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr
+/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/l
+ocal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/loca
+l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
+exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texl
+ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texliv
+e/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on emmons_drake_caps.pdf (10 pages, 1298989 bytes).
+PDF statistics:
+ 505 PDF objects out of 1000 (max. 8388607)
+ 417 compressed objects within 5 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 287 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,4 +1,4 @@
-\documentclass[12pt,aps,pra,amsmath,amssymb,showpacs,twocolumn,preprintnumbers,
+\documentclass[12pt, aps,pra,amsmath,amssymb,showpacs,twocolumn,preprintnumbers,
 floatfix,letterpaper]{revtex4-1}
 
 \usepackage{bm}
@@ -11,41 +11,32 @@ floatfix,letterpaper]{revtex4-1}
 \usepackage{color}
 \usepackage{overpic}
 \usepackage{rotating}
+\usepackage{subfigure}
+
 \usepackage{hyperref}
-\usepackage{epstopdf}
-\usepackage{natbib}
-\usepackage{textcase}
-\usepackage{bm}
-
 \hypersetup{
- bookmarks=true, % show bookmarks bar?
- unicode=false, % non-Latin characters in Acrobat’s bookmarks
- pdftoolbar=false, % show Acrobat’s toolbar?
- pdfmenubar=false, % show Acrobat’s menu?
- pdffitwindow=false, % window fit to page when opened
- pdfstartview={FitH}, % fits the width of the page to the window
- pdftitle={My title}, % title
- pdfauthor={Author}, % author
- pdfsubject={Subject}, % subject of the document
- pdfcreator={Creator}, % creator of the document
- pdfproducer={Producer}, % producer of the document
- pdfkeywords={keyword1} {key2} {key3}, % list of keywords
- pdfnewwindow=true, % links in new window
- colorlinks=true, % false: boxed links; true: colored links
- linkcolor=red, % color of internal links
- citecolor=blue, % color of links to bibliography
- filecolor=magenta, % color of file links
- urlcolor=cyan % color of external links
- }
+  bookmarks=true,     % show bookmarks bar?
+  unicode=false,     % non-Latin characters in Acrobat’s bookmarks
+  pdftoolbar=true,    % show Acrobat’s toolbar?
+  pdfmenubar=true,    % show Acrobat’s menu?
+  pdffitwindow=false,   % window fit to page when opened
+  pdfstartview={FitH},  % fits the width of the page to the window
+  pdftitle={My title},  % title
+  pdfauthor={Author},   % author
+  pdfsubject={Subject},  % subject of the document
+  pdfcreator={Creator},  % creator of the document
+  pdfproducer={Producer}, % producer of the document
+  pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+  pdfnewwindow=true,   % links in new window
+  colorlinks=true,    % false: boxed links; true: colored links
+  linkcolor=red,     % color of internal links
+  citecolor=blue,     % color of links to bibliography
+  filecolor=magenta,   % color of file links
+  urlcolor=cyan      % color of external links
+      }
 
-\linespread{1.0}
+\linespread{1.25}
 
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-\newcommand{\ba}{\begin{eqnarray}}
-\newcommand{\ea}{\end{eqnarray}}
-\newcommand{\br}{\begin{array}}
-\newcommand{\er}{\end{array}}
 \newcommand{\Schro}{Schr\"o\-din\-ger }
 
 \def\rgb#1#2#3{\special{color rgb #1 #2 #3}}
@@ -60,11 +51,13 @@ floatfix,letterpaper]{revtex4-1}
 \begin{document}
 %\preprint{Draft 01~July~2013}
 
-\author{Alexei N. Grum-Grzhimailo}
-\affiliation{Skobeltsyn Institute of Nuclear Physics, Lomonosov Moscow State University, Moscow 119991, Russia}
-
+\author{John Emmons}
+\author{Sean Buczek}
 \author{Klaus Bartschat}
 \affiliation{Department of Physics and Astronomy, Drake University, Des Moines, Iowa 50311, USA}
+
+\author{Alexei N. Grum-Grzhimailo}
+\affiliation{Skobeltsyn Institute of Nuclear Physics, Lomonosov Moscow State University, Moscow 119991, Russia}
 
 \date{\today}
 
@@ -73,34 +66,26 @@ floatfix,letterpaper]{revtex4-1}
 \begin{abstract}
 
 
-We solve the time-dependent Schr\"odinger equation for the hydrogen atom exposed to strong-field few-cycle
-laser pulses for a variety of pulse shapes, peak intensities, and photon energies on and off resonance.
-The dependence of the theoretical predictions on these parameters is analyzed in detail. Comparison
-with results from other recent calculations suggests that the approximations made in those
-works produced inaccuracies that shed doubt on the physical effects predicted. 
+We solve the time-dependent Schr\"odinger equation for the hydrogen atom exposed to strong-field few-cycle laser pulses for a variety of pulse shapes, peak intensities, and photon energies on and off resonance. The dependence of the theoretical predictions on these parameters is analyzed in detail. Comparison with results from other recent calculations suggests that the appepsimations made in those works produced inaccuracies that shed doubt on the physical effects predicted. 
  
 \end{abstract}
 
-\pacs{32.80.Rm, 32.80.Fb, 42.50.Hz, 32.90.+a}
+% \pacs{32.80.Rm, 32.80.Fb, 42.50.Hz, 32.90.+a}
 % insert suggested keywords - APS authors don't need to do this
-\keywords{strong field, short-pulse, multi-photon ionization, atomic hydrogen}
+% \keywords{strong field, short-pulse, multi-photon ionization, atomic hydrogen}
 
 \maketitle
 
 \section{Introduction}\label{sec:intro}
-As the only neutral atomic target, for which the non-relativistic wave functions are known exactly, atomic hydrogen remains the ideal system to study fundamental processes such as its interaction with an external electromagnetic field. Instead of attempting a comprehensive list of references, we illustrate this interest by listing a few papers that appeared within the past months in this journal~\cite{PhysRevA.87.013405,PhysRevA.87.013421,PhysRevA.87.043405,PhysRevA.87.043411}. Atomic hydrogen is also an excellent system to investigate a variety of numerical methods, especially the validity of approximations that may be required for more complex systems, since it is now possible to generate theoretical benchmark results with a high degree of confidence. In fact, combining accurate theoretical with experimental data was recently used to determine the absolute intensity of a laser to unprecedented accuracy at the 1~\% level \cite{PhysRevA.87.053411}.
+As the only neutral atomic target, for which the non-relativistic wave functions are known exactly, atomic hydrogen remains the ideal system to study fundamental processes such as its interaction with an external electromagnetic field. Instead of attempting a comprehensive list of references, we illustrate this interest by listing a few papers that appeared within the past months in this journal~\cite{PhysRevA.87.013405,PhysRevA.87.013421,PhysRevA.87.043405,PhysRevA.87.043411}. Atomic hydrogen is also an excellent system to investigate a variety of numerical methods, especially the validity of approximations that may be required for more complex systems, since it is now possible to generate theoretical benchmark results with a high degree of confidence. In fact, combining accurate theoretical with experimental data was recentlepssed to determine the absolute intensity of a laser to unprecedented accuracy at the 1~\% level \cite{PhysRevA.87.053411}.
 
-One of the approximate methods mentioned above was recently introduced by Nganso {\it et al.}~\cite{PhysRevA.83.013401}. The basic idea is to replace the kernel of the non\-local Coulomb potential in the momentum-space representation of the problem by a finite sum of separable potentials. The accuracy of the method was then tested by comparison against predictions from the numerical solution of the time-dependent Schr\"odinger equation (TDSE). The comparison (see Fig.~8 of~\cite{PhysRevA.83.013401}) was assessed as ``qualitatively correct'', a judgment based on the assumption that the numerical solution using the Sturmian expansion approach described by Madro\~nero and Piraux~\cite{PhysRevA.80.033409} was highly accurate. We note, however, that the latter authors themselves showed cases where some of their results were apparently not converged. These cases were later discussed in some detail by Grum-Grzhimailo {\it et al.}~\cite{PhysRevA.81.043408}, who adopted
-the matrix-iteration approach of Nurhuda and Faisal~\cite{PhysRevA.60.3125}. In the meantime, results from the latter approach were compared on several occasions against those from an entirely independent Arnoldi-Lanczos time-propagation scheme developed by Ivanov and Kheifets (see, for example, Ref.~\cite{Pullen:11}), always yielding excellent agreement between the predictions from these two methods. Consequently, we believe that our approach is sufficiently stable to truly test the predictions of approximate algorithms such as that put forward by Nganso {\it et al.}~\cite{PhysRevA.83.013401}.
+One of the approximate methods mentioned above was recently introduced by Nganso {\it et al.}~\cite{PhysRevA.83.013401}. The basic idea is to replace the kernel of the non\-local Coulomb potential in the momentum-space representation of the problem by a finite sum of separable potentials. The accuracy of the method was then tested by comparison against predictions from the numerical solution of the time-dependent Schr\"odinger equation (TDSE). The comparison (see Fig.~8 of~\cite{PhysRevA.83.013401}) was assessed as ``qualitatively correct'', a judgment based on the assumption that the numerical solution using the Sturmian expansion approach described by Madro\~nero and Piraux~\cite{PhysRevA.80.033409} was highly accurate. We note, however, that the latter authors themselves showed cases where some of their results were apparently not converged. These cases were later discussed in some detail by Grum-Grzhimailo {\it et al.}~\cite{PhysRevA.81.043408}, who adopted the matrix-iteration approach of Nurhuda and Faisal~\cite{PhysRevA.60.3125}. In the meantime, results from the latter approach were compared on several occasions against those from an entirely independent Arnoldi-Lanczos time-propagation scheme developed by Ivanov and Kheifets (see, for example, Ref.~\cite{Pullen:11}), always yielding excellent agreement between the predictions from these two methods. Consequently, we believe that our approach is sufficiently stable to truly test the predictions of approximate algorithms such as that put forward by Nganso {\it et al.}~\cite{PhysRevA.83.013401}.
 
-Apart from the comparison with the results from the Sturmian approach in Fig.~8 of~\cite{PhysRevA.83.013401}), Fig.~4 of the above paper also contains some rather surprising results. Specifically, the Autler-Townes doublet structure~\cite{PhysRev.100.703} in the ejected electron energy distribution function is flattening
-out for electron energies above approximately two atomic units (a.u.). For the (central) photon energy of 0.375~a.u. and a comparatively low peak intensity of $4 \times 10^{14}$~W/cm$^2$, however, such a plateau would generally not be expected. Hence, the question arises whether this prediction is possibly indicating
-some ``new physics'', maybe related to the fact that this energy corresponds to the $1s \to 2p$ resonance transition, or whether it is simply an artifact of the model and/or of the numerical approximation. 
+Apeps from the comparison with the results from the Sturmian approach in Fig.~8 of~\cite{PhysRevA.83.013401}), Fig.~4 of the above paper also contains some rather surprising results. Specifically, the Autler-Townes doublet structure~\cite{PhysRev.100.703} in the ejected electron energy distribution function is flattening out for electron energies above approximately two atomic units (a.u.). For the (central) photon energy of 0.375~a.u. and a comparatively low peak intensity of $4 \times 10^{14}$~W/cm$^2$, however, such a plateau would generally not be expected. Hence, the question arises whether this prediction is possibly indicating some ``new physics'', maybe related to the fact that this energy corresponds to the $1s \to 2p$ resonance transition, or whether it is simply an artifact of the model and/or of the numerical approximation. 
 
 The purpose of the present paper is two\-fold. To begin with, we intend to validate the model of Nganso {\it et al.}~\cite{PhysRevA.83.013401} once again, namely against the results from solving the TDSE directly on a numerical grid. Furthermore, we will present a few examples regarding the sensitivity of the results on the characteristics of the laser pulse, such as the way the pulse is ramped on and off, the peak intensity in connection with the ramping function, and the detuning of the laser frequency from a resonance transition such as $1s \to 2p$ or $1s \to 3p$. While these effects have been studied before~\cite{otherpapers}, we believe that the information obtained with our highly accurate method is valuable for future benchmark studies.
 
-This manuscript is organized as follows. After this introduction, Sect.~\ref{sec:numerics} provides a brief summary of our numerical method. This is followed by the presentation of our results, starting with the validation of the Nganso {\it et al.}~results in subsection~\ref{subsec:Popov} before discussing the sensitivity of the results to the laser parameters in subsection~\ref{subsec:Shape}.
-We finish with a brief summary and conclusion.
+This manuscript is organized as follows. After this introduction, Sect.~\ref{sec:numerics} provides a brief summary of our numerical method. This is followed by the presentation of our results, starting with the validation of the Nganso {\it et al.}~results in subsection~\ref{subsec:Popov} before discussing the sensitivity of the results to the laser parameters in subsection~\ref{subsec:Shape}. We finish with a brief summary and conclusion. 
 
 \section{Numerical Approach}\label{sec:numerics}
 Our numerical method was described in detail by Grum-Grzhimailo {\it et al}~\cite{PhysRevA.81.043408}. Briefly, we use the matrix iteration method MIM of Faisal and Nurhuda~\cite{PhysRevA.60.3125} to propagate the initial field-free state (atomic hydrogen with its electron in the $1s$ ground state) in time under the influence of a strong laser pulse. Depending on the peak intensity of the pulse, we use either the length or the velocity form of the electric dipole operator. We check that the results from the two formulations agree within the thickness of the line when the form of the operator is switched from one to the other for cases where both forms are numerically suitable.
@@ -108,23 +93,21 @@ Our numerical method was described in detail by Grum-Grzhimailo {\it et al}~\cit
 Furthermore, we ensure that the final predictions are, once again within the thickness of the lines in the figures, independent of the number of partial waves used in the expansion of the wave function. And, finally, we performed several spot checks to verify that the results are independent of the numerical parameters such as the grid spacing, the time step, and the number of iterations. 
 
 \section{Results and Discussion}\label{sec:results}
-Below we first compare our results with those presented by Nganso {\it et al.}~\cite{PhysRevA.83.013401}. Then we analyze the effect of a number of physical parameters on our theoretical predictions. These include the temporal shape of the pulse via the envelope function, the peak intensity, and the 
-central photon frequency. We discuss both resonant and off-resonance cases, in order to determine whether a ``stepping stone'' provided through an intermediate energy level has a significant effect on the 
-results.
+Below we first compare our results with those presented by Nganso {\it et al.}~\cite{PhysRevA.83.013401}. Then we analyze the effect of a number of physical parameters on our theoretical predictions. These include the temporal shape of the pulse via the envelope function, the peak intensity, and the central photon frequency. We discuss both resonant and off-resonance cases, in order to determine whether a ``stepping stone'' provided through an intermediate energy level has a significant effect on the results.
 
-\subsection{The 1s-2p resonant case for a trapezoidal envelope function}\label{subsec:Popov} We begin our discussion with Figs.~\ref{fig:spect-trap-1au} and~\ref{fig:spect-trap-all}, 
-which exhibit the ejected electron spectrum for a 40-cycle laser pulse with central photon energy of 0.375~a.u., corresponding to the $1s \to 2p$ resonance transition. The peak intensity is $4.0 \times 10^{14}~$W/cm$^2$, and the envelope function for the electric field is of trapezoidal form, ramping on and off over two optical cycles with a plateau of 36~cycles. The identical pulse was used by Nganso {\it et al.}~\cite{PhysRevA.83.013401}. 
+\subsection{The 1s-2p resonant case for a trapezoidal envelope function}\label{subsec:Popov}
+We begin our discussion with Figs.~\ref{fig:spect-trap-1au} and~\ref{fig:spect-trap-all}, which exhibit the ejected electron spectrum for a 40-cycle laser pulse with central photon energy of 0.375~a.u., corresponding to the $1s \to 2p$ resonance transition. The peak intensity is $4.0 \times 10^{14}~$W/cm$^2$, and eps envelope function for the electric field is of trapezoidal form, ramping on and off over two optical cycles with a plateau of 36~cycles. The identical pulse was used by Nganso {\it et al.}~\cite{PhysRevA.83.013401}.
+
 
 \begin{figure}[t]
 \centering
 \begin{overpic}[width=0.49\textwidth,clip=]{figure_one-mod.eps} \end{overpic}
-\caption{(Color online) Ejected electron spectrum for a 40-cycle laser pulse with central photon energy of 0.375~a.u. and a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$. The envelope function for the electric field is of trapezoidal form, ramping on and off over two optical cycles with a plateau of 36~cycles. Results from our numerical solution of the TDSE results are compared
-with those presented by Nganso {\it et al.}~\cite{PhysRevA.83.013401}.
+\caption{(Color online) Ejected electron spectrum for a 40-cycle laser pulse with central photon energy of 0.375~a.u. and a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$. The envelope function for the electric field is of trapezoidal form, ramping on and off over two optical cycles with a plateau of 36~cycles. Results from our numerical solution of the TDSE results are compared with those presented by Nganso {\it et al.}~\cite{PhysRevA.83.013401}.
 }
 \label{fig:spect-trap-1au}
 \end{figure}
 
-Figure~\ref{fig:spect-trap-1au} exhibits results for ejected electron energies up to 1~a.u. We note an even better agreement between the predictions from our solution of the TDSE and the approximate results of Nganso {\it et al.}~\cite{PhysRevA.83.013401} than what the latter authors found in their comparison with the results from the Sturmian expansion in the solution of the TDSE. It appears as if the Sturmian method rapidly runs into difficulties with increasing electron energy. As mentioned above, such problems were already identified by Madro\~nero and Piraux~\cite{PhysRevA.80.033409} and later also by Grum-Grzhimailo {\it et al.}~\cite{PhysRevA.81.043408},
+Figure~\ref{fig:spect-trap-1au} exhibits results for ejected electron energies up to 1~a.u. We note an even better agreement between the predictions from our solution of the TDSE and the approximate results of Nganso {\it et al.}~\cite{PhysRevA.83.013401} than what the latter authors found in their comparison with the results from the Sturmian expansion in the solution of the TDSE. It appears as if the Sturmian method rapidly runs into difficulties with increasing electron energy. As mentioned above, such problems were already identified by Madro\~nero and Piraux~\cite{PhysRevA.80.033409} and later also by Grum-Grzhimailo {\it et al.}~\cite{PhysRevA.81.043408}, 
 
 \begin{figure}[t]
 \centering
@@ -139,14 +122,14 @@ Figure~\ref{fig:spect-trap-all} exhibits similar results over an extended range 
 
 \begin{figure}[t]
 \centering
-\begin{overpic}[width=\columnwidth,clip=]{c-shape-intens.eps} \end{overpic}
+\begin{overpic}[width=0.45\textwidth,clip=]{c-shape-intens.pdf} \end{overpic}
 \caption{(Color online) Ejected electron spectra for a 40-cycle laser pulse with central photon energy of 0.375~a.u. and peak intensities of $4.0 \times 10^{14}~$W/cm$^2$ (top), $4.0 \times 10^{13}~$W/cm$^2$ (center), and $4.0 \times 10^{12}~$W/cm$^2$ (bottom). The envelope function for the electric field is of either trapezoidal or sin$^2$ form, ramping on and off over two optical cycles with a plateau of 36~cycles.}
 \label{fig:intens-trap-sin2}
 \end{figure}
  
-In this subsection we analyze the sensitivity of our results on a number of {\it physical} parameters that could, in principle, be controlled experimentally. We will concentrate on the low-energy regime, particularly the first few maxima and the first Autler-Townes doublet. 
+In this subsection we analyze the sensitivity of our results on a number of {\it physical} parameters that could, in principle, be controlled experimentally. We will concentrate on the low-energy regime, particularly the first few maxima and the first Autler-Townes doublet.
 
-Figure~\ref{fig:intens-trap-sin2} exhibits our results for what appears to be a rather small change in the envelope function for the electric field. Specifically, we change the ramp-on and ramp-off part of that function from trapezoidal to sinusoidal over two optical cycles. As seen in the top panel of the figure, the first maximum of the Autler-Townes doublet actually splits into three parts for the pulse with the sin$^2$ envelope while the second one is suppressed compared to the trapezoidal ramp-on/off. As one might expect, the results for the two pulse shapes become more similar when the peak intensity is reduced by a factor of 10 (center panel) and the Autler-Townes splitting is reduced. Another reduction in the peak intensity by an order of magnitude results in just a single peak (bottom panel), which is very similar for both cases. This peak is close to 0.25~a.u., corresponding to two-photon (0.75~a.u.) absorption to promote the bound electron with an energy of $-0.5$~a.u. into the continuum. Even the maximum of the dynamic Stark shift is too small to result in a split of that peak. 
+Figure~\ref{fig:intens-trap-sin2} exhibits our results for what appears to be a rather small change in the envelope function for the electric field. Specifically, we change the ramp-on and ramp-off part of that function from trapezoidal to sinusoidal over two optical cycles. As seen in the top panel of the figure, the first maximum of the Autler-Townes doublet actually splits into three parts for the pulse with the sin$^2$ envelope while the second one is suppressed compared to the trapezoidal ramp-on/off. As one might expect, the results for the two pulse shapes become more similar when the peak intensity is reduced by a factor of 10 (center panel) and the Autler-Townes splitting is reduced. Another reduction in the peak intensity by an order of magnitude results in just a single peak (bottom panel), which is very similar for both cases. This peak is close to 0.25~a.u., corresponding to two-photon (0.75~a.u.) absorption to promote the bound electron with an energy of $-0.5$~a.u. into the continuum. Even the maximum of the dynamic Stark shift is too small to result in a split of that peak.
 
 Given the effects seen above, it seems worthwhile to look at the Fourier spectrum of the two pulses. This is displayed in Fig.~\ref{fig:Fourier}. Although the two pulses are identical for 90\% of the time, we notice the broad wings of the spectral distribution in the case of a sinusoidal ramp-on/off. For sufficiently strong pulses (c.f.~the top panel of Fig.~\ref{fig:intens-trap-sin2}), these wings are apparently sufficient to cause a significant change in the ejected electron energy distribution compared to the trapezoidal pulse. For future reference, analytic formulas for the spectra of the two pulse shapes are provided in the Appendix.
 
@@ -161,27 +144,72 @@ Given the effects seen above, it seems worthwhile to look at the Fourier spectru
 
 \begin{figure}[t]
 \centering
-\begin{overpic}[width=0.49\textwidth,clip=]{c-ramp.eps} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c-ramp.pdf} \end{overpic}
 \caption{(Color online) Ejected electron spectra for a 40-cycle laser pulse with central photon energy of 0.375~a.u. and a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$. The envelope function for the electric field is of sin$^2$ form, ramping on and off over a varying number of optical cycles. The notation \hbox{$N_1$-$N_2$-$N_3$} in the legend refers to the number of cycles for ramp-on ($N_1$), plateau ($N_2$), and ramp-off ($N_3$).
 }
 \label{fig:c-ramp}
 \end{figure}
 
-Figure~\ref{fig:c-ramp} exhibits how the first peak of the lowest Autler-Townes maximum is affected by the way the pulse is ramped on and off. As shown in Fig.~\ref{fig:intens-trap-sin2} above, a sin$^2$ envelope of a 0.375~a.u.~pulse with a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$ results in a split of that maximum into three separate maxima when the ramp-on/off occurs over two optical cycles, while this is not seen for the trapezoidal pulse. As seen in the figure, the triplet structure already disappears when the ramping is distributed over three rather than two optical cycles. This shows the importance of specifying the pulse form accurately when comparing results from different theoretical approaches. 
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_fourier_350_2_36_2.pdf} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_pulse_350_2_36_2.pdf} \end{overpic}
+\caption{hi}
+\label{fig:c-detune}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_fourier_350_10_20_10.pdf} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_pulse_350_10_20_10.pdf} \end{overpic}
+\caption{hi}\label{fig:c-detune}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_fourier_350_20_0_20.pdf} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_pulse_350_20_0_20.pdf} \end{overpic}
+\caption{hi}
+\label{fig:c-detune}
+\end{figure*}
+
+Figure~\ref{fig:c-ramp} exhibits how the first peak of the lowest Autler-Townes maximum is affected by the way the pulse is ramped on and off. As shown in Fig.~\ref{fig:intens-trap-sin2} above, a sin$^2$ envelope of a 0.375~a.u.~pulse with a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$ results in a split of that maximum into three separate maxima when the ramp-on/off occurs over two optical cycles, while this is not seen for the trapezoidal pulse. As seen in the figure, the triplet structure already disappears when the ramping is distributed over three rather than two optical cycles. This shows the importance of specifying the pulse form accurately when comparing results from different theoretical approaches.
 
 It is also interesting to investigate to what extent the central photon energy of the pulse affects the results. Figure~~\ref{fig:c-detune} shows the ejected electron spectra for a 40-cycle laser pulse with central photon energies between 0.3500~a.u.~and 0.4550~a.u.~and a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$. As before, the electric field is ramped on/off over two optical cycles via a sin$^2$ envelope function. While only the 0.3750~a.u.~photons are in resonance with the field-free $1s \to 2p$ transition, we see that the dynamic Stark effect is causing similar structures for slightly lower (0.3000~a.u.) and higher (0.4000~a.u.) photon energies. 
 
 \begin{figure}[t]
 \centering
-\begin{overpic}[width=0.49\textwidth,clip=]{c-detune.eps} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c-detune.pdf} \end{overpic}
 \caption{(Color online) Ejected electron spectra for a 40-cycle laser pulse with central photon energies between 0.3500~a.u. and 0.4550~a.u. and a peak intensity of $4.0 \times 10^{14}~$W/cm$^2$. The envelope function for the electric field is of sin$^2$ form, ramping on and off over a over two optical cycles with a plateau of 36~cycles.
 }
 \label{fig:c-detune}
 \end{figure}
 
-A similar effect occurs for photons on (0.4444~a.u.) and off (0.4550~a.u.) resonance with the $1s \to 3p$ transition. Absorbing two 0.4444~a.u.~photons nominally leads to ejected electrons with energy 0.3889~a.u. Looking at the figure, we see that the peak at the latter energy is indeed broadened and split, as expected through the Autler-Townes effect. The first broad peak around an ejected-electron energy of 0.31~a.u., on the other hand, corresponds to the development of the lower-energy structures when going further off the resonance energy for the $1s \to 2p$ transition. The last set of results for a photon energy of 0.4550~a.u., finally, represents the smooth continuation of those for 0.4444~a.u.
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_350_2_36_2_highin} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_350_2_36_2_lowin} \end{overpic}
+\caption{hi}
+\label{fig:c-detune}
+\end{figure*}
 
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_375_2_36_2_highin} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_375_2_36_2_lowin} \end{overpic}
+\caption{hi}
+\label{fig:c-detune}
+\end{figure*}
 
+\begin{figure*}
+\centering
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_350_3_34_3_highin} \end{overpic}
+\begin{overpic}[width=0.49\textwidth,clip=]{c_spectrum_350_4_32_4_highin} \end{overpic}
+\caption{hi}
+\label{fig:c-detune}
+\end{figure*}
+
+A similar effect occurs for photons on (0.4444~a.u.) and off (0.4550~a.u.) resonance with the $1s \to 3p$ transition.  Absorbing two 0.4444~a.u.~photons nominally leads to ejected electrons with energy 0.3889~a.u. Looking at the figure, we see that the peak at the latter energy is indeed broadened and split, as expected through the Autler-Townes effect. The first broad peak around an ejected-electron energy of 0.31~a.u., on the other hand, corresponds to the development of the lower-energy structures when going further off the resonance energy for the $1s \to 2p$ transition. The last set of results for a photon energy of 0.4550~a.u., finally, represents the smooth continuation of those for 0.4444~a.u.
  
 \section{Summary and Conclusion}
  \label{sec:conclusion}
@@ -191,9 +219,13 @@ Based on the results presented above, we conclude that the photon energy being o
 
 Unfortunately, the strong dependence on the pulse shape also suggests likely problems when comparing theoretical predictions with experimental data. Very often, the raw experimental data need to be processed further, e.g., by focal averaging. This post-processing also assumes some knowledge about the pulse shapes and peak intensities. In light of the above results, there are undoubtedly challenges associated with these procedures, and they should be kept in mind when assessing the validity of a theoretical model, particularly when comparing results for more complex systems than atomic hydrogen.
 
- 
+
+
 \begin{acknowledgments}
-We would like to thank Yuri Popov for drawing our attention to this problem. This work was supported by the United States National Science Foundation under Grant No.~PHY-1068140 (KB) and by ????? (ANG).We acknowledge the kind hospitality of DESY and XFEL in Hamburg (Germany), where part of this work was carried out.
+We would like to thank Yuri Popov for drawing our attention to this problem.
+This work was supported by the United States National Science Foundation under Grant No.~PHY-1068140 (KB) 
+and by ????? (ANG).
+We acknowledge the kind hospitality of DESY and XFEL in Hamburg (Germany), where part of this work was carried out.
 \end{acknowledgments}
 
 \appendix
@@ -202,10 +234,10 @@ We would like to thank Yuri Popov for drawing our attention to this problem. Thi
 
 The sin$^2$ pulse is of the form
 \begin{eqnarray} \label{eq:ap1} 
-\sin^2 \frac{\pi}{2n} \left( t + N_{\frac{1}{2}} \right) \sin 2\pi t \,, & - N_{\frac{1}{2}} \le\ t \le - N_{\frac{1}{2}} + n; \nonumber \\
-\sin 2\pi t \,, & - N_{\frac{1}{2}}+n \le\ t \le N_{\frac{1}{2}} - n; \nonumber \\
+\sin^2 \frac{\pi}{2n} \left( t + N_{\frac{1}{2}} \right) \sin 2\pi t \,, & - N_{\frac{1}{2}} \le\ t \le - N_{\frac{1}{2}} + n;  \nonumber \\
+\sin 2\pi t \,,  & - N_{\frac{1}{2}}+n \le\ t \le N_{\frac{1}{2}} - n; \nonumber \\
 \sin^2 \frac{\pi}{2n} \left( t - N_{\frac{1}{2}} \right) \sin 2\pi t 
-\,, & N_{\frac{1}{2}} - n \le t \le N_{\frac{1}{2}}. 
+\,, &  N_{\frac{1}{2}} - n \le t \le N_{\frac{1}{2}}. 
 \end{eqnarray}
 Here $N_{\frac{1}{2}} = (N+2n)/2$ with $N$~even.
 The integral over the square of the pulse (\ref{eq:ap1}) gives unity.
@@ -219,10 +251,10 @@ P(w) & = & \frac{8 \pi \cos^2 nw}{4N+3n}
 \end{eqnarray}
 A similarly normalized trapezoidal pulse is of the form 
 \begin{eqnarray} \label{eq:ap3} 
-N_0^{-\frac{1}{2}} \, \frac{N_{\frac{1}{2}}+t}{n} \sin 2\pi t \,, & - N_{\frac{1}{2}} \le\ t \le - N_{\frac{1}{2}} + n; \nonumber \\
-N_0^{-\frac{1}{2}} \, \sin 2\pi t \,, & - N_{\frac{1}{2}}+n \le\ t \le N_{\frac{1}{2}} - n; \nonumber \\
+N_0^{-\frac{1}{2}} \, \frac{N_{\frac{1}{2}}+t}{n} \sin 2\pi t \,, & - N_{\frac{1}{2}} \le\ t \le - N_{\frac{1}{2}} + n;  \nonumber \\
+N_0^{-\frac{1}{2}} \, \sin 2\pi t \,,  & - N_{\frac{1}{2}}+n \le\ t \le N_{\frac{1}{2}} - n;  \nonumber \\
 N_0^{-\frac{1}{2}} \, \frac{N_{\frac{1}{2}}-t}{n} \sin 2\pi t 
-\,, & N_{\frac{1}{2}} - n \le t \le N_{\frac{1}{2}}. 
+\,, &  N_{\frac{1}{2}} - n \le t \le N_{\frac{1}{2}}. 
 \end{eqnarray}
 The normalization constant is $N_0 = N_{\frac{1}{2}} - \frac{\displaystyle 2n}{\displaystyle 3} -
 \frac{\displaystyle 1}{\displaystyle 8n \pi^2}$. This yields the spectrum
@@ -231,9 +263,96 @@ P(w) = \frac{4 \pi}{N_0} \, \left[ \frac{w \sin nw \, \sin (N+n)w}{n(\pi^2
 -w^2)^2} \right]^2.
 \end{equation}
 
+\begin{thebibliography}{99}
 
-\bibliography{h-references}
+\bibitem{PhysRevA.87.013405"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
 
+\bibitem{PhysRevA.87.013421"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.87.043405"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.87.043411"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.87.053411"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.83.013401"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.80.033409"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.81.043408"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRevA.60.3125"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{Pullen:11"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{PhysRev.100.703"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+\bibitem{otherpapers"}
+ Leslie Lamport,
+ \emph{\LaTeX: A Document Preparation System}.
+ Addison Wesley, Massachusetts,
+ 2nd Edition,
+ 1994.
+
+
+
+
+\end{thebibliography}
 
 \end{document}
 
