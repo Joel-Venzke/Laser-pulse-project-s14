@@ -1,0 +1,11 @@
+-----
+
+README: example.sh, example.uni, Done-jobs
+
+The example.sh file is a WORKING example for one of the shell scripts John Emmons used to run his jobs. You WILL have to edited this file in order to get it working. Instructions on how to do this are in the file.
+
+The example.uni is a WORKING example for one of the batch scripts John Emmons used to run his jobs. You WILL have to edit this file to get it working. Instruction on how to do this are in the file.
+
+The Done-Jobs directory is full of job scripts that have already been run by Sean Buczek and John Emmons. These scripts WILL NOT work though; the directory structure of this git repo have changed since the files were run. A few changes to each file should fix it though in case you wish to rerun a job.
+
+-----

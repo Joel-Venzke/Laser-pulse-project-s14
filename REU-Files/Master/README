@@ -1,0 +1,13 @@
+-----
+
+README: *.pdf, *.inp, *.out, work15b-all.f
+
+The pdf files are reading materials and preprint papers related to this work.
+
+The .inp or input files are example inputs to the work15b-all code
+
+The .out or output files are example outputs from the work15b-all code
+
+The work15b-all code in this directory is the orginial code given to use at the beginning of the project. This should probably never be used unless something terrible happens to the code in the Development directory.
+
+-----
