@@ -1046,21 +1046,12 @@ C********************************************************************
 C     written by John Emmons and Sean Buczek 
 C     date Feb 2014
 C
-C**** print data at intermediate time steps (i.e. not just the end
-C**** the columns of the output are listed beloew with | separating each entry:
-C**** OUTPUT FILE: intermediate.out (file number 230)
-C
-C**** timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , sum of energies, integral betas , sum of integral
-
-C
-C     TODO
-C     [X] make output acutally write to file 230
-C     [X] make a format statement
-C     [X] compute betas integral
-C     [X] sum the overaps for vairous n
-C     [X] sum the sum of overlap and integral of betas
-C     [X] print timestep (add input parameter)
-C     [X] make code print at nprint intervals
+C     print data at intermediate time steps (i.e. not just the end
+C     the columns of the output are listed beloew with | separating each entry:
+C     OUTPUT FILE: intermediate.out (file number 230)
+C     
+C     The output file have the following format (replace commas by tabs)
+C     timestep , overlap in 1s , overlap in 2s , ... ,  integral n=1 , integral n=2 , ... , sum of energies, integral betas , sum of integral
 
       subroutine intermediate_output (k)
       use parameters
@@ -1115,89 +1106,6 @@ C     [X] make code print at nprint intervals
       allocate (psi(0:nx+1,0:ntet),prob1(0:nx+1,0:ntet),anorm(nx+1),
      >          auto(nx+1),conv(0:nx+1),vrlp(0:nfmax))
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!dstrm code!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-C      ncu = nc
-C      nrp1 = nrp+1
-C
-C      dm = 0.d0
-C      ener(0) = emin-de
-C      rpe(1) = 0.d0
-C      rtp(1) = 0.d0
-C      
-C      do 990 i = 2,nrp1
-C        rtp(i) = rp(i-1)
-C990       continue        
-C
-C      do nen = 1,nerg
-C        ener(nen) = ener(nen-1) + de
-C      end do
-C
-!c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
-C      do 390 nen = 1,nerg
-C        ep = 2.0d0*ener(nen)
-C        do 290 jj=0,nc
-C          call dwavekb(jj,ep,phse,dw)         
-C          phall(nen,jj) = phse
-C          do 119 i=2,nrp1
-C            rpe(i)=dw(i-1)              
-C119               continue
-C          do 129 i=1,ngob
-C            call parinv(x(i),rtp,rpe,nrp1,rg)
-C            wr(i+1) = rg*dreal(q(i,jj))
-C            wi(i+1) = rg*dimag(q(i,jj))
-C129               continue
-C          call arsimd(ngob1,h,wr,rtr)
-C          call arsimd(ngob1,h,wi,rti)
-C          tint(jj,nen) = dcmplx(rtr,rti)
-c---- this is for angular distribution:
-C          if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
-c----------------------------------------------------------------------
-C          dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
-C290           continue
-C9901            format(f9.5,3d15.5)
-C390                continue
-!c$omp end parallel do
-        
-!c$omp parallel do private(nen,lam,be,rlam,j1,j2,rj1,rj2,
-!c$omp>                    cgdd,ier,aw,rph,ct1,bet,dcr)
-c---- beta parameters
-C      do 490 nen = 1,nerg
-C        am = dble(mfixed)
-C        if (key4.gt.1) then
-C         do 259 lam=0,min(2*nc,20)
-C          be = dcmplx(0.d0,0.d0)
-C          rlam = dble(lam)
-C          do 249 j1 = 0,nc
-C            j2min = abs(j1-lam)
-C            j2max = min(nc,j1+lam)
-C            do 239 j2 = j2min,j2max,2
-C              rj1 = dble(j1)
-C              rj2 = dble(j2)       
-C              call clegor(2*j1,2*lam,2*j2,2*mfixed,0,2*mfixed,cgdd,ier)
-C              aw = dsqrt((2.d0*rj1+1.d0)/(2.d0*rj2+1.d0))
-C     >            *clb(j1,lam,j2)*cgdd
-C              rph = phall(nen,j1)-phall(nen,j2)
-C              ct1 = (0.d0,1.d0)**(j2-j1) * cdexp(dcmplx(0.d0,rph)) 
-C     >            *tint(j1,nen)*dconjg(tint(j2,nen))*dcmplx(aw,0.d0)
-C              be = be + ct1
-C239                   continue
-C249                          continue
-C          bet(lam) = dreal(be)*(2.d0*rlam+1.d0)/dm(nen)  
-C          betall(nen,lam) = bet(lam)
-C259            continue 
-C        endif
-C        dcr = dm(nen)*dsqrt(2.d0/ener(nen))
-C        dcrall(nen) = dcr
-C490       continue
-!c$omp end parallel do
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!OUTPUT CODE!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       k1 = k+1
 
       psi = czero
@@ -1221,10 +1129,6 @@ C*** PROBABILITY DENSITY (r^2*|psi|^2) BY DIRECT SQUARE
         end do
       end do
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!BEGIN OUTPUTING!!!!!!!!!!  
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 ! orbital probabilities
 C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
         do kd=1,nf
@@ -1240,6 +1144,10 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           vrlp(kd) = are**2 + aie**2
           overlap_output(kd) = vrlp(kd)
         end do          
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!Print Headers!!!!!!!!!!!  
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ! if first run through print the column headers
         if(k .eq. 0) then
@@ -1282,9 +1190,6 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(A7)', advance='no') '       '
            write(230, '(A2)', advance='no') char(9)
 
-! we do not need to calculate the betas in the middle of the run
-           ! print the betas integral column header
-
            write(230, '(A4)', advance='no') 'bInt'
            write(230, '(A7)', advance='no') '       '
 
@@ -1295,11 +1200,14 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
            write(230, '(A1)') ''
         endif
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!Print the Data!!!!!!!!!!!  
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 !       print the timestep and space character before the data
-!       April 18th, 2014: fixed to print time in femtoseconds
+!       April 18th, 2014: John Emmons fixed to print time in femtoseconds
         write(230, '(E12.5)', advance='no') DBLE(k) * 
-     >        (2.418884326505E-17) * dt / (1E-15)
+     >        (2.418884326505E-17) * dt / (1E-15) ! conversion to fs
 
 !       print the square of the overlap (i.e. probability of state)
         do i = 1, nf
@@ -1369,8 +1277,10 @@ C     >  2.d0*ener(1))*dcrall(1)))-(2.d0*ener(2)*dcrall(2)))))
 
        deallocate(psi,prob1,anorm,auto,conv,vrlp)
 
-! test output 
-     
+!     Flush the print buffer to ensure that the data is output right away
+!     rather than waiting. If this wasn't here, the program might not print 
+!     to the file until the very end. This way if the program crashes then
+!     at least some of the results will have been printed.
       flush(230)
 
       return
