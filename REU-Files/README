@@ -1,0 +1,13 @@
+-----
+
+README: Development, Job-scripts, Master
+
+These directories are where different versions of the code live.
+
+Inside Development is the most recent version of the code. When running jobs usng the shell scripts in the Job-scripts directory, the compiled work15b-all code inside Development will be used.
+
+Job-scripts contains all of the *.sh and *.uni files needed sumbit and run batch jobs on Stampede. As is noted in the README file inside Development. Jobs should be submitted with these scripts rather than being run interactively.
+
+Master contains reading materials that Dr. Bartschat gave us and the code exactly as it was when Dr. Bartschat first gave it to us early in the spring of 2014.
+
+-----

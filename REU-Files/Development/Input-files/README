@@ -1,0 +1,13 @@
+-----
+
+README: input_generator.py, input files
+RUNNING:$ python input_generator.py <flags> >& <output file>
+HELP/USAGE:$ python input_generator.py -h
+
+The input_generator.py script IS USED to generate the "pulse.inp" input file used in the work15b-all code before each run.
+
+The tdse*.inp files ARE ALSO used when jobs are run. In particular, during the spring 2014 semester the tdse-40cycle.inp was used frequency to get results for 40 cycle laser pulses. These files do not change between runs unless there is a numerics problem (i.e. don't change them unless bartschat says so).
+
+The pulse*.inp files ARE NOT used when jobs are run. Rather, the input_generator.py script created pulse.inp files since the pulse files changes between each run. 
+
+---

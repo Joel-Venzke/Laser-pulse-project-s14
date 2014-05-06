@@ -1,7 +1,7 @@
 set term pslatex color 
 set out 'overlap_350_025.tex'
 
-set multiplot layout 2,0 title '\textbf{~~~~~~~~\textbf{2-36-2~~~$\mathbf{0.25 \times 10^{14}\,}$W/cm$^2$~~~S-S~~~9.5eV}}\vspace{-.375cm}'
+set multiplot layout 2,0 title '~~~~~~~~\textbf{2-36-2~~~$\mathbf{0.25 \times 10^{14}\,}$W/cm$^2$~~~S-S~~~9.5eV}\vspace{-.375cm}'
 
 set size 1.0,0.65
 set origin 0.0,0.0

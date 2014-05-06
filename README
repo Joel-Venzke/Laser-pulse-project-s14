@@ -1,0 +1,9 @@
+-----
+
+README: Plots, REU-files
+
+The Plots directory contains all of the files needed to plot data obtained with the main code, work15b-all. You will need to copy data into this directory to plot it unless you change the code.
+
+The REU_files directory contains all of the code and scripts necessary to run jobs and collect data on Stampede.
+
+-----

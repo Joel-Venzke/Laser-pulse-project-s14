@@ -1,0 +1,13 @@
+-----
+
+README: fourier-omp.f
+COMPILING:$ ifort -o fourier-omp -openmp fourier-omp.f
+RUNNING:$ ./fourier-omp # expects input file fort.1; outputs to fort.2 
+
+This code was written by Dr. Bartschat and is designed to take a field in the time domain and convert it to the frequency domain.
+
+The files in this directory are NOT used when running jobs. Rather the fourirer transform code was added to the main code, work15b-all.f. You can find this in the work15b-all code within the subroutine PULSEKB (around line 2224 as of May 1st, 2014).  
+
+There shouldn't be any reason to edit this code unless something bad happens to the work15b-all code.
+
+-----

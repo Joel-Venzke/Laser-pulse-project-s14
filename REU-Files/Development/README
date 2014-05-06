@@ -1,0 +1,15 @@
+-----
+
+README: integratorFort.f, Makefile, work15b-all
+COMPILING:$ make #use the makefile
+RUNNING: submit as batch job with a *.uni file.
+
+The work15b-all is the main code for this project written by Dr. Bartschat and his collaborators. It takes in two input files that must have the names "pulse.inp" and "tdse.inp". Once done running there will be 9 output files.
+
+The integratorFort.f is code written by Sean Buczek to integrate the bets.out ouput file from the work15b-all. Ask Sean about this code!
+
+YOU SHOULD LOOK INSIDE THE MAKEFILE! The makefile will compile the work15b-all code with the correct compiler flags. Note that the there two CFLAGS variable; only one should ever be uncommented! 
+
+Use the top CFLAG variable for production runs (i.e. fast code) and the second CFLAG variable for debugging (i.e. slow, but more error outputs).
+
+-----

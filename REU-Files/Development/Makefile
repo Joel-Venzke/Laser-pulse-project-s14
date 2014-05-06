@@ -1,5 +1,14 @@
+TARGET = work15b-all
+COMPILER = ifort
+
+# production/debugging compiler flags
+# only one should ever be uncommented at a time
+CFLAGS = -openmp
+#CFLAGS = -C -traceback 
+
+
 all:
-	ifort -o work15b-all -openmp work15b-all.f
+	$(COMPILER) -o $(TARGET) $(CFLAGS) $(TARGET).f
 	rm -rf *.mod *.pyc
 
 clean:
