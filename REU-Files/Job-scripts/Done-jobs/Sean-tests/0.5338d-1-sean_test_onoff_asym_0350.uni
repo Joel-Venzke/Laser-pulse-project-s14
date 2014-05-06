@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH -J  0.5338d-1-sean_test_onoff_asym_0350.nam
+#SBATCH -o  0.5338d-1-sean_test_onoff_asym_0350.log
+#SBATCH -e  0.5338d-1-sean_test_onoff_asym_0350.err
+#SBATCH -N  1  -n  1
+#SBATCH -p  development
+#SBATCH -t 00:02:00
+
+export OMP_NUM_THREADS=16
+export KMP_STACKSIZE=16m
+
+cd /home1/02869/smbuczek/physics-capstone/REU-Files/Job-scripts
+./0.5338d-1-sean_test_onoff_asym_0350.sh
+
+#rm field.out
+#rm wfn.out
+

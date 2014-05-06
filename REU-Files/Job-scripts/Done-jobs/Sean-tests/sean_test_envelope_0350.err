@@ -1,0 +1,17 @@
+mkdir: cannot create directory `/work/02869/smbuczek/1.0676d-1-Env-test-0350-cep1-90-src': File exists
+Usage: input_generator.py [options]
+
+input_generator.py: error: no such option: --cept1
+forrtl: severe (24): end-of-file during read, unit 80, file /work/02869/smbuczek/1.0676d-1-Env-test-0350-cep1-90-t-t/pulse.inp
+Image              PC                Routine            Line        Source             
+work15b-all        00000000004D2E7E  Unknown               Unknown  Unknown
+work15b-all        00000000004D1916  Unknown               Unknown  Unknown
+work15b-all        000000000047C382  Unknown               Unknown  Unknown
+work15b-all        000000000042516C  Unknown               Unknown  Unknown
+work15b-all        000000000042468C  Unknown               Unknown  Unknown
+work15b-all        000000000043F931  Unknown               Unknown  Unknown
+work15b-all        0000000000414C53  Unknown               Unknown  Unknown
+work15b-all        000000000040405E  Unknown               Unknown  Unknown
+work15b-all        0000000000403A4C  Unknown               Unknown  Unknown
+libc.so.6          00000039E2A1ECDD  Unknown               Unknown  Unknown
+work15b-all        0000000000403949  Unknown               Unknown  Unknown
