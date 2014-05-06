@@ -1,13 +1,13 @@
 set term pslatex color 
 set out 'overlap_350_4.tex'
 
-set multiplot layout 2,0 title '\textbf{~~~~~~~~\textbf{2-36-2~~~$\mathbf{4.0 \times 10^{14}\,}$W/cm$^2$~~~S-S~~~9.5eV}}\vspace{-.375cm}'
+set multiplot layout 2,0 title '~~~~~~~~\textbf{2-36-2~~~$\mathbf{4.0 \times 10^{14}\,}$W/cm$^2$~~~S-S~~~9.5eV~}\vspace{-.375cm}'
 
 set size 1.0,0.65
 set origin 0.0,0.0
 
 set xlabel 't [fs]' offset 0.0,-0.5
-set ylabel 'probability' offset -2.5,0.0
+set ylabel 'probability' offset -2.0,0.0
 set format y '%3.1f'
 #set mytics 10
 #set yr [0:1]
@@ -27,7 +27,7 @@ plot datadir . '/S-s__2-36-2__1.0676d-1__0350/overlap.out' u ($1*.000120622):2 t
 set size 1.0,0.3
 set origin 0.0,0.625
 unset xlabel
-set ylabel 'field [a.u.]' offset -1.5,0.0
+set ylabel 'field [a.u.]' offset -1.0,0.0
 set format y '%3.1f'
 #set mytics 10
 #set yr [0:1]
