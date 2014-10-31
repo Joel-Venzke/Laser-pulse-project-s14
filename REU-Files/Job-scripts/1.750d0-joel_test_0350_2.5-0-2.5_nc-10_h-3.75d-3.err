@@ -1,0 +1,13 @@
+forrtl: severe (18): too many values for NAMELIST variable, unit 50, file /work/02971/jvenzke/1.750d-1_0350_nc-10_h-3.75d-3-2.5-0-2.5-s-s/tdse.inp, line 4, position 51
+Image              PC                Routine            Line        Source             
+work15b-all        00000000004D2E9E  Unknown               Unknown  Unknown
+work15b-all        00000000004D1936  Unknown               Unknown  Unknown
+work15b-all        000000000047C3A2  Unknown               Unknown  Unknown
+work15b-all        000000000042518C  Unknown               Unknown  Unknown
+work15b-all        00000000004246AC  Unknown               Unknown  Unknown
+work15b-all        0000000000440953  Unknown               Unknown  Unknown
+work15b-all        0000000000411978  Unknown               Unknown  Unknown
+work15b-all        0000000000403E29  Unknown               Unknown  Unknown
+work15b-all        0000000000403A4C  Unknown               Unknown  Unknown
+libc.so.6          000000322E61ED5D  Unknown               Unknown  Unknown
+work15b-all        0000000000403949  Unknown               Unknown  Unknown
