@@ -9,14 +9,14 @@ parser = optparse.OptionParser()
 parser.add_option('--rr1',
                   dest='rr1',# default='0.0d0',
                   help='pulse 1: delay in periods from the start of time')
-parser.add_option('--n1up',
-                  dest='n1up',# default='20',
+parser.add_option('--x1up',
+                  dest='x1up',# default='20',
                   help='pulse 1: number of periods for ramp-up ')
-parser.add_option('--n1plat',
-                  dest='n1plat',# default='0',
+parser.add_option('--x1plat',
+                  dest='x1plat',# default='0',
                   help='pulse 1: number of periods on plateau')
-parser.add_option('--n1down',
-                  dest='n1down',# default='20',
+parser.add_option('--x1down',
+                  dest='x1down',# default='20',
                   help='pulse 1: number of periods for ramp-down')
 parser.add_option('--ww1',
                   dest='ww1',# default='0.5d0',
