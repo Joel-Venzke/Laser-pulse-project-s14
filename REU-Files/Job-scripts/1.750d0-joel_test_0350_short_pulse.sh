@@ -6,7 +6,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1.750d0-joel_test_0350_short_pulse
+TEST_DESCRIPTION=1.750d0-joel_test_0350_short_pulse_new_code
 
 
 #####
@@ -22,7 +22,7 @@ CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 WORK_DIR_FP=/work/02971/jvenzke
 
 # the full path to the compiled code 
-COMPILED_CODE_FP=$CODE_DIR_FP/work15b-all
+COMPILED_CODE_FP=$CODE_DIR_FP/work21a-ell
 
 # the full path to the input file generator
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
@@ -73,7 +73,7 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 # copy and create input files
 	cp $source_dir/$numerics_filename ./tdse.inp 
-	python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.350d0 --n1up=$p1 --n1plat=$plat --n1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
+	python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.350d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
 
 # run the code 
 	$source_dir/$code_filename > $code_filename-$p1-$plat-$p1-$p2-$p2.log 
