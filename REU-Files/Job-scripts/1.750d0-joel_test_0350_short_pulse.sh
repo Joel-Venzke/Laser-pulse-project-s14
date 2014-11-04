@@ -6,7 +6,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1.750d0-joel_test_0350_short_pulse_new_code
+TEST_DESCRIPTION=1.750d-1-joel_test_0350_short_pulse_new_code
 
 
 #####
@@ -35,7 +35,7 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-short.inp
 #####
 
 # these are the test parameters that allow you to loop through multiple tests. You may want to change these depending on your goals
-PARAMETER_1=(1.5, 2.0, 2.5, 3.0, 3.5)
+PARAMETER_1=(1.5d0 2.0d0 2.5d0 3.0d0 3.5d0 )
 PARAMETER_2=(s)
 
 
