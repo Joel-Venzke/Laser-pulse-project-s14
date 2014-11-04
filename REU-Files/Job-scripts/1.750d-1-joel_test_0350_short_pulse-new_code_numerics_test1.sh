@@ -6,7 +6,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1.750d-1-joel_test_0350_short_pulse_new_code
+TEST_DESCRIPTION=1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test1
 
 
 #####
@@ -28,14 +28,14 @@ COMPILED_CODE_FP=$CODE_DIR_FP/work21a-ell
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-short.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-short_numerics-test-1_20141103.inp
 
 #####
 # TEST PARAMETERS: changes these to create tests with different inputs
 #####
 
 # these are the test parameters that allow you to loop through multiple tests. You may want to change these depending on your goals
-PARAMETER_1=(1.5d0 2.0d0 2.5d0 3.0d0 3.5d0 )
+PARAMETER_1=(3.5d0)
 PARAMETER_2=(s)
 
 
