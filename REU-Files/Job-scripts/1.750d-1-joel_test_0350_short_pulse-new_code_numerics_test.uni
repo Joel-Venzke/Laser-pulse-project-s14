@@ -17,3 +17,4 @@ cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
 ./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test1.sh
 ./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test2.sh
+./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test3.sh
