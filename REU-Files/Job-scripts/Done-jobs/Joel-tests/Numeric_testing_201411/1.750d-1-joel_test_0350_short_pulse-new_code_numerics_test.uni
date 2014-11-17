@@ -4,7 +4,7 @@
 #SBATCH -e  1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
-#SBATCH -t  10:00:00
+#SBATCH -t  16:00:00
 
 export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
@@ -23,5 +23,8 @@ cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 #./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test6.sh
 #./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test7.sh
 #./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test8.sh
-./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test9.sh
-./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test10.sh
+#./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test9.sh
+#./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test10.sh
+#./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test11.sh
+#./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test12.sh
+./1.750d-1-joel_test_0350_short_pulse-new_code_numerics_test13.sh
