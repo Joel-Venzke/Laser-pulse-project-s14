@@ -72,7 +72,7 @@ cd ..
 # begin the main loop for the tests. This will do all possible combinations of the elements of the parameter lists
 for p1 in ${PARAMETER_1[*]}; do
     for p2 in ${PARAMETER_2[*]}; do	
-    	for p3 in ${PARAMETERS_3[*]}; do
+    	for p3 in ${PARAMETER_3[*]}; do
 
 # compute the number of cycles for the plateau from the ramp up/down
 		let "plat = 0"
