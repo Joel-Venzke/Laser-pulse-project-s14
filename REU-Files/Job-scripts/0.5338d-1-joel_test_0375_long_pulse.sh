@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1.750d-1-joel_test_0350_short_pulse
+TEST_DESCRIPTION=0.5338d-1-joel_test_0375_long_pulse
 
 
 #####
@@ -34,7 +34,7 @@ COMPILED_CODE_FP=$CODE_DIR_FP/work25
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3.5cycle.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-40cycle.inp
 
 #####
 # TEST PARAMETERS: changes these to create tests with different inputs
@@ -42,9 +42,9 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3.5cycle.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(1.0d0 1.5d0 2.0d0 2.5d0 3.0d0 3.5d0)
-PARAMETER_2=(s)
-PARAMETER_3=(90.0d0)
+PARAMETER_1=(20d0)
+PARAMETER_2=(s t g)
+PARAMETER_3=(0.0d0 90.0d0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -73,16 +73,16 @@ cd ..
 for p1 in ${PARAMETER_1[*]}; do
     for p2 in ${PARAMETER_2[*]}; do	
     	for p3 in ${PARAMETERS_3[*]}; do
-
+    	
 # compute the number of cycles for the plateau from the ramp up/down
 		let "plat = 0"
 
 		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION_CEP-$p3-$p1-$plat-$p1-$p2-$p2
 		cd $WORK_DIR_FP/$TEST_DESCRIPTION_CEP-$p3-$p1-$plat-$p1-$p2-$p2
-		
+			
 # copy and create input files
 		cp $source_dir/$numerics_filename ./tdse.inp 
-		python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.350d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
+		python2.6 $INP_FILE_GEN_FP --ee1=0.5338d-1 --ww1=0.375d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
 # run the code 
 		$source_dir/$code_filename > $code_filename_CEP-$p3-$p1-$plat-$p1-$p2-$p2.log 
