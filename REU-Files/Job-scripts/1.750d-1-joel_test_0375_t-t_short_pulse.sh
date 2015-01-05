@@ -77,15 +77,15 @@ for p1 in ${PARAMETER_1[*]}; do
 # compute the number of cycles for the plateau from the ramp up/down
 		let "plat = 0"
 
-		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION_CEP-$p3-$p1-$plat-$p1-$p2-$p2
-		cd $WORK_DIR_FP/$TEST_DESCRIPTION_CEP-$p3-$p1-$plat-$p1-$p2-$p2
+		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
+		cd $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
 		
 # copy and create input files
 		cp $source_dir/$numerics_filename ./tdse.inp 
 		python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.375d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
 # run the code 
-		$source_dir/$code_filename > $code_filename_CEP-$p3-$p1-$plat-$p1-$p2-$p2.log 
+		$source_dir/$code_filename > $code_filename-CEP-$p3-$p1-$plat-$p1-$p2-$p2.log 
 
 # go up a dir and run the next test
 		cd ..
