@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J  1.750d-1-joel_test_0375_s-s_short_pulse_CEP-0.nam
-#SBATCH -o  1.750d-1-joel_test_0375_s-s_short_pulse_CEP-0.log
-#SBATCH -e  1.750d-1-joel_test_0375_s-s_short_pulse_CEP-0.err
+#SBATCH -J  1.750d-1-joel_test_0350_g-g_short_pulse.nam
+#SBATCH -o  1.750d-1-joel_test_0350_g-g_short_pulse.log
+#SBATCH -e  1.750d-1-joel_test_0350_g-g_short_pulse.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
 #SBATCH -t  48:00:00
@@ -15,4 +15,4 @@ export KMP_STACKSIZE=16m
 cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
-./1.750d-1-joel_test_0375_s-s_short_pulse_CEP-0.sh
+./1.750d-1-joel_test_0350_g-g_short_pulse.sh

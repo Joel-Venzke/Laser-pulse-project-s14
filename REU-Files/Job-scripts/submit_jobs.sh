@@ -1,6 +1,6 @@
 for i in $( ls ); 
 do 
-	if ( echo $i | grep -q "CEP-0.uni" ) ; then
+	if ( echo $i | grep -q "short_pulse.uni" ) ; then
 		echo $i;
 		sbatch $i;
 	fi
