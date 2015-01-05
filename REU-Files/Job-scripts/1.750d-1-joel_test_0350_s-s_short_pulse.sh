@@ -56,11 +56,11 @@ code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
 
 # copy code to the work dir
-mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
+mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src-9
 
 # get the full path to the source (src) directory that just was created
 # you should NOT change this code!
-cd $WORK_DIR_FP/$TEST_DESCRIPTION-src   
+cd $WORK_DIR_FP/$TEST_DESCRIPTION-src-9   
 source_dir=$(pwd)
 
 cp $COMPILED_CODE_FP .
