@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1p11-
+TEST_DESCRIPTION=1p11
 
 
 #####
@@ -78,10 +78,10 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 	# copy and create input files
 	cp $source_dir/$numerics_filename ./tdse.inp 
-	python2.6 $INP_FILE_GEN_FP --ee1=$p1 --ww1=0.350d0 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 > pulse.inp
+	python2.6 $INP_FILE_GEN_FP --ee1=1.688d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 > pulse.inp
 
 	# run the code 
-	$source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del000-0p225
+	$source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del000-0p225.log
 
 	# go up a dir and run the next test
 	cd ..
