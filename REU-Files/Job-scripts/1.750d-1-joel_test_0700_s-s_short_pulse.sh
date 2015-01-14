@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1.750d-1-joel_test_0350_short_pulse
+TEST_DESCRIPTION=1.750d-1-joel_test_0700_short_pulse
 
 
 #####
@@ -42,9 +42,9 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3.5cycle.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(1.0d0 1.5d0 2.0d0 2.5d0 3.0d0 3.5d0)
+PARAMETER_1=(2.5d0)
 PARAMETER_2=(s)
-PARAMETER_3=(90.0d0)
+PARAMETER_3=(0.0d0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -82,7 +82,7 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 # copy and create input files
 		cp $source_dir/$numerics_filename ./tdse.inp 
-		python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.350d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
+		python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.700d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
 # run the code 
 		$source_dir/$code_filename > $code_filename-CEP-$p3-$p1-$plat-$p1-$p2-$p2.log 
