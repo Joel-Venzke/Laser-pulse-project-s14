@@ -54,11 +54,11 @@ code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
 
 # copy code to the work dir
-mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src-4
+mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
 
 # get the full path to the source (src) directory that just was created
 # you should NOT change this code!
-cd $WORK_DIR_FP/$TEST_DESCRIPTION-src-4   
+cd $WORK_DIR_FP/$TEST_DESCRIPTION-src   
 source_dir=$(pwd)
 
 cp $COMPILED_CODE_FP .
@@ -73,7 +73,7 @@ for p1 in ${PARAMETER_1[*]}; do
 # compute the number of cycles for the plateau from the ramp up/down
 	let "plat = 0"
 
-	mkdir $WORK_DIR_FP/$TEST_DESCRIPTION
+	mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del000-0p225
 	cd $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del000-0p225
 		
 	# copy and create input files

@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J  0.5338d-1-joel_test_0350_long_pulse.nam
-#SBATCH -o  0.5338d-1-joel_test_0350_long_pulse.log
-#SBATCH -e  0.5338d-1-joel_test_0350_long_pulse.err
+#SBATCH -J 1p11.nam
+#SBATCH -o 1p11.log
+#SBATCH -e 1p11.err 
 #SBATCH -N  1  -n  1
 #SBATCH -p  development
 #SBATCH -t  2:00:00
