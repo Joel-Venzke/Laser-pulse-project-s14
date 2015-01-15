@@ -115,5 +115,5 @@ for i in range(len(inputs)):
             else:
                 first = False
             sys.stdout.write(inputs[i][0] +' = ' + inputs[i][1])
-
+sys.stdout.write(' /\n')
 
