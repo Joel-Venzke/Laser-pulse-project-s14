@@ -57,7 +57,7 @@ parser.add_option('--ee2',
                   dest='ee2',# default='0.05338d0',
                   help='pulse 2: amplitude in atomic units')
 parser.add_option('--alph2',
-                  dest='alph2',# default='1.0d0',
+                  dest='alph2', default='0.0d0',
                   help='pulse 2: factor by which e2 is multiplied')
 parser.add_option('--s2up',
                   dest='shape2up',# default='s',
