@@ -42,7 +42,8 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(0.3300 0.3400 0.3500 0.3550 0.3600 0.3625 0.3650 0.3675 0.3700 0.3725 0.3750 0.3775 0.3800 0.3825 0.3850 0.3875 0.3900 0.3950 0.4000 0.4100)
+# PARAMETER_1=(0.3300 0.3400 0.3500 0.3550 0.3600 0.3625 0.3650 0.3675 0.3700 0.3725 0.3750 0.3775 0.3800 0.3825 0.3850 0.3875 0.3900 0.3950 0.4000 0.4100)
+PARAMETER_1=(0.2700 0.2800 0.2900 0.3000 0.3100 0.3200 0.4200 0.4300 0.4300 0.4400 0.4500 0.4600)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -69,7 +70,7 @@ cd ..
 
 # begin the main loop for the tests. This will do all possible combinations of the elements of the parameter lists
 for p1 in ${PARAMETER_1[*]}; do
-    	
+
 # compute the number of cycles for the plateau from the ramp up/down
 	let "plat = 0"
 
