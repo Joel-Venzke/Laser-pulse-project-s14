@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=0.5338d-1-joel_test_0700_long_pulse
+TEST_DESCRIPTION=0.5338d-1-joel_test_0350_long_pulse
 
 
 #####
@@ -56,11 +56,11 @@ code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
 
 # copy code to the work dir
-mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
+mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src-4
 
 # get the full path to the source (src) directory that just was created
 # you should NOT change this code!
-cd $WORK_DIR_FP/$TEST_DESCRIPTION-src
+cd $WORK_DIR_FP/$TEST_DESCRIPTION-src-4   
 source_dir=$(pwd)
 
 cp $COMPILED_CODE_FP .
@@ -82,7 +82,7 @@ for p1 in ${PARAMETER_1[*]}; do
 			
 # copy and create input files
 		cp $source_dir/$numerics_filename ./tdse.inp 
-		python2.6 $INP_FILE_GEN_FP --ee1=0.5338d-1 --ww1=0.700d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
+		python2.6 $INP_FILE_GEN_FP --ee1=0.5338d-1 --ww1=0.350d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
 # run the code 
 		$source_dir/$code_filename > $code_filename-CEPA-$p3-$p1-$plat-$p1-$p2-$p2.log 
