@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1p11-1.688d-2
+TEST_DESCRIPTION=1.750d-1-joel_test_0700_short_pulse
 
 
 #####
@@ -28,13 +28,13 @@ CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 WORK_DIR_FP=/work/02971/jvenzke
 
 # the full path to the compiled code 
-COMPILED_CODE_FP=$CODE_DIR_FP/work25
+COMPILED_CODE_FP=$CODE_DIR_FP/work26
 
 # the full path to the input file generator
-INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator_2.py
+INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3.5cycle.inp
 
 #####
 # TEST PARAMETERS: changes these to create tests with different inputs
@@ -42,8 +42,9 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-# PARAMETER_1=(0.3300 0.3400 0.3500 0.3550 0.3600 0.3625 0.3650 0.3675 0.3700 0.3725 0.3750 0.3775 0.3800 0.3825 0.3850 0.3875 0.3900 0.3950 0.4000 0.4100)
-PARAMETER_1=(0.2700 0.2800 0.2900 0.3000 0.3100 0.3200 0.4200 0.4300 0.4300 0.4400 0.4500 0.4600)
+PARAMETER_1=(2.5d0 3.0d0 3.5d0)
+PARAMETER_2=(s)
+PARAMETER_3=(090.0d0 180.0d0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -55,11 +56,11 @@ code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
 
 # copy code to the work dir
-mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
+mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src-1
 
 # get the full path to the source (src) directory that just was created
 # you should NOT change this code!
-cd $WORK_DIR_FP/$TEST_DESCRIPTION-src   
+cd $WORK_DIR_FP/$TEST_DESCRIPTION-src-1   
 source_dir=$(pwd)
 
 cp $COMPILED_CODE_FP .
@@ -70,21 +71,24 @@ cd ..
 
 # begin the main loop for the tests. This will do all possible combinations of the elements of the parameter lists
 for p1 in ${PARAMETER_1[*]}; do
+    for p2 in ${PARAMETER_2[*]}; do	
+    	for p3 in ${PARAMETER_3[*]}; do
 
 # compute the number of cycles for the plateau from the ramp up/down
-	let "plat = 0"
+		let "plat = 0"
 
-	mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del000-0p225
-	cd $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del000-0p225
+		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-CEPA-$p3-$p1-$plat-$p1-$p2-$p2
+		cd $WORK_DIR_FP/$TEST_DESCRIPTION-CEPA-$p3-$p1-$plat-$p1-$p2-$p2
 		
-	# copy and create input files
-	cp $source_dir/$numerics_filename ./tdse.inp 
-	python2.6 $INP_FILE_GEN_FP --ee1=1.688d-2 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 > pulse.inp
+# copy and create input files
+		cp $source_dir/$numerics_filename ./tdse.inp 
+		python2.6 $INP_FILE_GEN_FP --ee1=1.750d-1 --ww1=0.700d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
-	# run the code 
-	$source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del000-0p225.log
+# run the code 
+		$source_dir/$code_filename > $code_filename-CEPA-$p3-$p1-$plat-$p1-$p2-$p2.log 
 
-	# go up a dir and run the next test
-	cd ..
-
+# go up a dir and run the next test
+		cd ..
+		done
+    done
 done 
