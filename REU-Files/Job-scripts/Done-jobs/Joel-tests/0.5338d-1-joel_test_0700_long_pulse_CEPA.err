@@ -1,0 +1,5 @@
+mkdir: cannot create directory `/work/02971/jvenzke/0.5338d-1-joel_test_0700_long_pulse-src': File exists
+cp: cannot create regular file `./work26': Text file busy
+mkdir: cannot create directory `/work/02971/jvenzke/0.5338d-1-joel_test_0700_long_pulse-CEPA-090.0d0-20d0-0-20d0-s-s': File exists
+slurmd[c404-601]: *** JOB 4759529 CANCELLED AT 2015-01-24T16:46:35 ***
+mkdir: cannot create directory `/work/02971/jvenzke/0.5338d-1-joel_test_0700_long_pulse-CEPA-180.0d0-20d0-0-20d0-s-s': File exists
