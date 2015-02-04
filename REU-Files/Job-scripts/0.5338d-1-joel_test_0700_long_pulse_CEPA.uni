@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -J  1.750d-1-joel_test_0350_s-s_short_pulse_CEPA.nam
-#SBATCH -o  1.750d-1-joel_test_0350_s-s_short_pulse_CEPA.log
-#SBATCH -e  1.750d-1-joel_test_0350_s-s_short_pulse_CEPA.err
+#SBATCH -J  0.5338d-1-joel_test_0700_long_pulse_CEPA.nam
+#SBATCH -o  0.5338d-1-joel_test_0700_long_pulse_CEPA.log
+#SBATCH -e  0.5338d-1-joel_test_0700_long_pulse_CEPA.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
-#SBATCH -t  8:00:00
+#SBATCH -t  48:00:00
 
 export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
@@ -15,4 +15,4 @@ export KMP_STACKSIZE=16m
 cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
-./1.750d-1-joel_test_0350_s-s_short_pulse_CEPA.sh
+./0.5338d-1-joel_test_0700_long_pulse_CEPA.sh

@@ -42,9 +42,9 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3.5cycle.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(1.5d0 2.0d0)
+PARAMETER_1=(2.25d0 2.75d0 3.25d0)
 PARAMETER_2=(s)
-PARAMETER_3=(090.0d0 180.0d0)
+PARAMETER_3=(090.0d0 135.0d0 180.0d0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
