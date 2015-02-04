@@ -28,7 +28,7 @@ CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 WORK_DIR_FP=/work/02971/jvenzke
 
 # the full path to the compiled code 
-COMPILED_CODE_FP=$CODE_DIR_FP/work26
+COMPILED_CODE_FP=$CODE_DIR_FP/work25
 
 # the full path to the input file generator
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
@@ -44,7 +44,7 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-40cycle.inp
 # You may want to change these depending on your goals
 PARAMETER_1=(2.0)
 PARAMETER_2=(s)
-PARAMETER_3=(090.0d0)
+PARAMETER_3=(0.0d0)
 PARAMETER_4=(1.0 2.0 4.0 8.0 16.0 24.0)
 
 #####
@@ -76,15 +76,15 @@ for p1 in ${PARAMETER_1[*]}; do
     	for p3 in ${PARAMETER_3[*]}; do
         	for plat in ${PARAMETER_4[*]}; do
 
-				mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-CEPA-$p3-$p1-$plat-$p1-$p2-$p2
-				cd $WORK_DIR_FP/$TEST_DESCRIPTION-CEPA-$p3-$p1-$plat-$p1-$p2-$p2
+				mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
+				cd $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
 					
 				# copy and create input files
 				cp $source_dir/$numerics_filename ./tdse.inp 
 				python2.6 $INP_FILE_GEN_FP --ee1=0.5338d-1 --ww1=0.700d0 --x1up=$p1 --x1plat=$plat --x1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' --cep1=$p3 > pulse.inp
 
 				# run the code 
-				$source_dir/$code_filename > $code_filename-CEPA-$p3-$p1-$plat-$p1-$p2-$p2.log 
+				$source_dir/$code_filename > $code_filename-CEP-$p3-$p1-$plat-$p1-$p2-$p2.log 
 
 				# go up a dir and run the next test
 				cd ..
