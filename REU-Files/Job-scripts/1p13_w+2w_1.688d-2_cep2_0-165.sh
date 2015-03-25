@@ -42,8 +42,8 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2_overlap.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(0.3750)
-PARAMETER_2=(000.0d0 045.0d0 090.0d0 135.0d0 180.0d0)
+PARAMETER_1=(0.3400 0.3600 0.3750 0.3900 0.4100)
+PARAMETER_2=(000.0d0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
