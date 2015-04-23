@@ -14,5 +14,5 @@ export KMP_STACKSIZE=16m
 cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
-./$PBS_JOBNAME.sh
+./titan.sh
 
