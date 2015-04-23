@@ -42,7 +42,7 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-40cycle.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(1.5d0 2.0d0 2.5d0 3.0d0 3.5d0 4.0d0 5.5d0 6.0d0)
+PARAMETER_1=(1.5 2.0 2.5 3.0 3.5 4.0 5.5 6.0)
 PARAMETER_2=(s)
 PARAMETER_3=(0.0d0)
 
@@ -75,7 +75,7 @@ for p1 in ${PARAMETER_1[*]}; do
     	for p3 in ${PARAMETER_3[*]}; do
     	
 # compute the number of cycles for the plateau from the ramp up/down
-		let "plat = 40.0 - (2.0 * $p1)"
+		plat=$(echo 40\-2.0*$p1 |bc -l)
 
 		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
 		cd $WORK_DIR_FP/$TEST_DESCRIPTION-CEP-$p3-$p1-$plat-$p1-$p2-$p2
