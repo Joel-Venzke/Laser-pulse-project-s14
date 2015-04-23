@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1p12-5.338d-2
+TEST_DESCRIPTION=$PBS_JOBNAME
 
 
 #####
@@ -21,11 +21,11 @@ TEST_DESCRIPTION=1p12-5.338d-2
 
 # the full path to your Development directory
 # to find the path, type "pwd" in your Development dir 
-CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
+CODE_DIR_FP=/ccs/home/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 
 # the full path to your Work direcoty
 # to find the path, type "cdw" to go to your work directory, then "pwd" 
-WORK_DIR_FP=/work/02971/jvenzke
+WORK_DIR_FP=/lustre/atlas/scratch/jvenzke/mph105
 
 # the full path to the compiled code 
 COMPILED_CODE_FP=$CODE_DIR_FP/work25
@@ -42,8 +42,7 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2_overlap.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-#PARAMETER_1=(0.3600 0.3700 0.3800 0.3900)
-PARAMETER_1=(0.3400 0.4100)
+PARAMETER_1=(0.3400)
 PARAMETER_2=(000.0d0)
 
 #####
@@ -83,7 +82,7 @@ for p1 in ${PARAMETER_1[*]}; do
 		python2.6 $INP_FILE_GEN_FP --ee1=5.338d-2 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 > pulse.inp
 
 		# run the code 
-		$source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del$p2-0p225.log
+		aprun -d16 $source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del$p2-0p225.log
 
 		# go up a dir and run the next test
 		cd ..
