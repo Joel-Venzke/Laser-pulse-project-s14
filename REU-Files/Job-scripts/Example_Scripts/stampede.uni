@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH -J  example.nam
-#SBATCH -o  example.log
-#SBATCH -e  example.err
+#SBATCH -J  stampede.nam
+#SBATCH -o  stampede.log
+#SBATCH -e  stampede.err
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
 #SBATCH -t  8:00:00
@@ -15,4 +15,4 @@ export KMP_STACKSIZE=16m
 cd /home1/02603/jemmons/physics-capstone/REU-Files/Job-scripts
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
-./example.sh
+./stampede.sh
