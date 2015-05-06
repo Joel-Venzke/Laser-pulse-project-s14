@@ -56,15 +56,15 @@ code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
 
 # copy code to the work dir
-# mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
+mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
 
-# # get the full path to the source (src) directory that just was created
-# # you should NOT change this code!
-# cd $WORK_DIR_FP/$TEST_DESCRIPTION-src   
-# source_dir=$(pwd)
+# get the full path to the source (src) directory that just was created
+# you should NOT change this code!
+cd $WORK_DIR_FP/$TEST_DESCRIPTION-src   
+source_dir=$(pwd)
 
-# cp $COMPILED_CODE_FP .
-# cp $NUMERICS_INPUT_FP . 
+cp $COMPILED_CODE_FP .
+cp $NUMERICS_INPUT_FP . 
 
 # go up a directory and run the tests
 cd ..
@@ -76,19 +76,18 @@ for p1 in ${PARAMETER_1[*]}; do
 			# compute the number of cycles for the plateau from the ramp up/down
 			let "plat = 0"
 			TMP_FILENAME=$TEST_DESCRIPTION-$p1-$p2-$p3-0p225
-			echo ${TMP_FILENAME}
-			# mkdir $WORK_DIR_FP/${TMP_FILENAME}
-			# cd $WORK_DIR_FP/${TMP_FILENAME}
+			mkdir $WORK_DIR_FP/${TMP_FILENAME}
+			cd $WORK_DIR_FP/${TMP_FILENAME}
 				
-			# # copy and create input files
-			# cp $source_dir/$numerics_filename ./tdse.inp 
-			# python2.6 $INP_FILE_GEN_FP --ee1=5.338d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 --rr2=$p3 > pulse.inp
+			# copy and create input files
+			cp $source_dir/$numerics_filename ./tdse.inp 
+			python2.6 $INP_FILE_GEN_FP --ee1=5.338d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 --rr2=$p3 > pulse.inp
 
-			# # run the code 
-			# $source_dir/$code_filename > $code_filename-${TMP_FILENAME}.log
+			# run the code 
+			$source_dir/$code_filename > $code_filename-${TMP_FILENAME}.log
 
-			# # go up a dir and run the next test
-			# cd ..
+			# go up a dir and run the next test
+			cd ..
 		done
 	done
 done 
