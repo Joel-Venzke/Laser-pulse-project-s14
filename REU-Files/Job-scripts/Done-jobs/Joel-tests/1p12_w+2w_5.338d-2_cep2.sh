@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=1p12-5.338d-3
+TEST_DESCRIPTION=1p12-5.338d-2
 
 
 #####
@@ -42,7 +42,8 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2_overlap.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(0.3750)
+#PARAMETER_1=(0.3600 0.3700 0.3800 0.3900)
+PARAMETER_1=(0.3400 0.4100)
 PARAMETER_2=(000.0d0)
 
 #####
@@ -79,7 +80,7 @@ for p1 in ${PARAMETER_1[*]}; do
 			
 		# copy and create input files
 		cp $source_dir/$numerics_filename ./tdse.inp 
-		python2.6 $INP_FILE_GEN_FP --ee1=5.338d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 > pulse.inp
+		python2.6 $INP_FILE_GEN_FP --ee1=5.338d-2 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 > pulse.inp
 
 		# run the code 
 		$source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del$p2-0p225.log
