@@ -1,46 +1,54 @@
 #!/bin/bash
 
-# This is a shell script that automates the running of multiple jobs. To get the script running on your account, you should only have to change the environment variables (the ones in all capital letters). If you want to change the behavior of the code you WILL have to edit some of code in the "begin script section"
+# This is a shell script that automates the running of multiple jobs. 
+# To get the script running on your account, you should only have to 
+# change the environment variables (the ones in all capital letters). 
+# If you want to change the behavior of the code you WILL have to edit 
+# some of code in the "begin script section"
 
 #####
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=Short-dir-name #this will prefix the output directory name 
+TEST_DESCRIPTION=1p12
 
 
 #####
-# SET THE ENVIRONMENT VARIABLES: you should only have to set these once. The information below is for John Emmons' account, so make sure you change the code to match where you have put the code
+# SET THE ENVIRONMENT VARIABLES: you should only have to set these once. 
+# The information below is for Joel Venzke's account, so make sure you 
+# change the code to match where you have put the code
 #####
 
 # the full path to your Development directory
 # to find the path, type "pwd" in your Development dir 
-CODE_DIR_FP=/home1/02603/jemmons/physics-capstone/REU-Files/Development
+CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 
 # the full path to your Work direcoty
 # to find the path, type "cdw" to go to your work directory, then "pwd" 
-WORK_DIR_FP=/work/02603/jemmons 
+WORK_DIR_FP=/work/02971/jvenzke
 
 # the full path to the compiled code 
-COMPILED_CODE_FP=$CODE_DIR_FP/work15b-all
+COMPILED_CODE_FP=$CODE_DIR_FP/work25
 
 # the full path to the input file generator
-INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator.py
+INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator_2pulse.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-40cycle.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2_overlap.inp
 
 #####
 # TEST PARAMETERS: changes these to create tests with different inputs
 #####
 
-# these are the test parameters that allow you to loop through multiple tests. You may want to change these depending on your goals
-PARAMETER_1=(2)
-PARAMETER_2=(s)
-
+# these are the test parameters that allow you to loop through multiple tests. 
+# You may want to change these depending on your goals
+PARAMETER_1=(0.360 0.375 0.390)
+PARAMETER_2=(000.0 045.0 090.0 135.0)
+PARAMETER_3=(0.0 0.5 1.0 1.5 2.0)
 
 #####
-# BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to change the behavior of the code or change the way tests are run.
+# BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
+# change the behavior of the code or change the way tests are run.
 #####
 
 # get the name of the compiled code and numerics file
@@ -63,23 +71,24 @@ cd ..
 
 # begin the main loop for the tests. This will do all possible combinations of the elements of the parameter lists
 for p1 in ${PARAMETER_1[*]}; do
-    for p2 in ${PARAMETER_2[*]}; do	
+    for p2 in ${PARAMETER_2[*]}; do
+    	for p3 in ${PARAMETER_3[*]}; do
+			# compute the number of cycles for the plateau from the ramp up/down
+			let "plat = 0"
+			TMP_FILENAME=$TEST_DESCRIPTION-$p1-$p2-$p3-0p225
+			# echo ${TMP_FILENAME}
+			mkdir $WORK_DIR_FP/${TMP_FILENAME}
+			cd $WORK_DIR_FP/${TMP_FILENAME}
+				
+			# copy and create input files
+			cp $source_dir/$numerics_filename ./tdse.inp 
+			python2.6 $INP_FILE_GEN_FP --ee1=5.338d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 --rr2=$p3 > pulse.inp
 
-# compute the number of cycles for the plateau from the ramp up/down
-	let "plat = 40 - (2 * $p1)"
+			# run the code 
+			$source_dir/$code_filename > run.log
 
-	mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-$plat-$p1-$p2-$p2
-	cd $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-$plat-$p1-$p2-$p2
-		
-# copy and create input files
-	cp $source_dir/$numerics_filename ./tdse.inp 
-	python2.6 $INP_FILE_GEN_FP --ee1=0.5338d-1 --ww1=0.440d0 --n1up=$p1 --n1plat=$plat --n1down=$p1 --s1up=\'$p2\' --s1down=\'$p2\' > pulse.inp
-
-# run the code 
-	$source_dir/$code_filename > $code_filename-$p1-$plat-$p1-$p2-$p2.log 
-
-# go up a dir and run the next test
-	cd ..
-
-    done
+			# go up a dir and run the next test
+			cd ..
+		done
+	done
 done 

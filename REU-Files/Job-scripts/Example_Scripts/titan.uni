@@ -2,8 +2,7 @@
 #PBS -A mph105
 #PBS -N titan
 #PBS -j oe
-#PBS -l walltime=0:20:00,nodes=1
-#PBS -m e 
+#PBS -l walltime=24:00:00,nodes=1
 
 export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
@@ -14,5 +13,5 @@ export KMP_STACKSIZE=16m
 cd /ccs/home/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts/
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
-./Example_Scripts/titan.sh
+./titan.sh
 

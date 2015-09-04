@@ -10,12 +10,12 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=$PBS_JOBNAME-2
+TEST_DESCRIPTION=1p12
 
 
 #####
 # SET THE ENVIRONMENT VARIABLES: you should only have to set these once. 
-# The information below is for John Emmons' account, so make sure you 
+# The information below is for Joel Venzke's account, so make sure you 
 # change the code to match where you have put the code
 #####
 
@@ -42,8 +42,9 @@ NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-w2_overlap.inp
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=(0.3400)
-PARAMETER_2=(000.0d0)
+PARAMETER_1=(0.360 0.375 0.390)
+PARAMETER_2=(000.0 045.0 090.0 135.0)
+PARAMETER_3=(0.0 0.5 1.0 1.5 2.0)
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -71,20 +72,23 @@ cd ..
 # begin the main loop for the tests. This will do all possible combinations of the elements of the parameter lists
 for p1 in ${PARAMETER_1[*]}; do
     for p2 in ${PARAMETER_2[*]}; do
-		# compute the number of cycles for the plateau from the ramp up/down
-		let "plat = 0"
+    	for p3 in ${PARAMETER_3[*]}; do
+			# compute the number of cycles for the plateau from the ramp up/down
+			let "plat = 0"
+			TMP_FILENAME=$TEST_DESCRIPTION-$p1-$p2-$p3-0p225
+			# echo ${TMP_FILENAME}
+			mkdir $WORK_DIR_FP/${TMP_FILENAME}
+			cd $WORK_DIR_FP/${TMP_FILENAME}
+				
+			# copy and create input files
+			cp $source_dir/$numerics_filename ./tdse.inp 
+			python2.6 $INP_FILE_GEN_FP --ee1=5.338d-3 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 --rr2=$p3 > pulse.inp
 
-		mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del$p2-0p225
-		cd $WORK_DIR_FP/$TEST_DESCRIPTION-$p1-ss20-cep000-del$p2-0p225
-			
-		# copy and create input files
-		cp $source_dir/$numerics_filename ./tdse.inp 
-		python2.6 $INP_FILE_GEN_FP --ee1=5.338d-2 --ww1=$p1 --x1up=20.0d0 --x1plat=0.0d0 --x1down=20.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 --alph2=0.225d0 --cep2=$p2 > pulse.inp
+			# run the code 
+			aprun -d16 $source_dir/$code_filename > run.log
 
-		# run the code 
-		aprun -d16 $source_dir/$code_filename > $code_filename-$p1-ss20-cep000-del$p2-0p225.log
-
-		# go up a dir and run the next test
-		cd ..
+			# go up a dir and run the next test
+			cd ..
+		done
 	done
 done 
