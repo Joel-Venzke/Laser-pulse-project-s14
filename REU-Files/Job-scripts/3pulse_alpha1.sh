@@ -35,6 +35,7 @@ INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator_3pulse.py
 
 # the full path to the tdse*.inp file you are using
 NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3pulse-IR.inp
+NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 #####
 # TEST PARAMETERS: changes these to create tests with different inputs
@@ -52,6 +53,7 @@ PARAMETER_1=( 1.0d0 )
 # get the name of the compiled code and numerics file
 code_filename=$(basename $COMPILED_CODE_FP)
 numerics_filename=$(basename $NUMERICS_INPUT_FP) 
+ne_filename=$(basename $NE_INPUT_FP) 
 
 # copy code to the work dir
 mkdir $WORK_DIR_FP/$TEST_DESCRIPTION-src
@@ -63,6 +65,7 @@ source_dir=$(pwd)
 
 cp $COMPILED_CODE_FP .
 cp $NUMERICS_INPUT_FP . 
+cp $NE_INPUT_FP .
 
 # go up a directory and run the tests
 cd ..
@@ -77,7 +80,10 @@ for p1 in ${PARAMETER_1[*]}; do
 		
 	# copy and create input files
 	cp $source_dir/$numerics_filename ./tdse.inp 
-	python2.6 $INP_FILE_GEN_FP --alph1=$p1 --ee1=5.338d-3 --ww1=0.7092d0 --x1up=150.0d0 --x1plat=0.0d0 --x1down=150.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
+	cp $source_dir/$ne_filename ./ne.wfn 
+
+	# create pulse.inp
+	python2.6 $INP_FILE_GEN_FP --alph1=$p1 --ee1=5.338d-3 --ww1=0.7092d0 --x1up=125.0d0 --x1plat=0.0d0 --x1down=125.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
 	--alph2=0.0d0 --rr2=0.0d0 \
 	--alph3=0.d0 --ee3=5.338d-4 --ww3=0.06d0 --x3up=3.00d0 --x3plat=0.0d0 --x3down=3.00d0 > pulse.inp
 

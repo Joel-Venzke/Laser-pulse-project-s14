@@ -1,10 +1,10 @@
 #!/bin/bash
-#SBATCH -J 5.338d-3_pulse2_delay.nam
-#SBATCH -o 5.338d-3_pulse2_delay.log
-#SBATCH -e 5.338d-3_pulse2_delay.err 
+#SBATCH -J 3pulse_alpha1.nam
+#SBATCH -o 3pulse_alpha1.log
+#SBATCH -e 3pulse_alpha1.err 
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
-#SBATCH -t  24:00:00
+#SBATCH -t  8:00:00
 
 export OMP_NUM_THREADS=16
 export KMP_STACKSIZE=16m
