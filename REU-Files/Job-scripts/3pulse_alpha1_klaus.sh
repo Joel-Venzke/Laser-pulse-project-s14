@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=3pulse
+TEST_DESCRIPTION=3pulse_klaus
 
 
 #####
@@ -28,13 +28,13 @@ CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
 WORK_DIR_FP=/work/02971/jvenzke
 
 # the full path to the compiled code 
-COMPILED_CODE_FP=$CODE_DIR_FP/work29
+COMPILED_CODE_FP=$CODE_DIR_FP/work-29
 
 # the full path to the input file generator
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator_3pulse.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3pulse-IR.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3pulse-IR-klaus.inp
 NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 #####
