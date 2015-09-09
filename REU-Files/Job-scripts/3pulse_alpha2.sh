@@ -10,7 +10,7 @@
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=3pulse_klaus5
+TEST_DESCRIPTION=3pulse
 
 
 #####
@@ -34,7 +34,7 @@ COMPILED_CODE_FP=$CODE_DIR_FP/work-29
 INP_FILE_GEN_FP=$CODE_DIR_FP/Input-files/input_generator_3pulse.py
 
 # the full path to the tdse*.inp file you are using
-NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3pulse-IR-klaus5.inp
+NUMERICS_INPUT_FP=$CODE_DIR_FP/Input-files/tdse-3pulse-IR-klaus.inp
 NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 #####
@@ -43,7 +43,7 @@ NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=( 1.0d0 )
+PARAMETER_1=( 0.125d0 0.225d0 0.350d0 0.500d0 )
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
@@ -74,7 +74,7 @@ cd ..
 for p1 in ${PARAMETER_1[*]}; do
 	# compute the number of cycles for the plateau from the ramp up/down
 	let "plat = 0"
-	TMP_FILENAME=$TEST_DESCRIPTION-$p1-0.0d0
+	TMP_FILENAME=$TEST_DESCRIPTION-0.0d0-$p1
 	mkdir $WORK_DIR_FP/${TMP_FILENAME}
 	cd $WORK_DIR_FP/${TMP_FILENAME}
 		
@@ -83,8 +83,8 @@ for p1 in ${PARAMETER_1[*]}; do
 	cp $source_dir/$ne_filename ./ne.wfn 
 
 	# create pulse.inp
-	python2.6 $INP_FILE_GEN_FP --alph1=$p1 --ee1=5.338d-3 --ww1=0.7092d0 --x1up=125.0d0 --x1plat=0.0d0 --x1down=125.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
-	--alph2=0.0d0 --rr2=0.0d0 \
+	python2.6 $INP_FILE_GEN_FP --alph1=0.0d0 --ee1=5.338d-3 --ww1=0.7092d0 --x1up=125.0d0 --x1plat=0.0d0 --x1down=125.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
+	--alph2=$p1 --rr2=0.0d0 \
 	--alph3=0.d0 --ee3=5.338d-4 --ww3=0.06d0 --x3up=3.00d0 --x3plat=0.0d0 --x3down=3.00d0 > pulse.inp
 
 	# run the code 
