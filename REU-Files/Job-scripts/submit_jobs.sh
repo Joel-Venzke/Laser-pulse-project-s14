@@ -1,7 +1,4 @@
-for i in $( ls ); 
-do 
-	if ( echo $i | grep -q ".uni" ) ; then
-		echo $i;
-		sbatch $i;
-	fi
+for i in $( ls 3pulse_rr2*.sh); do 
+	echo $i;
+	sbatch $i;
 done
