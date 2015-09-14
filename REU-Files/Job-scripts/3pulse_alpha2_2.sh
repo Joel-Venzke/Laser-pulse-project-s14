@@ -43,9 +43,7 @@ NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-#PARAMETER_1=( 0.005d0 0.010d0 0.015d0 0.020d0 )
-#PARAMETER_1=( 0.0215d0 0.0212d0 0.0217d0 )
-PARAMETER_1=( 0.0216d0 )
+PARAMETER_1=( 0.025d0 0.050d0 0.075d0 )
 
 #####
 # BEGIN THE SCRIPT BELOW: you will have to edit the code below if you want to 
