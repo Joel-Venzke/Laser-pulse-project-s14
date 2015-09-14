@@ -88,7 +88,7 @@ for p1 in ${PARAMETER_1[*]}; do
 	for p2 in ${PARAMETER_2[*]}; do
 		# compute the number of cycles for the plateau from the ramp up/down
 		let "plat = 0"
-		echo TMP_FILENAME=$TEST_DESCRIPTION-$p1-$p2
+		TMP_FILENAME=$TEST_DESCRIPTION-$p1-$p2
 		mkdir -p $WORK_DIR_FP/${TMP_FILENAME}
 		cd $WORK_DIR_FP/${TMP_FILENAME}
 			
