@@ -1,0 +1,8 @@
+ &element    target = 'Ne'  /
+ &discrete   nf=12, nnauto = 2, llauto=1, mfixed=0, nc=4, nn(1)=1, ll(1)=0,
+             nn(2)=2, ll(2)=0, nn(3)=3, ll(3)=0, nn(4)=4, ll(4)=0, nn(5)=5, ll(5)=0,
+             nn(6)=2, ll(6)=1, nn(7)=3, ll(7)=1, nn(8)=4, ll(8)=1, nn(9)=5, ll(9)=1,
+             nn(10)=3, ll(10)=2, nn(11)=4, ll(11)=2, nn(12)=5, ll(12)=2 /
+ &control    key4 = 2, nprint = 500/
+ &numerics   dt = 0.0055d0, h = 0.02d0, nx = 160000, gbr = 3000.00d0, agbr = 5.0d0/
+ &energies   emin = 0.55d0, de = 0.0001d0, nerg = 2001 /
