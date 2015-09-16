@@ -98,7 +98,7 @@ for p1 in ${PARAMETER_1[*]}; do
 
 		# create pulse.inp
 		python2.6 $INP_FILE_GEN_FP --alph1=1.0d0 --ee1=5.338d-3 --ww1=$p1 --x1up=125.0d0 --x1plat=0.0d0 --x1down=125.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
-		--alph2=0.02155d0 --rr2=0.0d0 \
+		--alph2=0.02155d0 --rr2=$p2 \
 		--alph3=0.d0 --ee3=5.338d-4 --ww3=0.06d0 --x3up=3.00d0 --x3plat=0.0d0 --x3down=3.00d0 > pulse.inp
 
 		# run the code 

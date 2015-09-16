@@ -55,7 +55,7 @@ NE_INPUT_FP=$CODE_DIR_FP/Input-files/ne.wfn
 
 # these are the test parameters that allow you to loop through multiple tests. 
 # You may want to change these depending on your goals
-PARAMETER_1=( 0.715d0 )
+PARAMETER_1=( 0.685d0 )
 PARAMETER_2=( 0.00d0  0.05d0  0.10d0  0.15d0  0.20d0  0.25d0  0.30d0  0.35d0  0.40d0  0.45d0  0.50d0  0.55d0  0.60d0  0.65d0  0.70d0  0.75d0  0.80d0  0.85d0  0.90d0  0.95d0)
 
 #####
@@ -98,7 +98,7 @@ for p1 in ${PARAMETER_1[*]}; do
 
 		# create pulse.inp
 		python2.6 $INP_FILE_GEN_FP --alph1=1.0d0 --ee1=5.338d-3 --ww1=$p1 --x1up=125.0d0 --x1plat=0.0d0 --x1down=125.0d0 --s1up=\'s\' --s1down=\'s\' --cep1=0.0d0 \
-		--alph2=0.02155d0 --rr2=$p2 \
+		--alph2=0.02155d0 --rr2=0.0d0 \
 		--alph3=0.d0 --ee3=5.338d-4 --ww3=0.06d0 --x3up=3.00d0 --x3plat=0.0d0 --x3down=3.00d0 > pulse.inp
 
 		# run the code 
