@@ -13,7 +13,7 @@ export KMP_STACKSIZE=16m
 # the two line below are the only lines of the code you HAVE to change. You should also change the SBATCH flags above to match the name of the test or something easy to remember
 
 # you need to cd into the Job-scripts directory or wherever you have put the corresponding job shell script
-cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
+cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts/Example_Scripts
 
 
 # This is a shell script that automates the running of multiple jobs. 
