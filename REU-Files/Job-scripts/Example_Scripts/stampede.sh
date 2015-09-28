@@ -25,7 +25,7 @@ cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts
 # TEST NAME
 #####
 
-TEST_DESCRIPTION=3p
+TEST_DESCRIPTION=test
 
 
 #####
@@ -44,7 +44,7 @@ fi
 
 # the full path to your Work direcoty
 # to find the path, type "cdw" to go to your work directory, then "pwd" 
-WORK_DIR_FP=/work/02971/jvenzke/3pulse 
+WORK_DIR_FP=/work/02971/jvenzke/test
 # created later (no checking needed)
 
 # the full path to the compiled code 
