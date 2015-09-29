@@ -4,7 +4,7 @@
 #SBATCH -e 0p700.err 
 #SBATCH -N  1  -n  1
 #SBATCH -p  normal
-#SBATCH -t  2:00:00
+#SBATCH -t  24:00:00
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
 export OMP_NUM_THREADS=16
