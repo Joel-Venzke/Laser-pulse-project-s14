@@ -1,0 +1,5 @@
+change integral
+
+cst = i*dt/2
+cs1 = i*dt/(4*h**2)
+cst5 = i*dt/(2*h**2)

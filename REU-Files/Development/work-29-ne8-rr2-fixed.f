@@ -1914,7 +1914,7 @@ C***************************************************************
 
       double precision fsum,asum
 !
-! There will be two pulses, and each pulse is characterized by a number
+! There will be three pulses, and each pulse is characterized by a number
 ! of parameters.  Here they are for the first pulse: 
 !                   
 !   independent parameters

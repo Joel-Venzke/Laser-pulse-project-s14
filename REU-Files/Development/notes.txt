@@ -1,0 +1,24 @@
+Files:
+	40: read.me
+	50: tdse.inp
+	60: wfn.out
+	70: betas.out
+	80: pulse.inp
+	90: pulse.out
+	91: fourier.out
+	101: spectra.out
+	102: overlap.out
+
+	hyd can be he, li, ne ...
+	10: hyd3.out
+	20: hyd1.out
+	22: hyd2.out
+	23: hydpartion.out
+	25: hydtotion.out
+
+use git diff to check things
+read me needs to be updated for third pulse! 
+	inprintkb is the subroutine to do so in
+
+read through main loop
+read through dstrm
