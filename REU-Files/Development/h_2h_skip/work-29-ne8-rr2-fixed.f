@@ -5,7 +5,7 @@
       end module parameters
       
       module realconstants1
-      integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,nprint,nc,ngob,ntfin,nbmax,
+      integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,ns,nprint,nc,ngob,ntfin,nbmax,
      1          ngob1,nerg,mfixed,nnauto,llauto
       end module realconstants1
       
@@ -19,7 +19,7 @@
       end module cmplxconstants
       
       module realconstants2
-      double precision pi,h,dt,tau,zet,gbr,xtime
+      double precision pi,h,hfrac,dt,tau,zet,gbr,xtime
       end module realconstants2
       
       module complexarray1
@@ -687,7 +687,7 @@ C****************************************************
       namelist /discrete/ nf,nn,ll,mfixed,nnauto,llauto,nc
       namelist /control/key1,key2,key3,key4,key5,nprint,irestart,iformat
       namelist /energies/ emin,de,nerg
-      namelist /numerics/ dt,h,nx,gbr,agbr
+      namelist /numerics/ dt,h,hfrac,ns,nx,gbr,agbr
                   
 C----------------------------------------------------------------------------------C
 C
@@ -716,7 +716,9 @@ C      nerg      ! number energies for which the spectrum is calculated
 C
 C
 C      dt        ! time step (in a.u.)
-C      h         ! mesh step (in a.u.)     
+C      h         ! mesh step (in a.u.)   
+C      hfrac     ! fraction of h you want the code to skip by (1.0 will keep h the same) 
+C      ns        ! location of the skip (happens between ns-1 and ns)
 C      nx        ! number of mesh points (0,1,...,nx), nx must be even
 C      gbr       ! gobbler starting radius (au)
 C      agbr      ! gobbler strength
@@ -758,7 +760,9 @@ C
       read(50,control)
       dt     = 0.02d0
       h      = 0.02d0
+      hfrac  = 1.0d0 ! adjusting h after ns steps
       nx     = 10000
+      ns     = nx ! adjusting h after ns steps
       gbr    = 0.9d0*h*dble(nx)
       agbr   = 5.d0
       read(50,numerics) 
@@ -1052,9 +1056,36 @@ C  SET INITIAL ZEROS
       u1 = czero
 
 C*** radial mesh
-      do 100 i=0,nx           
-        x(i)= h * dble(i)
-100   continue
+      if (ns.lt.nx) then
+      	do 100 i=0,ns-1           
+         x(i)= h * dble(i)
+100     continue
+        do 101 i=1,(nx-ns)+1           
+          x(ns+i-1)= h * hfrac * dble(i) + x(ns-1)
+101     continue
+      else
+       do 102 i=0,nx ! why is nx+1 not set?        
+         x(i)= h * dble(i)
+102    continue
+      endif
+
+! this is used for debugging
+!       do 103 i=0,nx           
+!          x(i)= h * dble(i) - x(i)
+! 103   continue
+!       print *, x
+!       if (ns.lt.nx) then
+!         do 104 i=0,ns-1           
+!          x(i)= h * dble(i)
+! 104     continue
+!         do 105 i=1,(nx-ns)+2           
+!           x(ns+i-1)= h * hfrac * dble(i) + x(ns-1)
+! 105     continue
+!       else
+!        do 106 i=0,nx           
+!          x(i)= h * dble(i)
+! 106    continue
+      endif      
 
 C*** find ngob
       ngob = nx
