@@ -1,0 +1,157 @@
+8c8
+<       integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,ns,nprint,nc,ngob,ntfin,nbmax,
+---
+>       integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,nprint,nc,ngob,ntfin,nbmax,
+18,19c18
+<       complex*16 ch,chout,cst,cst1,cst1out,cst2,cst2out,cst3,cst4,cst5
+<       complex*16 cst5out,h2,h3,h24,h1d5,hd25,c27
+---
+>       complex*16 ch,cst,cst1,cst2,cst3,cst4,cst5,h2,h3,h24,h1d5,hd25,c27
+23c22
+<       double precision pi,h,hfrac,hout,dt,tau,zet,gbr,xtime
+---
+>       double precision pi,h,dt,tau,zet,gbr,xtime
+310,333c309,314
+< 
+<        if (ns.ne.-1.0d0) then 
+<          a(1:ns-1) = -cst1
+<          a(ns)     = -cst1
+<          a(ns+1:)  = -cst1out
+<          c(1:ns-1) = -cst1
+<          c(ns)     = -cst1
+<          c(ns+1:)  = -cst1out
+<          a(1) = czero
+<          c(nx-1) = czero
+<          bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
+<          bb(ns,:)        = cone + cst*v(ns,:) + cst5
+<          bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
+<          ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
+<          ff(ns,:)        = cone - cst*v(ns,:) - cst5
+<          ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
+<        else
+<          a = -cst1
+<          c = -cst1
+<          a(1) = czero
+<          c(nx-1) = czero
+<          bb = cone + cst*v + cst5
+<          ff = cone - cst*v - cst5
+<        endif
+---
+>        a = -cst1
+>        c = -cst1
+>        a(1) = czero
+>        c(nx-1) = czero
+>        bb = cone + cst*v + cst5
+>        ff = cone - cst*v - cst5
+345d325
+<       ! do 400 k=0,500
+397c377
+<      >           - a(j)*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
+---
+>      >           + cst1*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
+710c690
+<       namelist /numerics/ dt,h,hfrac,ns,nx,gbr,agbr
+---
+>       namelist /numerics/ dt,h,nx,gbr,agbr
+739,741c719
+< C      h         ! mesh step (in a.u.)   
+< C      hfrac     ! fraction of h you want the code to skip by (1.0 will keep h the same) 
+< C      ns        ! location of the skip (happens at ns)
+---
+> C      h         ! mesh step (in a.u.)     
+783d760
+<       hfrac  = 1.0d0 ! adjusting h after ns steps
+785d761
+<       ns     = -1.d0 ! adjusting h after ns steps (-1.0d0 turns it off)
+998,1030c974,1001
+<       hout     = h*hfrac
+<       pi       = dacos(-1.d0)
+<       iz       = 100
+<       nbf      = nx-1
+<       nx1      = nx+1
+<       nc1      = nc-1
+<       nc2      = nc+1
+<       czero    = dcmplx(0.d0,0.d0)
+<       cone     = dcmplx(1.d0,0.d0)
+<       ctwo     = dcmplx(2.d0,0.d0)
+<       cthree   = dcmplx(3.d0,0.d0)
+<       cfour    = dcmplx(4.d0,0.d0)
+<       chalf    = dcmplx(0.5d0,0.d0)
+<       ci       = dcmplx(0.d0,1.d0)
+<       c27      = dcmplx(27.d0,0.d0)
+<       tau      = dt/2.d0
+<       zet      = 1.d0
+<       ch       = dcmplx(h,0.d0)
+<       chout    = dcmplx(hout,0.d0)
+<       cst      = ci*dcmplx(tau,0.d0)
+<       cst1     = cst/(ctwo*ch*ch)
+<       cst1out  = cst/(ctwo*chout*chout)
+<       cst2     = cst1/ctwo
+<       cst2out  = cst1out/ctwo
+<       cst3     = cst/ctwo
+<       cst4     = ci*dcmplx(dt,0.d0)
+<       cst5     = cst/(ch*ch)
+<       cst5out  = cst/(chout*chout)
+<       h2       = ctwo*ch
+<       h3       = cthree*ch
+<       h24      = cone/(dcmplx(24.d0,0.d0)*ch)
+<       h1d5     = dcmplx(1.5d0,0.d0)*ch
+<       hd25     = dcmplx(0.25d0,0.d0)*ch
+---
+>       pi    = dacos(-1.d0)
+>       iz    = 100
+>       nbf   = nx-1
+>       nx1   = nx+1
+>       nc1   = nc-1
+>       nc2   = nc+1
+>       czero = dcmplx(0.d0,0.d0)
+>       cone  = dcmplx(1.d0,0.d0)
+>       ctwo  = dcmplx(2.d0,0.d0)
+>       cthree= dcmplx(3.d0,0.d0)
+>       cfour = dcmplx(4.d0,0.d0)
+>       chalf = dcmplx(0.5d0,0.d0)
+>       ci    = dcmplx(0.d0,1.d0)
+>       c27   = dcmplx(27.d0,0.d0)
+>       tau   = dt/2.d0
+>       zet   = 1.d0
+>       ch    = dcmplx(h,0.d0)
+>       cst   = ci*dcmplx(tau,0.d0)
+>       cst1  = cst/(ctwo*ch*ch)
+>       cst2  = cst1/ctwo
+>       cst3  = cst/ctwo
+>       cst4  = ci*dcmplx(dt,0.d0)
+>       cst5  = cst/(ch*ch)
+>       h2    = ctwo*ch
+>       h3    = cthree*ch
+>       h24   = cone/(dcmplx(24.d0,0.d0)*ch)
+>       h1d5  = dcmplx(1.5d0,0.d0)*ch
+>       hd25  = dcmplx(0.25d0,0.d0)*ch
+1084,1107c1055,1057
+<       if (ns.ge.nx) then
+<         print *, "ERROR: ns should be less than nx"
+<         stop
+<       endif
+<       if (ns.ne.-1.0d0) then 
+<       	do 100 i=0,ns           
+<          x(i)= h * dble(i)
+< 100     continue
+<         do 101 i=1,(nx-ns)+1           
+<           x(ns+i)= hout * dble(i) + x(ns)
+< 101     continue
+<       else
+<        do 102 i=0,nx+1         
+<          x(i)= h * dble(i)
+< 102    continue
+<       endif
+<       ! print *, x
+< 
+< 
+< ! this is used for debugging
+< !       do 103 i=0,nx+1           
+< !          x(i)= h * dble(i) - x(i)
+< ! 103   continue
+< !       stop     
+---
+>       do 100 i=0,nx           
+>         x(i)= h * dble(i)
+> 100   continue

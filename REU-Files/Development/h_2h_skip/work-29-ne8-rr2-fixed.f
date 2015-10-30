@@ -15,11 +15,12 @@
       
       module cmplxconstants
       complex*16 czero,chalf,cone,ctwo,cthree,cfour,ci 
-      complex*16 ch,cst,cst1,cst2,cst3,cst4,cst5,h2,h3,h24,h1d5,hd25,c27
+      complex*16 ch,chout,cst,cst1,cst1out,cst2,cst2out,cst3,cst4,cst5
+      complex*16 cst5out,h2,h3,h24,h1d5,hd25,c27
       end module cmplxconstants
       
       module realconstants2
-      double precision pi,h,hfrac,dt,tau,zet,gbr,xtime
+      double precision pi,h,hfrac,hout,dt,tau,zet,gbr,xtime
       end module realconstants2
       
       module complexarray1
@@ -306,12 +307,30 @@ c$omp end parallel do
 C*****end of propagation by dt/2
 
 ! reset coefficients to allow for steps of dt by the diagonal term
-       a = -cst1
-       c = -cst1
-       a(1) = czero
-       c(nx-1) = czero
-       bb = cone + cst*v + cst5
-       ff = cone - cst*v - cst5
+
+       if (ns.ne.-1.0d0) then 
+         a(1:ns-1) = -cst1
+         a(ns)     = -cst1
+         a(ns+1:)  = -cst1out
+         c(1:ns-1) = -cst1
+         c(ns)     = -cst1
+         c(ns+1:)  = -cst1out
+         a(1) = czero
+         c(nx-1) = czero
+         bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
+         bb(ns,:)        = cone + cst*v(ns,:) + cst5
+         bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
+         ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
+         ff(ns,:)        = cone - cst*v(ns,:) - cst5
+         ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
+       else
+         a = -cst1
+         c = -cst1
+         a(1) = czero
+         c(nx-1) = czero
+         bb = cone + cst*v + cst5
+         ff = cone - cst*v - cst5
+       endif
 !!SETTING GAMMA AND BETA
        do 17 jj=0,nc
           beta(1,jj)=bb(1,jj)
@@ -323,6 +342,7 @@ C*****end of propagation by dt/2
 C  MAIN TIME LOOP
 *******************************************************
       do 400 k=0,ntfinpulse
+      ! do 400 k=0,500
         nreach = nreach0 + int(dble(k)*dble(nx-nreach0)/dble(ntfinal))
 !         nreach= nreach0+
 !     >        int(dble(k)*dt*2.d0*sqrt(2.d0*max(ww1,ww2,ww3))/ch)
@@ -374,7 +394,7 @@ c$omp parallel do private(jj,j,bet,u,gam)
         u(1)=(q(1,jj)*ff(1,jj) + cst1*(q(2,jj)+q(0,jj)))/beta(1,jj)
         do 310 j=2,nreach-1
           u(j) = (q(j,jj)*ff(j,jj)
-     >           + cst1*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
+     >           - a(j)*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
 310     continue
         do 320 j=nreach-2,1,-1
           u(j)=u(j)-gamma(j+1,jj)*u(j+1)
@@ -718,7 +738,7 @@ C
 C      dt        ! time step (in a.u.)
 C      h         ! mesh step (in a.u.)   
 C      hfrac     ! fraction of h you want the code to skip by (1.0 will keep h the same) 
-C      ns        ! location of the skip (happens between ns-1 and ns)
+C      ns        ! location of the skip (happens at ns)
 C      nx        ! number of mesh points (0,1,...,nx), nx must be even
 C      gbr       ! gobbler starting radius (au)
 C      agbr      ! gobbler strength
@@ -762,7 +782,7 @@ C
       h      = 0.02d0
       hfrac  = 1.0d0 ! adjusting h after ns steps
       nx     = 10000
-      ns     = nx ! adjusting h after ns steps
+      ns     = -1.d0 ! adjusting h after ns steps (-1.0d0 turns it off)
       gbr    = 0.9d0*h*dble(nx)
       agbr   = 5.d0
       read(50,numerics) 
@@ -975,34 +995,39 @@ C---- pg = Legendre polynomial Pn
       use realconstants1
       implicit double precision (a-h,o-z)
       
-      pi    = dacos(-1.d0)
-      iz    = 100
-      nbf   = nx-1
-      nx1   = nx+1
-      nc1   = nc-1
-      nc2   = nc+1
-      czero = dcmplx(0.d0,0.d0)
-      cone  = dcmplx(1.d0,0.d0)
-      ctwo  = dcmplx(2.d0,0.d0)
-      cthree= dcmplx(3.d0,0.d0)
-      cfour = dcmplx(4.d0,0.d0)
-      chalf = dcmplx(0.5d0,0.d0)
-      ci    = dcmplx(0.d0,1.d0)
-      c27   = dcmplx(27.d0,0.d0)
-      tau   = dt/2.d0
-      zet   = 1.d0
-      ch    = dcmplx(h,0.d0)
-      cst   = ci*dcmplx(tau,0.d0)
-      cst1  = cst/(ctwo*ch*ch)
-      cst2  = cst1/ctwo
-      cst3  = cst/ctwo
-      cst4  = ci*dcmplx(dt,0.d0)
-      cst5  = cst/(ch*ch)
-      h2    = ctwo*ch
-      h3    = cthree*ch
-      h24   = cone/(dcmplx(24.d0,0.d0)*ch)
-      h1d5  = dcmplx(1.5d0,0.d0)*ch
-      hd25  = dcmplx(0.25d0,0.d0)*ch
+      hout     = h*hfrac
+      pi       = dacos(-1.d0)
+      iz       = 100
+      nbf      = nx-1
+      nx1      = nx+1
+      nc1      = nc-1
+      nc2      = nc+1
+      czero    = dcmplx(0.d0,0.d0)
+      cone     = dcmplx(1.d0,0.d0)
+      ctwo     = dcmplx(2.d0,0.d0)
+      cthree   = dcmplx(3.d0,0.d0)
+      cfour    = dcmplx(4.d0,0.d0)
+      chalf    = dcmplx(0.5d0,0.d0)
+      ci       = dcmplx(0.d0,1.d0)
+      c27      = dcmplx(27.d0,0.d0)
+      tau      = dt/2.d0
+      zet      = 1.d0
+      ch       = dcmplx(h,0.d0)
+      chout    = dcmplx(hout,0.d0)
+      cst      = ci*dcmplx(tau,0.d0)
+      cst1     = cst/(ctwo*ch*ch)
+      cst1out  = cst/(ctwo*chout*chout)
+      cst2     = cst1/ctwo
+      cst2out  = cst1out/ctwo
+      cst3     = cst/ctwo
+      cst4     = ci*dcmplx(dt,0.d0)
+      cst5     = cst/(ch*ch)
+      cst5out  = cst/(chout*chout)
+      h2       = ctwo*ch
+      h3       = cthree*ch
+      h24      = cone/(dcmplx(24.d0,0.d0)*ch)
+      h1d5     = dcmplx(1.5d0,0.d0)*ch
+      hd25     = dcmplx(0.25d0,0.d0)*ch
 
       return
       end      
@@ -1056,36 +1081,30 @@ C  SET INITIAL ZEROS
       u1 = czero
 
 C*** radial mesh
-      if (ns.lt.nx) then
-      	do 100 i=0,ns-1           
+      if (ns.ge.nx) then
+        print *, "ERROR: ns should be less than nx"
+        stop
+      endif
+      if (ns.ne.-1.0d0) then 
+      	do 100 i=0,ns           
          x(i)= h * dble(i)
 100     continue
         do 101 i=1,(nx-ns)+1           
-          x(ns+i-1)= h * hfrac * dble(i) + x(ns-1)
+          x(ns+i)= hout * dble(i) + x(ns)
 101     continue
       else
-       do 102 i=0,nx ! why is nx+1 not set?        
+       do 102 i=0,nx+1         
          x(i)= h * dble(i)
 102    continue
       endif
+      ! print *, x
+
 
 ! this is used for debugging
-!       do 103 i=0,nx           
+!       do 103 i=0,nx+1           
 !          x(i)= h * dble(i) - x(i)
 ! 103   continue
-!       print *, x
-!       if (ns.lt.nx) then
-!         do 104 i=0,ns-1           
-!          x(i)= h * dble(i)
-! 104     continue
-!         do 105 i=1,(nx-ns)+2           
-!           x(ns+i-1)= h * hfrac * dble(i) + x(ns-1)
-! 105     continue
-!       else
-!        do 106 i=0,nx           
-!          x(i)= h * dble(i)
-! 106    continue
-      endif      
+!       stop     
 
 C*** find ngob
       ngob = nx

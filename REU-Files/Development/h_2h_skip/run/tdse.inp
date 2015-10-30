@@ -3,6 +3,6 @@
              nn(11)=5, nn(12)=5, nn(13)=5, nn(14)=5, nn(15)=5, 
              ll(11)=0, ll(12)=1, ll(13)=2, ll(14)=3, ll(15)=4, nc = 4 /
  &control    key4 = 2, nprint = 25 /
- &numerics   dt=0.02d0, h=0.01d0, hfrac=2.0d0, ns=5000, nx=100000, gbr=900.00d0, agbr=5.0d0/
+ &numerics   dt=0.02d0, h=0.01d0, hfrac=1.0d0, ns=500, nx=100000, gbr=900.00d0, agbr=5.0d0/
  &energies   emin=0.002d0, de=0.002d0, nerg = 400 /
 
