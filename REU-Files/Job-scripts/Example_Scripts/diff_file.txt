@@ -1,0 +1,36 @@
+2,7c2,5
+< #SBATCH -J stampede.nam
+< #SBATCH -o stampede.log
+< #SBATCH -e stampede.err 
+< #SBATCH -N  1  -n  1
+< #SBATCH -p  normal
+< #SBATCH -t  2:00:00
+---
+> #PBS -N supermic
+> #PBS -j oe
+> #PBS -l walltime=24:00:00
+> #PBS -l nodes=1:ppn=20
+10c8
+< export OMP_NUM_THREADS=16
+---
+> export OMP_NUM_THREADS=20
+16c14
+< cd /home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts/Example_Scripts
+---
+> cd /home/jvenzke/Laser-pulse-project-s14/REU-Files/Job-scripts/Example_Scripts
+39c37
+< CODE_DIR_FP=/home1/02971/jvenzke/Laser-pulse-project-s14/REU-Files/Development
+---
+> CODE_DIR_FP=/home/jvenzke/Laser-pulse-project-s14/REU-Files/Development
+47c45
+< WORK_DIR_FP=/work/02971/jvenzke/test
+---
+> WORK_DIR_FP=/work/jvenzke/test
+51c49
+< COMPILED_CODE_FP=$CODE_DIR_FP/work-29
+---
+> COMPILED_CODE_FP=$CODE_DIR_FP/work-29_supermic
+85c83
+< PARAMETER_2=( 0.00d0  0.05d0  0.10d0  0.15d0  0.20d0  0.25d0  0.30d0  0.35d0  0.40d0  0.45d0  0.50d0  0.55d0  0.60d0  0.65d0  0.70d0  0.75d0  0.80d0  0.85d0  0.90d0  0.95d0 )
+---
+> PARAMETER_2=( 0.00d0  0.05d0 )

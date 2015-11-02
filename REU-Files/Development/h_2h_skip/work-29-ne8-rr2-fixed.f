@@ -15,8 +15,8 @@
       
       module cmplxconstants
       complex*16 czero,chalf,cone,ctwo,cthree,cfour,ci 
-      complex*16 ch,chout,cst,cst1,cst1out,cst2,cst2out,cst3,cst4,cst5
-      complex*16 cst5out,h2,h3,h24,h1d5,hd25,c27
+      complex*16 ch,chfrac,chout,cst,cst1,cst1out,cst2,cst2out,cst3
+      complex*16 cst4,cst5,cst5ns,cst5out,h2,h3,h24,h1d5,hd25,c27
       end module cmplxconstants
       
       module realconstants2
@@ -308,20 +308,24 @@ C*****end of propagation by dt/2
 
 ! reset coefficients to allow for steps of dt by the diagonal term
 
-       if (ns.ne.-1.0d0) then 
+       if (ns.ne.-1) then 
          a(1:ns-1) = -cst1
-         a(ns)     = -cst1
+         a(ns)     = -cst5/(1+chfrac)
+!         a(ns) = -cst1
          a(ns+1:)  = -cst1out
          c(1:ns-1) = -cst1
-         c(ns)     = -cst1
+!         c(ns) = -cst1
+         c(ns)     = -cst5/((1+chfrac)*chfrac)
          c(ns+1:)  = -cst1out
          a(1) = czero
          c(nx-1) = czero
          bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
-         bb(ns,:)        = cone + cst*v(ns,:) + cst5
+         bb(ns,:)        = cone + cst*v(ns,:) + cst5ns
+!         bb(ns,:)    = cone + cst*v(ns,:) + cst5
          bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
          ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
-         ff(ns,:)        = cone - cst*v(ns,:) - cst5
+         ff(ns,:)        = cone - cst*v(ns,:) - cst5ns
+!         ff(ns,:)    = cone - cst*v(ns,:) - cst5
          ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
        else
          a = -cst1
@@ -394,7 +398,8 @@ c$omp parallel do private(jj,j,bet,u,gam)
         u(1)=(q(1,jj)*ff(1,jj) + cst1*(q(2,jj)+q(0,jj)))/beta(1,jj)
         do 310 j=2,nreach-1
           u(j) = (q(j,jj)*ff(j,jj)
-     >           - a(j)*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
+!     >           - a(j)*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
+     >    - c(j)*q(j+1,jj)-a(j)*q(j-1,jj)-a(j)*u(j-1))/beta(j,jj)
 310     continue
         do 320 j=nreach-2,1,-1
           u(j)=u(j)-gamma(j+1,jj)*u(j+1)
@@ -782,7 +787,7 @@ C
       h      = 0.02d0
       hfrac  = 1.0d0 ! adjusting h after ns steps
       nx     = 10000
-      ns     = -1.d0 ! adjusting h after ns steps (-1.0d0 turns it off)
+      ns     = -1 ! adjusting h after ns steps (-1 turns it off)
       gbr    = 0.9d0*h*dble(nx)
       agbr   = 5.d0
       read(50,numerics) 
@@ -1013,6 +1018,7 @@ C---- pg = Legendre polynomial Pn
       tau      = dt/2.d0
       zet      = 1.d0
       ch       = dcmplx(h,0.d0)
+      chfrac   = dcmplx(hfrac,0.d0)
       chout    = dcmplx(hout,0.d0)
       cst      = ci*dcmplx(tau,0.d0)
       cst1     = cst/(ctwo*ch*ch)
@@ -1022,6 +1028,7 @@ C---- pg = Legendre polynomial Pn
       cst3     = cst/ctwo
       cst4     = ci*dcmplx(dt,0.d0)
       cst5     = cst/(ch*ch)
+      cst5ns   = cst5/chfrac
       cst5out  = cst/(chout*chout)
       h2       = ctwo*ch
       h3       = cthree*ch
@@ -1085,7 +1092,7 @@ C*** radial mesh
         print *, "ERROR: ns should be less than nx"
         stop
       endif
-      if (ns.ne.-1.0d0) then 
+      if (ns.ne.-1) then 
       	do 100 i=0,ns           
          x(i)= h * dble(i)
 100     continue
