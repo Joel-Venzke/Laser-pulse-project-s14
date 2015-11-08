@@ -7,7 +7,10 @@
  x1up, x1plat, x1down:     1.000     0.000     1.000
  x2up, x2plat, x2down:     2.000     0.000     2.000
 
- shape for on/off ramp (s = sin^2, g = gaussian, t = linear (trapezoidal):    s  s  s  s
+ shape for on/off ramp (s = sin^2, g = gaussian, t = linear (trapezoidal):  
+
+ Pulse1   =  s s
+ Pulse2   =  s s
 
  CEP1     =  9.0000E+01 deg
  CEP2     =  9.0000E+01 deg
@@ -23,11 +26,13 @@
 
  *********  Numerical Parameters:  *******
 
- nx    =   100000;    h  = 1.0000E-02 a.u.;  rmax =  1.0000E+03 a.u.
+ ns    =     2999;   h     = 1.0000E-02 a.u.;  rns  =  2.9990E+01 a.u.
 
- nt    =    31416;   dt  = 2.0000E-02 a.u.;  tfin =  6.2832E+02 a.u.
+ nx-ns =    50001;   hout  = 2.0000E-02 a.u.;  rmax =  1.0300E+03 a.u.
 
- ngob1 =    99999;   gbr = 9.0000E+02 a.u.;  agbr =  5.0000E+00 a.u.
+ nt    =    31416;   dt    = 2.0000E-02 a.u.;  tfin =  6.2832E+02 a.u.
+
+ ngob1 =    52999;   gbr   = 9.0000E+02 a.u.;  agbr =  5.0000E+00 a.u.
 
  highest L-value of coupled channels (ell = 0,nc):   4
 

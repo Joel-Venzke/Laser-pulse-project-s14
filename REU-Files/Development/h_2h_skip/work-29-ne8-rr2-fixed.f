@@ -15,8 +15,8 @@
       
       module cmplxconstants
       complex*16 czero,chalf,cone,ctwo,cthree,cfour,ci 
-      complex*16 ch,chfrac,chout,cst,cst1,cst1out,cst2,cst2out,cst3
-      complex*16 cst4,cst5,cst5ns,cst5out,h2,h3,h24,h1d5,hd25,c27
+      complex*16 ch,chfrac,chout,cst,cst1,cst1ns,cst1out,cst2,cst2out
+      complex*16 cst3,cst4,cst5,cst5ns,cst5out,h2,h3,h24,h1d5,hd25,c27
       end module cmplxconstants
       
       module realconstants2
@@ -253,7 +253,7 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
 
 ! llauto has the correct l-value for the autocorrelation function
       q(:,llauto) = dcmplx(g,0.0d0)
-      
+
       q(nx,:) = czero
       q(0,:) = czero
       a1(1) = czero
@@ -278,6 +278,13 @@ C**** SET COEFFICIENTS a,b,c AND INPUT FOR SOLVING DE
       nreach0 = min(nreach+100,nx)
 10    print *,'nreach0 = ',nreach0
       nreach = nreach0
+
+! make sure ns is not in the first propagation
+      if (ns.ne.-1 .and. ns.le.nreach0) then
+      	print *,'ns = ',ns
+      	print *, "ERROR: ns is less than nreach0"
+      	stop
+      endif
 
       kcount = 0
 ! printout before we even start
@@ -310,22 +317,18 @@ C*****end of propagation by dt/2
 
        if (ns.ne.-1) then 
          a(1:ns-1) = -cst1
-         a(ns)     = -cst5/(1+chfrac)
-!         a(ns) = -cst1
+         a(ns)     = -cst5/(cone+chfrac)
          a(ns+1:)  = -cst1out
          c(1:ns-1) = -cst1
-!         c(ns) = -cst1
-         c(ns)     = -cst5/((1+chfrac)*chfrac)
+         c(ns)     = -cst5/((cone+chfrac)*chfrac)
          c(ns+1:)  = -cst1out
          a(1) = czero
          c(nx-1) = czero
          bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
          bb(ns,:)        = cone + cst*v(ns,:) + cst5ns
-!         bb(ns,:)    = cone + cst*v(ns,:) + cst5
          bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
          ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
          ff(ns,:)        = cone - cst*v(ns,:) - cst5ns
-!         ff(ns,:)    = cone - cst*v(ns,:) - cst5
          ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
        else
          a = -cst1
@@ -398,8 +401,7 @@ c$omp parallel do private(jj,j,bet,u,gam)
         u(1)=(q(1,jj)*ff(1,jj) + cst1*(q(2,jj)+q(0,jj)))/beta(1,jj)
         do 310 j=2,nreach-1
           u(j) = (q(j,jj)*ff(j,jj)
-!     >           - a(j)*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/beta(j,jj)
-     >    - c(j)*q(j+1,jj)-a(j)*q(j-1,jj)-a(j)*u(j-1))/beta(j,jj)
+     >           - c(j)*q(j+1,jj)-a(j)*q(j-1,jj)-a(j)*u(j-1))/beta(j,jj)
 310     continue
         do 320 j=nreach-2,1,-1
           u(j)=u(j)-gamma(j+1,jj)*u(j+1)
@@ -419,12 +421,29 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
 
 ! This is just for the last time step of the main loop, where the step is dt/2
 500   continue
-      a = -cst2
-      c = -cst2
-      a(1) = czero
-      c(nx-1) = czero
-      bb = cone + cst3*v + cst1
-      ff = cone - cst3*v - cst1  
+      if (ns.ne.-1) then 
+	     a(1:ns-1) = -cst2
+         a(ns)     = -cst5/((cone+chfrac)*ctwo) 
+         a(ns+1:)  = -cst2out
+         c(1:ns-1) = -cst2
+         c(ns)     = -cst5/((cone+chfrac)*chfrac*ctwo) 
+         c(ns+1:)  = -cst2out
+         a(1) = czero
+         c(nx-1) = czero
+         bb(0:ns-1,:)    = cone + cst3*v(0:ns-1,:) + cst1 
+         bb(ns,:)        = cone + cst3*v(ns,:) + cst1ns ! change this
+         bb(ns+1:nx+1,:) = cone + cst3*v(ns+1:nx+1,:) + cst1out ! change this
+         ff(0:ns-1,:)    = cone - cst3*v(0:ns-1,:) - cst1 
+         ff(ns,:)        = cone - cst3*v(ns,:) - cst1ns ! change this
+         ff(ns+1:nx+1,:) = cone - cst3*v(ns+1:nx+1,:) - cst1out ! change this
+      else 
+         a = -cst2
+         c = -cst2
+         a(1) = czero
+         c(nx-1) = czero
+         bb = cone + cst3*v + cst1
+         ff = cone - cst3*v - cst1  
+      endif
 c$omp parallel do private(jj,j,bet,u,gam)
       do 600 jj=0,nc
         bet=bb(1,jj)
@@ -433,7 +452,8 @@ c$omp parallel do private(jj,j,bet,u,gam)
           gam(j)=c(j-1)/bet
           bet=bb(j,jj)-a(j)*gam(j)
           u(j) = (q(j,jj)*ff(j,jj)
-     >          + cst2*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/bet
+     >          - c(j)*q(j+1,jj)-a(j)*q(j-1,jj)-a(j)*u(j-1))/bet
+!      >          + cst2*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/bet
 610     continue
         do 620 j=nreach-2,1,-1
           u(j)=u(j)-gam(j+1)*u(j+1)
@@ -601,11 +621,17 @@ C**** AUTOCORRELATION FUNCTION
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dreal(q(i-1,llauto))*g(i-1)
         end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
         call arsimd(ngob1,h,auto,are)
         do i=1,ngob1
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dimag(q(i-1,llauto))*g(i-1)
         end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
         call arsimd(ngob1,h,auto,aie)
         vrlp(0) = are**2 + aie**2
         write(10,1000) are,aie,vrlp(0)
@@ -621,10 +647,16 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           do i=1,ngob1                    
             auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
           call arsimd(ngob1,h,auto,are)
           do i=1,ngob1                    
             auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
+  ! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
           call arsimd(ngob1,h,auto,aie)
           vrlp(kd) = are**2 + aie**2
           write(10,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
@@ -645,6 +677,9 @@ C*** MONITOR CONVERGENCE WITH RESPECT TO PARTIAL WAVES AND NORMALIZATION
           do i=1,ngob1
             conv(i)=abs(q(i-1,j))**2
           end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
           call arsimd(ngob1,h,conv,awh)
           write(10,1002) j,awh
           cnorm = cnorm + awh
@@ -660,6 +695,9 @@ C*** CONTROL OF NORMALIZATION
             anorm(i) = anorm(i) + abs(q(i-1,j))**2
           end do
         end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
         call arsimd(ngob1,h,anorm,cnorm)
         write(10,1003) cnorm
       endif
@@ -820,11 +858,24 @@ C
       
       write(40,1001)
 1001  format(/,' *********  Laser Parameters:  **********')
-      if (abs(alph2*ee2).gt.1.d-10) then
+      if (abs(alph3*ee3).gt.1.d-10) then 
+       write(40,1202) ww1,alph1*ee1,period1,ww2,alph2*ee2,period2,
+     >                ww3,alph3*ee3,period3
+      else if (abs(alph2*ee2).gt.1.d-10) then
        write(40,1002) ww1,alph1*ee1,period1,ww2,alph2*ee2,period2
       else
        write(40,1102) ww1,alph1*ee1,period1
       endif
+1202  format(/,
+     >       ' omega1   = ',1p,e11.4,0p,' a.u.',
+     >       '   amp1   = ',1p,e11.4,0p,' a.u.',
+     >       '     T1   = ',1p,e11.4,0p,' a.u.',/,
+     >       ' omega2   = ',1p,e11.4,0p,' a.u.',
+     >       '   amp2   = ',1p,e11.4,0p,' a.u.',
+     >       '     T2   = ',1p,e11.4,0p,' a.u.',/,
+     >       ' omega3   = ',1p,e11.4,0p,' a.u.',
+     >       '   amp3   = ',1p,e11.4,0p,' a.u.',
+     >       '     T3   = ',1p,e11.4,0p,' a.u.')
 1002  format(/,
      >       ' omega1   = ',1p,e11.4,0p,' a.u.',
      >       '   amp1   = ',1p,e11.4,0p,' a.u.',
@@ -836,36 +887,72 @@ C
      >       ' omega1   = ',1p,e11.4,0p,' a.u.',
      >       '   amp1   = ',1p,e11.4,0p,' a.u.',
      >       '     T1   = ',1p,e11.4,0p,' a.u.')
-      if (abs(alph2*ee2).gt.1.d-10) then 
+      if (abs(alph3*ee3).gt.1.d-10) then
+       write(40,1203) x1up,x1plat,x1down,x2up,x2plat,x2down,
+     >                x3up,x3plat,x3down
+      else if (abs(alph2*ee2).gt.1.d-10) then 
        write(40,1003) x1up,x1plat,x1down,x2up,x2plat,x2down
       else
        write(40,1103) x1up,x1plat,x1down
       endif
+1203  format(/,' x1up, x1plat, x1down:',3f10.3,
+     >       /,' x2up, x2plat, x2down:',3f10.3,
+     >       /,' x3up, x3plat, x3down:',3f10.3)
 1003  format(/,' x1up, x1plat, x1down:',3f10.3,
      >       /,' x2up, x2plat, x2down:',3f10.3)
 1103  format(/,' x1up, x1plat, x1down:',3f10.3)
-      if (abs(alph2*ee2).gt.1.d-10) then 
-       write(40,1100) shape1up,shape1down,shape2up,shape2down
+      if (abs(alph3*ee3).gt.1.d-10) then 
+       write(40,1200) shape1up,shape1down,shape2up,shape2down,
+     >                shape3up,shape3down
+      else if (abs(alph2*ee2).gt.1.d-10) then 
+       write(40,1000) shape1up,shape1down,shape2up,shape2down
       else
        write(40,1100) shape1up,shape1down
       endif
+1200  format(/' shape for on/off ramp (s = sin^2, g = gaussian,',
+     >        ' t = linear (trapezoidal):  ',//, 
+     >        ' Pulse1   = ',2a2,/
+     >        ' Pulse2   = ',2a2,/
+     >        ' Pulse3   = ',2a2)
+1000  format(/' shape for on/off ramp (s = sin^2, g = gaussian,',
+     >        ' t = linear (trapezoidal):  ',//,
+     >        ' Pulse1   = ',2a2,/
+     >        ' Pulse2   = ',2a2)  
 1100  format(/' shape for on/off ramp (s = sin^2, g = gaussian,',
-     >       ' t = linear (trapezoidal):  ',4a3)  
-      if (abs(alph2*ee2).gt.1.d-10) then 
+     >        ' t = linear (trapezoidal):  ',//,
+     >        ' Pulse1   = ',2a2)
+      if (abs(alph3*ee3).gt.1.d-10) then 
+       write(40,1204) CEP1,CEP2,CEP3
+      else if (abs(alph2*ee2).gt.1.d-10) then 
        write(40,1004) CEP1,CEP2
       else
        write(40,1104) CEP1
       endif
+1204  format(/,
+     >       ' CEP1     = ',1p,e11.4,0p,' deg',/,
+     >       ' CEP2     = ',1p,e11.4,0p,' deg',/,
+     >       ' CEP3     = ',1p,e11.4,0p,' deg')
 1004  format(/,
      >       ' CEP1     = ',1p,e11.4,0p,' deg',/,
      >       ' CEP2     = ',1p,e11.4,0p,' deg')
 1104  format(/,' CEP1     = ',1p,e11.4,0p,' deg')
-      if (abs(alph2*ee2).gt.1.d-10) then 
+      if (abs(alph3*ee3).gt.1.d-10) then 
+       write(40,1205) tstart1,tend1,tstart2,tend2,tstart3,tend3,
+     >                tpulses,tfinal
+      else if (abs(alph2*ee2).gt.1.d-10) then 
        write(40,1005) tstart1,tend1,tstart2,tend2,tpulses,tfinal
       else
        write(40,1105) tstart1,tend1,tpulses,tfinal
       endif
-
+1205  format(/,
+     >       ' tstart1  = ',1p,e11.4,0p,' a.u.', 
+     >       '   tend1  = ',1p,e11.4,0p,' a.u',/,
+     >       ' tstart2  = ',1p,e11.4,0p,' a.u.', 
+     >       '   tend2  = ',1p,e11.4,0p,' a.u.',/
+     >       ' tstart3  = ',1p,e11.4,0p,' a.u.', 
+     >       '   tend3  = ',1p,e11.4,0p,' a.u.',/
+     >       ' tpulses  = ',1p,e11.4,0p,' a.u.', 
+     >       '  tfinal  = ',1p,e11.4,0p,' a.u.') 
 1005  format(/,
      >       ' tstart1  = ',1p,e11.4,0p,' a.u.', 
      >       '   tend1  = ',1p,e11.4,0p,' a.u',/,
@@ -884,13 +971,24 @@ C
 1007  format(/,' initial state:  n = ',i2,',  l = ',i2,',  m = ',i2)
       write(40,1008)
 1008  format(/,' *********  Numerical Parameters:  *******') 
-      write(40,1009) nx, h, nx*h, ntfinal, dt, tfinal
-1009  format(/,' nx    =',i9,';    h  =',1p,e11.4,0p,' a.u.;  rmax = ',
+      if (ns.ne.-1) then
+       write(40,1109) ns, h, ns*h, nx-ns,  hout, ns*h+(nx-ns)*hout, 
+     >                ntfinal, dt, tfinal
+      else
+       write(40,1009) nx, h, nx*h, ntfinal, dt, tfinal
+      endif
+1109  format(/,' ns    =',i9,';   h     =',1p,e11.4,0p,' a.u.;  rns  = ',
      >           1p,e11.4,0p,' a.u.',//,
-     >         ' nt    =',i9,';   dt  =',1p,e11.4,0p,' a.u.;  tfin = ',
+     >         ' nx-ns =',i9,';   hout  =',1p,e11.4,0p,' a.u.;  rmax = ',
+     >           1p,e11.4,0p,' a.u.',//,
+     >         ' nt    =',i9,';   dt    =',1p,e11.4,0p,' a.u.;  tfin = ',
+     >           1p,e11.4,0p,' a.u.')
+1009  format(/,' nx    =',i9,';    h    =',1p,e11.4,0p,' a.u.;  rmax = ',
+     >           1p,e11.4,0p,' a.u.',//,
+     >         ' nt    =',i9,';   dt    =',1p,e11.4,0p,' a.u.;  tfin = ',
      >           1p,e11.4,0p,' a.u.')
       write(40,1010) ngob1,gbr,agbr
-1010  format(/,' ngob1 =',i9,';   gbr =',1p,e11.4,0p,' a.u.;  agbr = ',
+1010  format(/,' ngob1 =',i9,';   gbr   =',1p,e11.4,0p,' a.u.;  agbr = ',
      >           1p,e11.4,0p,' a.u.')      
       write(40,1011) nc
 1011  format(/,' highest L-value of coupled channels (ell = 0,nc):',i4)
@@ -900,6 +998,9 @@ C
       do i=1,ngob1
         anrm(i) = g(i-1)**2
       end do
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
       call arsimd(ngob1,h,anrm,cn)
       write(40,1013) cn
 1013  format(/,' initial norm = ',1p,e16.8,/)
@@ -1022,6 +1123,7 @@ C---- pg = Legendre polynomial Pn
       chout    = dcmplx(hout,0.d0)
       cst      = ci*dcmplx(tau,0.d0)
       cst1     = cst/(ctwo*ch*ch)
+      cst1ns   = cst1/chfrac
       cst1out  = cst/(ctwo*chout*chout)
       cst2     = cst1/ctwo
       cst2out  = cst1out/ctwo
@@ -1088,6 +1190,7 @@ C  SET INITIAL ZEROS
       u1 = czero
 
 C*** radial mesh
+      if(mod(ns,2).eq.0) ns = ns-1 ! makes ns odd for Simpsons rule
       if (ns.ge.nx) then
         print *, "ERROR: ns should be less than nx"
         stop
@@ -1237,8 +1340,17 @@ c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
             wr(i+1) = rg*dreal(q(i,jj))
             wi(i+1) = rg*dimag(q(i,jj))
 120       continue
-          call arsimd(ngob1,h,wr,rtr)
-          call arsimd(ngob1,h,wi,rti)
+          if (ns==-1) then 
+            call arsimd(ngob1,h,wr,rtr)
+            call arsimd(ngob1,h,wi,rti)
+          else 
+            call arsimd(ns,h,wr(1:ns),rtr1)
+            call arsimd(ngob1-ns-1,hout,wr(ns:ngob1-1),rtr)
+            rtr = rtr + rtr1
+            call arsimd(ns,h,wi(1:ns),rti1)
+            call arsimd(ngob1-ns-1,hout,wi(ns:ngob1-1),rti)
+            rti = rti + rti1
+          endif
           tint(jj,nen) = dcmplx(rtr,rti)
 c---- this is for angular distribution:
           if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
@@ -1416,6 +1528,9 @@ c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
             wr(i+1) = rg*dreal(q(i,jj))
             wi(i+1) = rg*dimag(q(i,jj))
 120       continue
+! update this ===================================================================
+! update this ===================================================================
+! update this ===================================================================
           call arsimd(ngob1,h,wr,rtr)
           call arsimd(ngob1,h,wi,rti)
           tint(jj,nen) = dcmplx(rtr,rti)

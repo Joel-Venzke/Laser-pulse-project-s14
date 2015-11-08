@@ -1,4 +1,6 @@
 change integral
+dstrm
+last step
 
 cst = i*dt/2
 cs1 = i*dt/(4*h**2)

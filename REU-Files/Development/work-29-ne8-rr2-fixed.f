@@ -395,29 +395,29 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
 
 ! This is just for the last time step of the main loop, where the step is dt/2
 500   continue
-      a = -cst2
-      c = -cst2
-      a(1) = czero
-      c(nx-1) = czero
-      bb = cone + cst3*v + cst1
-      ff = cone - cst3*v - cst1  
-c$omp parallel do private(jj,j,bet,u,gam)
-      do 600 jj=0,nc
-        bet=bb(1,jj)
-        u(1)=(q(1,jj)*ff(1,jj) + cst2*(q(2,jj)+q(0,jj)))/bet
-        do 610 j=2,nreach-1
-          gam(j)=c(j-1)/bet
-          bet=bb(j,jj)-a(j)*gam(j)
-          u(j) = (q(j,jj)*ff(j,jj)
-     >          + cst2*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/bet
-610     continue
-        do 620 j=nreach-2,1,-1
-          u(j)=u(j)-gam(j+1)*u(j+1)
-620     continue
-        do 630 j=1,nreach-1
-          q(j,jj) = u(j)
-630     continue
-600   continue
+!       a = -cst2
+!       c = -cst2
+!       a(1) = czero
+!       c(nx-1) = czero
+!       bb = cone + cst3*v + cst1
+!       ff = cone - cst3*v - cst1  
+! c$omp parallel do private(jj,j,bet,u,gam)
+!       do 600 jj=0,nc
+!         bet=bb(1,jj)
+!         u(1)=(q(1,jj)*ff(1,jj) + cst2*(q(2,jj)+q(0,jj)))/bet
+!         do 610 j=2,nreach-1
+!           gam(j)=c(j-1)/bet
+!           bet=bb(j,jj)-a(j)*gam(j)
+!           u(j) = (q(j,jj)*ff(j,jj)
+!      >          + cst2*(q(j+1,jj)+q(j-1,jj))-a(j)*u(j-1))/bet
+! 610     continue
+!         do 620 j=nreach-2,1,-1
+!           u(j)=u(j)-gam(j+1)*u(j+1)
+! 620     continue
+!         do 630 j=1,nreach-1
+!           q(j,jj) = u(j)
+! 630     continue
+! 600   continue
 c$omp end parallel do
 
 !  print output at this point
