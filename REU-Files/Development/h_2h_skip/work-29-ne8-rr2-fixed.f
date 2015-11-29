@@ -5,8 +5,8 @@
       end module parameters
       
       module realconstants1
-      integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,ns,nprint,nc,ngob,ntfin,nbmax,
-     1          ngob1,nerg,mfixed,nnauto,llauto
+      integer*4 iz,nbf,nx1,nc1,nc2,nt,nx,ns,nprint,nc,ngob,ntfin,nbmax
+      integer*4 ngob1,nerg,mfixed,nnauto,llauto
       end module realconstants1
       
       module extra
@@ -21,6 +21,7 @@
       
       module realconstants2
       double precision pi,h,hfrac,hout,dt,tau,zet,gbr,xtime
+      double precision xgrid, xinside
       end module realconstants2
       
       module complexarray1
@@ -621,18 +622,24 @@ C**** AUTOCORRELATION FUNCTION
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dreal(q(i-1,llauto))*g(i-1)
         end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-        call arsimd(ngob1,h,auto,are)
+        if (ns==-1) then 
+          call arsimd(ngob1,h,auto,are)
+        else 
+          call arsimd(ns,h,auto(1:ns),are1)
+          call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),are)
+          are = are+are1
+        endif
         do i=1,ngob1
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dimag(q(i-1,llauto))*g(i-1)
         end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-        call arsimd(ngob1,h,auto,aie)
+        if (ns==-1) then 
+          call arsimd(ngob1,h,auto,aie)
+        else 
+          call arsimd(ns,h,auto(1:ns),aie1)
+          call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),aie)
+          aie = aie+aie1
+        endif
         vrlp(0) = are**2 + aie**2
         write(10,1000) are,aie,vrlp(0)
       endif
@@ -647,17 +654,23 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           do i=1,ngob1                    
             auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-          call arsimd(ngob1,h,auto,are)
+          if (ns==-1) then 
+            call arsimd(ngob1,h,auto,are)
+          else 
+            call arsimd(ns,h,auto(1:ns),are1)
+            call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),are)
+            are = are+are1
+          endif
           do i=1,ngob1                    
             auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
-  ! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-          call arsimd(ngob1,h,auto,aie)
+          if (ns==-1) then 
+            call arsimd(ngob1,h,auto,aie)
+          else 
+            call arsimd(ns,h,auto(1:ns),aie1)
+            call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),aie)
+            aie = aie+aie1
+          endif
           vrlp(kd) = are**2 + aie**2
           write(10,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
           probexcit = probexcit + vrlp(kd)
@@ -677,10 +690,13 @@ C*** MONITOR CONVERGENCE WITH RESPECT TO PARTIAL WAVES AND NORMALIZATION
           do i=1,ngob1
             conv(i)=abs(q(i-1,j))**2
           end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-          call arsimd(ngob1,h,conv,awh)
+          if (ns==-1) then 
+            call arsimd(ngob1,h,conv,awh)
+          else 
+            call arsimd(ns,h,conv(1:ns),awh1)
+            call arsimd(ngob1-ns-1,hout,conv(ns:ngob1-1),awh)
+            awh = awh+awh1
+          endif
           write(10,1002) j,awh
           cnorm = cnorm + awh
         end do
@@ -695,10 +711,13 @@ C*** CONTROL OF NORMALIZATION
             anorm(i) = anorm(i) + abs(q(i-1,j))**2
           end do
         end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-        call arsimd(ngob1,h,anorm,cnorm)
+        if (ns==-1) then 
+          call arsimd(ngob1,h,anorm,cnorm)
+        else 
+          call arsimd(ns,h,anorm(1:ns),cnorm1)
+          call arsimd(ngob1-ns-1,hout,anorm(ns:ngob1-1),cnorm)
+          cnorm = cnorm+cnorm1
+        endif
         write(10,1003) cnorm
       endif
 1003  format(/,' norm = ',f11.8)
@@ -750,7 +769,7 @@ C****************************************************
       namelist /discrete/ nf,nn,ll,mfixed,nnauto,llauto,nc
       namelist /control/key1,key2,key3,key4,key5,nprint,irestart,iformat
       namelist /energies/ emin,de,nerg
-      namelist /numerics/ dt,h,hfrac,ns,nx,gbr,agbr
+      namelist /numerics/ dt,h,hfrac,ns,nx,gbr,agbr,xgrid,xinside
                   
 C----------------------------------------------------------------------------------C
 C
@@ -794,7 +813,7 @@ C      q(0:nx,0:nc) - solution, 1st index - coordinate, 2nd - channel
 C----------------------------------------------------------------------------------C
 C
       read(50,element)
-      nf = 6
+      nf     = 6
       nn(1)  = 1
       nn(2)  = 2
       nn(3)  = 2 
@@ -812,22 +831,27 @@ C
       llauto = 0
       nc     = 8
       read(50,discrete)
-      key1   = 1
-      key2   = 1
-      key3   = 1
-      key4   = 1
-      key5   = 0
-      nprint = 500
+      key1     = 1
+      key2     = 1
+      key3     = 1
+      key4     = 1
+      key5     = 0
+      nprint   = 500
       irestart = 0
       iformat  = 0
       read(50,control)
-      dt     = 0.02d0
-      h      = 0.02d0
-      hfrac  = 1.0d0 ! adjusting h after ns steps
-      nx     = 10000
-      ns     = -1 ! adjusting h after ns steps (-1 turns it off)
-      gbr    = 0.9d0*h*dble(nx)
-      agbr   = 5.d0
+      dt       = 0.02d0
+      h        = 0.02d0
+      hfrac    = 1.0d0 ! adjusting h after ns steps
+! update this ========================================================
+! update this ========================================================
+      xgrid    = 200.0d0
+      xinside  = -1.0d0
+      nx       = -1
+      ns       = -1 ! adjusting h after ns steps (-1 turns it off)
+      ! gbr      = 0.9d0*h*dble(nx) ! old version (this is now done in cnstnt)
+      gbr      = -1.0d0
+      agbr     = 5.d0
       read(50,numerics) 
       emin   = 1.d-3
       de     = 1.d-3
@@ -998,10 +1022,13 @@ C
       do i=1,ngob1
         anrm(i) = g(i-1)**2
       end do
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-      call arsimd(ngob1,h,anrm,cn)
+      if (ns==-1) then 
+        call arsimd(ngob1,h,anrm,cn)
+      else 
+        call arsimd(ns,h,anrm(1:ns),cn1)
+        call arsimd(ngob1-ns-1,hout,anrm(ns:ngob1-1),cn)
+        cn = cn+cn1
+      endif
       write(40,1013) cn
 1013  format(/,' initial norm = ',1p,e16.8,/)
       call flush(40)
@@ -1102,6 +1129,52 @@ C---- pg = Legendre polynomial Pn
       implicit double precision (a-h,o-z)
       
       hout     = h*hfrac
+
+! calculate nx and ns from xgrid and xinside
+      if (nx .eq. -1) then
+        if (xgrid.le.xinside) then
+          print *, " xgrid: ", xgrid, " xinside: ", xinside
+          print *, "ERROR: xinside should be less than xgrid"
+          stop
+        end if
+        if (xinside .eq. -1.0d0) then
+          ns = -1
+          nx = xgrid/h
+        else
+          ns = int(xinside/h)
+          nx = int((xgrid-xinside)/(hout))+ns
+        end if
+      end if
+
+! check if ns and nx are odd and even respectively
+      if (mod(nx,2).ne.0) nx = nx-1 ! make nx even
+      if (mod(ns,2).eq.0) ns = ns-1 ! makes ns odd for Simpsons rule
+
+! make sure the input makes sense
+      if (ns.ge.nx) then
+        print *, " nx: ", nx, " ns: ", ns
+        print *, "ERROR: ns should be less than nx"
+        stop
+      endif
+
+! update xgrid and xinside
+      if (ns.eq.-1) then
+        xgrid = h*dble(nx)
+      else
+        xinside = h*dble(ns)
+        xgrid   = hout*dble(nx-ns)+xinside
+      end if
+
+      if (gbr .eq. -1.0d0) then
+        gbr = 0.9d0*xgrid
+      end if
+
+      if (gbr.ge.xgrid) then
+        print *, " gbr: ", gbr, " xgrid: ", xgrid
+        print *, "ERROR: gbr should be less than xgrid"
+        stop
+      endif
+
       pi       = dacos(-1.d0)
       iz       = 100
       nbf      = nx-1
@@ -1190,11 +1263,6 @@ C  SET INITIAL ZEROS
       u1 = czero
 
 C*** radial mesh
-      if(mod(ns,2).eq.0) ns = ns-1 ! makes ns odd for Simpsons rule
-      if (ns.ge.nx) then
-        print *, "ERROR: ns should be less than nx"
-        stop
-      endif
       if (ns.ne.-1) then 
       	do 100 i=0,ns           
          x(i)= h * dble(i)
@@ -1207,20 +1275,12 @@ C*** radial mesh
          x(i)= h * dble(i)
 102    continue
       endif
-      ! print *, x
-
-
-! this is used for debugging
-!       do 103 i=0,nx+1           
-!          x(i)= h * dble(i) - x(i)
-! 103   continue
-!       stop     
 
 C*** find ngob
       ngob = nx
       if(gbr.lt.1.d-10) goto 200
       do 201 i = 0,nx
-        if(abs(x(i)-gbr).lt.1.d-10) then
+        if(gbr-x(i).lt.1.d-10) then
           ngob = i
           goto 200
         endif
@@ -1326,7 +1386,8 @@ C***energy and angular distribution in the final state
         ener(nen) = ener(nen-1) + de
       end do
 
-c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+c$omp parallel do &
+c$opm& private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
       do 300 nen = 1,nerg
         ep = 2.0d0*ener(nen)
         do 200 jj=0,nc
@@ -1514,7 +1575,8 @@ C***energy spectrum in the final state
         ener(nen) = ener(nen-1) + de
       end do
 
-c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
+c$omp parallel do &
+c$opm& private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
       do 300 nen = 1,nerg
         ep = 2.0d0*ener(nen)
         do 200 jj=0,nc
@@ -1528,11 +1590,17 @@ c$omp parallel do private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rti)
             wr(i+1) = rg*dreal(q(i,jj))
             wi(i+1) = rg*dimag(q(i,jj))
 120       continue
-! update this ===================================================================
-! update this ===================================================================
-! update this ===================================================================
-          call arsimd(ngob1,h,wr,rtr)
-          call arsimd(ngob1,h,wi,rti)
+          if (ns==-1) then 
+            call arsimd(ngob1,h,wr,rtr)
+            call arsimd(ngob1,h,wi,rti)
+          else 
+            call arsimd(ns,h,wr(1:ns),rtr1)
+            call arsimd(ngob1-ns-1,hout,wr(ns:ngob1-1),rtr)
+            rtr = rtr + rtr1
+            call arsimd(ns,h,wi(1:ns),rti1)
+            call arsimd(ngob1-ns-1,hout,wi(ns:ngob1-1),rti)
+            rti = rti + rti1
+          endif
           tint(jj,nen) = dcmplx(rtr,rti)
           dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
           dcr = dm(nen)*dsqrt(2.d0/ener(nen))

@@ -5,3 +5,8 @@ last step
 cst = i*dt/2
 cs1 = i*dt/(4*h**2)
 cst5 = i*dt/(2*h**2)
+
+update the rest of the integrals
+look at the various wave function subroutines to make sure they work
+check if we need more private variables
+
