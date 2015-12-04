@@ -1,0 +1,58 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    69726.smic3
+Username:  jvenzke
+Group:     xsede
+Date:      29-Nov-2015 15:56
+Node:      smic093 (34758)
+--------------------------------------
+PBS has allocated the following nodes:
+
+smic093
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node smic093 15:56:52 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 29-Nov-2015 15:56:52
+------------------------------------------------------
+/work/jvenzke/H-skip_test/openmp-test
+mkdir: cannot create directory `serial': File exists
+forrtl: error (78): process killed (SIGTERM)
+Image              PC                Routine            Line        Source             
+work-29-ne8-rr2-f  00000000004E9F99  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004E886E  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004945B2  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000432998  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000436499  Unknown               Unknown  Unknown
+libpthread.so.0    00000030D340F710  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  000000000040B4D3  Unknown               Unknown  Unknown
+libiomp5.so        00002B514EA0E233  Unknown               Unknown  Unknown
+------------------------------------------------------
+Running PBS epilogue script    - 29-Nov-2015 18:17:50
+------------------------------------------------------
+Checking node smic093 (MS)
+Checking node smic093 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 29-Nov-2015 18:17:53
+------------------------------------------------------
+Exit Status:     271
+Job ID:          69726.smic3
+Username:        jvenzke
+Group:           xsede
+Job Name:        supermic
+Session Id:      34757
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=08:00:00
+Resources Used:  cput=04:44:43,mem=330852kb,vmem=2079684kb,walltime=02:21:00
+Queue Used:      workq
+Account String:  TG-PHY090031
+Node:            smic093
+Process id:      36725
+Last status:     29-Nov-2015:18:01 PBS_job=69726.smic3 user=jvenzke allocation=TG-PHY090031 queue=workq total_load=1.00 cpu_hours=1.18 wall_hours=1.16 unused_nodes=0 total_nodes=1 ppn=20 avg_load=1.00 avg_cpu=99% avg_mem=195mb avg_vmem=442mb top_proc=jvenzke:work-29-ne8-rr2:smic093:223M:192M:1.1hr:99% toppm=jvenzke:work-29-ne8-rr2-fixed-serial:smic093:234M:202M node_processes=3 avg_avail_mem=60873mb min_avail_mem=60873mb reverified_avg_load=1.00
+------------------------------------------------------

@@ -1,0 +1,46 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    69743.smic3
+Username:  jvenzke
+Group:     xsede
+Date:      29-Nov-2015 18:19
+Node:      smic305 (63034)
+--------------------------------------
+PBS has allocated the following nodes:
+
+smic305
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node smic305 18:19:59 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 29-Nov-2015 18:19:59
+------------------------------------------------------
+/work/jvenzke/H-skip_test/openmp-test
+------------------------------------------------------
+Running PBS epilogue script    - 29-Nov-2015 18:36:58
+------------------------------------------------------
+Checking node smic305 (MS)
+Checking node smic305 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 29-Nov-2015 18:37:01
+------------------------------------------------------
+Exit Status:     0
+Job ID:          69743.smic3
+Username:        jvenzke
+Group:           xsede
+Job Name:        supermic
+Session Id:      63033
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=08:00:00
+Resources Used:  cput=05:36:09,mem=382160kb,vmem=2093668kb,walltime=00:17:01
+Queue Used:      workq
+Account String:  TG-PHY090031
+Node:            smic305
+Process id:      63615
+------------------------------------------------------

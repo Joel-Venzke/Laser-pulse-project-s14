@@ -1386,8 +1386,8 @@ C***energy and angular distribution in the final state
         ener(nen) = ener(nen-1) + de
       end do
 
-c$omp parallel do &
-c$opm& private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
+c$omp parallel do 
+c$omp> private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
       do 300 nen = 1,nerg
         ep = 2.0d0*ener(nen)
         do 200 jj=0,nc
@@ -1575,8 +1575,8 @@ C***energy spectrum in the final state
         ener(nen) = ener(nen-1) + de
       end do
 
-c$omp parallel do &
-c$opm& private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
+c$omp parallel do 
+c$omp> private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
       do 300 nen = 1,nerg
         ep = 2.0d0*ener(nen)
         do 200 jj=0,nc

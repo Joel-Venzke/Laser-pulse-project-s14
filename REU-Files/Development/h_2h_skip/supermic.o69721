@@ -1,0 +1,78 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    69721.smic3
+Username:  jvenzke
+Group:     xsede
+Date:      29-Nov-2015 15:28
+Node:      smic092 (35696)
+--------------------------------------
+PBS has allocated the following nodes:
+
+smic092
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node smic092 15:28:50 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 29-Nov-2015 15:28:50
+------------------------------------------------------
+/work/jvenzke/H-skip_test/openmp-test
+ &element    target = ' H'  /
+&discrete   nf = 6, nn(7)=4, nn(8)=4, nn(9)=4, nn(10)=4, ll(7)=0, ll(8)=1, ll(9)=2, ll(10)=3,
+nn(11)=5, nn(12)=5, nn(13)=5, nn(14)=5, nn(15)=5,
+ll(11)=0, ll(12)=1, ll(13)=2, ll(14)=3, ll(15)=4, nc = 4 /
+&control    key4 = 2, nprint = 25 /
+&numerics   dt=0.02d0, h=0.01d0, hfrac=1.0d0, xgrid=1.00d3, xinside=030.0d0, gbr=900.00d0, agbr=5.0d0/
+&energies   emin=0.002d0, de=0.002d0, nerg = 400 /
+cp: cannot stat `/Users/jvenzke/Laser_research/Laser-pulse-project-s14/REU-Files/Development/h_2h_skip/run/pulse.inp': No such file or directory
+forrtl: No such file or directory
+forrtl: severe (29): file not found, unit 80, file /worka/work/jvenzke/H-skip_test/openmp-test/serial/pulse.inp
+Image              PC                Routine            Line        Source             
+work-29-ne8-rr2-f  000000000043E18C  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  000000000040375D  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000403496  Unknown               Unknown  Unknown
+libc.so.6          000000390AE1ED5D  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000403389  Unknown               Unknown  Unknown
+ &element    target = ' H'  /
+&discrete   nf = 6, nn(7)=4, nn(8)=4, nn(9)=4, nn(10)=4, ll(7)=0, ll(8)=1, ll(9)=2, ll(10)=3,
+nn(11)=5, nn(12)=5, nn(13)=5, nn(14)=5, nn(15)=5,
+ll(11)=0, ll(12)=1, ll(13)=2, ll(14)=3, ll(15)=4, nc = 4 /
+&control    key4 = 2, nprint = 25 /
+&numerics   dt=0.02d0, h=0.01d0, hfrac=1.0d0, xgrid=1.00d3, xinside=030.0d0, gbr=900.00d0, agbr=5.0d0/
+&energies   emin=0.002d0, de=0.002d0, nerg = 400 /
+cp: cannot stat `/Users/jvenzke/Laser_research/Laser-pulse-project-s14/REU-Files/Development/h_2h_skip/run/pulse.inp': No such file or directory
+forrtl: No such file or directory
+forrtl: severe (29): file not found, unit 80, file /worka/work/jvenzke/H-skip_test/openmp-test/openmp/pulse.inp
+Image              PC                Routine            Line        Source             
+work-29-ne8-rr2-f  000000000043ED1C  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000403D81  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000403AC6  Unknown               Unknown  Unknown
+libc.so.6          000000390AE1ED5D  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004039B9  Unknown               Unknown  Unknown
+------------------------------------------------------
+Running PBS epilogue script    - 29-Nov-2015 15:28:50
+------------------------------------------------------
+Checking node smic092 (MS)
+Checking node smic092 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 29-Nov-2015 15:28:53
+------------------------------------------------------
+Exit Status:     0
+Job ID:          69721.smic3
+Username:        jvenzke
+Group:           xsede
+Job Name:        supermic
+Session Id:      35695
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=08:00:00
+Resources Used:  cput=00:00:00,mem=0kb,vmem=0kb,walltime=00:00:02
+Queue Used:      workq
+Account String:  TG-PHY090031
+Node:            smic092
+Process id:      36250
+------------------------------------------------------

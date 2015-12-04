@@ -1,0 +1,63 @@
+--------------------------------------
+Running PBS prologue script
+--------------------------------------
+User and Job Data:
+--------------------------------------
+Job ID:    69748.smic3
+Username:  jvenzke
+Group:     xsede
+Date:      29-Nov-2015 18:50
+Node:      smic107 (8542)
+--------------------------------------
+PBS has allocated the following nodes:
+
+smic107
+
+A total of 20 processors on 1 nodes allocated
+---------------------------------------------
+Check nodes and clean them of stray processes
+---------------------------------------------
+Checking node smic107 18:50:27 
+Done clearing all the allocated nodes
+------------------------------------------------------
+Concluding PBS prologue script - 29-Nov-2015 18:50:27
+------------------------------------------------------
+forrtl: error (78): process killed (SIGTERM)
+Image              PC                Routine            Line        Source             
+work-29-ne8-rr2-f  00000000004E9F99  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004E886E  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004945B2  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000432998  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000436499  Unknown               Unknown  Unknown
+libpthread.so.0    000000331A80F710  Unknown               Unknown  Unknown
+libc.so.6          000000331A0CF287  Unknown               Unknown  Unknown
+libiomp5.so        00002B4DB060B6C0  Unknown               Unknown  Unknown
+libiomp5.so        00002B4DB060DCB4  Unknown               Unknown  Unknown
+libiomp5.so        00002B4DB060C4B2  Unknown               Unknown  Unknown
+libiomp5.so        00002B4DB061341D  Unknown               Unknown  Unknown
+libiomp5.so        00002B4DB05EE500  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  000000000040677E  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  0000000000403AC6  Unknown               Unknown  Unknown
+libc.so.6          000000331A01ED5D  Unknown               Unknown  Unknown
+work-29-ne8-rr2-f  00000000004039B9  Unknown               Unknown  Unknown
+------------------------------------------------------
+Running PBS epilogue script    - 29-Nov-2015 18:53:47
+------------------------------------------------------
+Checking node smic107 (MS)
+Checking node smic107 ok
+------------------------------------------------------
+Concluding PBS epilogue script - 29-Nov-2015 18:53:50
+------------------------------------------------------
+Exit Status:     271
+Job ID:          69748.smic3
+Username:        jvenzke
+Group:           xsede
+Job Name:        supermic
+Session Id:      8541
+Resource Limits: ncpus=1,neednodes=1:ppn=20,nodes=1:ppn=20,walltime=08:00:00
+Resources Used:  cput=00:56:45,mem=324108kb,vmem=2083780kb,walltime=00:03:23
+Queue Used:      workq
+Account String:  TG-PHY090031
+Node:            smic107
+Process id:      9113
+------------------------------------------------------
