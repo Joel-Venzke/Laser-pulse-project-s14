@@ -16,8 +16,8 @@ RUN_FILE=/home/jvenzke/LaserPulseShapeStudies/REU-Files/Development/h_2h_skip/wo
 PULSE_FILE=/home/jvenzke/LaserPulseShapeStudies/REU-Files/Development/h_2h_skip/pulse.inp
 NE_FILE=/home/jvenzke/LaserPulseShapeStudies/REU-Files/Development/Input-files/ne.wfn
 
-PARAMETER_1=( 1.1d0 1.25d0 1.5d0 0.90d0 0.95d0 )
-PARAMETER_2=( 030.0d0 100.0d0 200.0d0 500.0d0 )
+PARAMETER_1=( 0.90d0 )
+PARAMETER_2=( 030.0d0 )
 
 for p1 in ${PARAMETER_1[*]}; do
 	for p2 in ${PARAMETER_2[*]}; do
