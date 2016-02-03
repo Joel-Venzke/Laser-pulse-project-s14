@@ -2,7 +2,7 @@
 #!/bin/bash
 #PBS -N supermic
 #PBS -j oe
-#PBS -l walltime=24:00:00
+#PBS -l walltime=2:00:00
 #PBS -l nodes=1:ppn=20
 
 # run the shell script, sit back, have a sip of coffee, and read this https://xkcd.com/676/
