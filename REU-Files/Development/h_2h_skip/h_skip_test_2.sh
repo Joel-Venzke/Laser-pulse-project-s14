@@ -21,8 +21,8 @@ PARAMETER_2=( 030.0d0 100.0d0 200.0d0 500.0d0 )
 
 for p1 in ${PARAMETER_1[*]}; do
 	for p2 in ${PARAMETER_2[*]}; do
- 		mkdir hfrac-0.016d0-$p1-xinside-$p2
-		cd hfrac-0.016d0-$p1-xinside-$p2
+ 		mkdir hfrac-0.015d0-$p1-xinside-$p2
+		cd hfrac-0.015d0-$p1-xinside-$p2
 		echo " &element    target = 'Ne'  /
  &discrete   nf=26, nnauto = 2, llauto=1, mfixed=0, nc=4, nn(1)=1, ll(1)=0,
              nn(2)=2, ll(2)=0, nn(3)=3, ll(3)=0, nn(4)=4, ll(4)=0, nn(5)=5, ll(5)=0,
@@ -34,7 +34,7 @@ for p1 in ${PARAMETER_1[*]}; do
              nn(22)=4, ll(22)=3, nn(23)=5, ll(23)=3,
              nn(24)=6, ll(24)=3, nn(25)=7, ll(25)=3, nn(26)=8, ll(26)=3 /
  &control    key4 = 2, nprint = 500, irestart = 0/
- &numerics   dt = 0.0055d0, h = 0.016d0, hfrac=$p1, xgrid=3.20d3, xinside=$p2, gbr = 3000.00d0, agbr = 5.0d0/
+ &numerics   dt = 0.0055d0, h = 0.015d0, hfrac=$p1, xgrid=3.20d3, xinside=$p2, gbr = 3000.00d0, agbr = 5.0d0/
  &energies   emin = 0.45d0, de = 0.0001d0, nerg = 3750 /">tdse.inp
  		cp $NE_FILE .
 		cp $PULSE_FILE .
