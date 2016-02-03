@@ -17,7 +17,7 @@ PULSE_FILE=/home/jvenzke/LaserPulseShapeStudies/REU-Files/Development/h_2h_skip/
 NE_FILE=/home/jvenzke/LaserPulseShapeStudies/REU-Files/Development/Input-files/ne.wfn
 
 
-PARAMETER_1=( 0.018d0 0.016d0 0.015d0 0.011d0)
+PARAMETER_1=( 0.010d0 0.008d0 0.006d0)
 
 pwd
 for p1 in ${PARAMETER_1[*]}; do
@@ -34,7 +34,7 @@ for p1 in ${PARAMETER_1[*]}; do
              nn(22)=4, ll(22)=3, nn(23)=5, ll(23)=3,
              nn(24)=6, ll(24)=3, nn(25)=7, ll(25)=3, nn(26)=8, ll(26)=3 /
  &control    key4 = 2, nprint = 500, irestart = 0/
- &numerics   dt = 0.0055d0, h = $p1 , nx = 160000, gbr = 3000.00d0, agbr = 5.0d0/
+ &numerics   dt = 0.0025d0, h = $p1 , nx = 160000, gbr = 3000.00d0, agbr = 5.0d0/
  &energies   emin = 0.45d0, de = 0.0001d0, nerg = 3750 /" > tdse.inp
  		cp $NE_FILE .
 		cp $PULSE_FILE .
