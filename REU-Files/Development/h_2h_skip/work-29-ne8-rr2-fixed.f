@@ -1,5 +1,5 @@
       module parameters
-      parameter(nxmax=200200,ncmax=19,nenmax=10000,nfmax=37)
+      parameter(nxmax=300000,ncmax=19,nenmax=10000,nfmax=37)
       parameter(ntet=1)   ! This will save a lot of space !!!
       parameter(zero=0.0d0,one=1.0d0,two=2.0d0,half=0.5d0,ifak=500)
       end module parameters
@@ -566,6 +566,25 @@ C*****end of propagation
       stop 
       end
 
+*************************************
+* Written by Joel (Feb 2016)
+* wrapper function to take care of the changing grid
+* when integrating with Simpson rule
+      SUBROUTINE integrate(N,DEL,A,R)
+      use realconstants1
+      use realconstants2
+      implicit double precision (a-h,o-z)
+      dimension a(n)
+      if (ns==-1) then 
+        call arsimd(n,del,a,r) 
+      else 
+        call arsimd(ns,del,a(1:ns),r1)
+        call arsimd(n-ns-1,hout,a(ns:n-1),r)
+        r = r+r1
+      endif
+      return
+      end
+
 C********************************************************
       subroutine output(k)
       use parameters
@@ -622,24 +641,16 @@ C**** AUTOCORRELATION FUNCTION
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dreal(q(i-1,llauto))*g(i-1)
         end do
-        if (ns==-1) then 
-          call arsimd(ngob1,h,auto,are)
-        else 
-          call arsimd(ns,h,auto(1:ns),are1)
-          call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),are)
-          are = are+are1
-        endif
+
+        call integrate(ngob1,h,auto,are)
+
         do i=1,ngob1
 ! llauto has the correct l-value for the autocorrelation function
           auto(i) = dimag(q(i-1,llauto))*g(i-1)
         end do
-        if (ns==-1) then 
-          call arsimd(ngob1,h,auto,aie)
-        else 
-          call arsimd(ns,h,auto(1:ns),aie1)
-          call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),aie)
-          aie = aie+aie1
-        endif
+
+        call integrate(ngob1,h,auto,aie)
+
         vrlp(0) = are**2 + aie**2
         write(10,1000) are,aie,vrlp(0)
       endif
@@ -654,23 +665,15 @@ C**** POPULATION OF DISCRETE STATES FOR key1 neq 0
           do i=1,ngob1                    
             auto(i) = dreal(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
-          if (ns==-1) then 
-            call arsimd(ngob1,h,auto,are)
-          else 
-            call arsimd(ns,h,auto(1:ns),are1)
-            call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),are)
-            are = are+are1
-          endif
+
+          call integrate(ngob1,h,auto,are)
+
           do i=1,ngob1                    
             auto(i) = dimag(q(i-1,ll(kd)))*fd(i-1,kd)
           end do
-          if (ns==-1) then 
-            call arsimd(ngob1,h,auto,aie)
-          else 
-            call arsimd(ns,h,auto(1:ns),aie1)
-            call arsimd(ngob1-ns-1,hout,auto(ns:ngob1-1),aie)
-            aie = aie+aie1
-          endif
+
+          call integrate(ngob1,h,auto,aie)
+
           vrlp(kd) = are**2 + aie**2
           write(10,1001) kd,nn(kd),ll(kd),are,aie,vrlp(kd)
           probexcit = probexcit + vrlp(kd)
@@ -690,13 +693,9 @@ C*** MONITOR CONVERGENCE WITH RESPECT TO PARTIAL WAVES AND NORMALIZATION
           do i=1,ngob1
             conv(i)=abs(q(i-1,j))**2
           end do
-          if (ns==-1) then 
-            call arsimd(ngob1,h,conv,awh)
-          else 
-            call arsimd(ns,h,conv(1:ns),awh1)
-            call arsimd(ngob1-ns-1,hout,conv(ns:ngob1-1),awh)
-            awh = awh+awh1
-          endif
+
+          call integrate(ngob1,h,conv,awh)
+
           write(10,1002) j,awh
           cnorm = cnorm + awh
         end do
@@ -711,13 +710,9 @@ C*** CONTROL OF NORMALIZATION
             anorm(i) = anorm(i) + abs(q(i-1,j))**2
           end do
         end do
-        if (ns==-1) then 
-          call arsimd(ngob1,h,anorm,cnorm)
-        else 
-          call arsimd(ns,h,anorm(1:ns),cnorm1)
-          call arsimd(ngob1-ns-1,hout,anorm(ns:ngob1-1),cnorm)
-          cnorm = cnorm+cnorm1
-        endif
+
+        call integrate(ngob1,h,anorm,cnorm)
+
         write(10,1003) cnorm
       endif
 1003  format(/,' norm = ',f11.8)
@@ -1022,13 +1017,9 @@ C
       do i=1,ngob1
         anrm(i) = g(i-1)**2
       end do
-      if (ns==-1) then 
-        call arsimd(ngob1,h,anrm,cn)
-      else 
-        call arsimd(ns,h,anrm(1:ns),cn1)
-        call arsimd(ngob1-ns-1,hout,anrm(ns:ngob1-1),cn)
-        cn = cn+cn1
-      endif
+
+      call integrate(ngob1,h,anrm,cn)
+
       write(40,1013) cn
 1013  format(/,' initial norm = ',1p,e16.8,/)
       call flush(40)
@@ -1401,17 +1392,10 @@ c$omp> private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
             wr(i+1) = rg*dreal(q(i,jj))
             wi(i+1) = rg*dimag(q(i,jj))
 120       continue
-          if (ns==-1) then 
-            call arsimd(ngob1,h,wr,rtr)
-            call arsimd(ngob1,h,wi,rti)
-          else 
-            call arsimd(ns,h,wr(1:ns),rtr1)
-            call arsimd(ngob1-ns-1,hout,wr(ns:ngob1-1),rtr)
-            rtr = rtr + rtr1
-            call arsimd(ns,h,wi(1:ns),rti1)
-            call arsimd(ngob1-ns-1,hout,wi(ns:ngob1-1),rti)
-            rti = rti + rti1
-          endif
+
+          call integrate(ngob1,h,wr,rtr)
+          call integrate(ngob1,h,wi,rti)
+
           tint(jj,nen) = dcmplx(rtr,rti)
 c---- this is for angular distribution:
           if( dabs(ener(nen)-enelec).le.1.d-6 ) cdst(jj)=tint(jj,nen)
@@ -1590,17 +1574,10 @@ c$omp> private(nen,ep,jj,phse,dw,i,rpe,rg,wr,wi,rtr,rtr1,rti,rti1)
             wr(i+1) = rg*dreal(q(i,jj))
             wi(i+1) = rg*dimag(q(i,jj))
 120       continue
-          if (ns==-1) then 
-            call arsimd(ngob1,h,wr,rtr)
-            call arsimd(ngob1,h,wi,rti)
-          else 
-            call arsimd(ns,h,wr(1:ns),rtr1)
-            call arsimd(ngob1-ns-1,hout,wr(ns:ngob1-1),rtr)
-            rtr = rtr + rtr1
-            call arsimd(ns,h,wi(1:ns),rti1)
-            call arsimd(ngob1-ns-1,hout,wi(ns:ngob1-1),rti)
-            rti = rti + rti1
-          endif
+
+          call integrate(ngob1,h,wr,rtr)
+          call integrate(ngob1,h,wi,rti)
+
           tint(jj,nen) = dcmplx(rtr,rti)
           dm(nen) = dm(nen) + cdabs(tint(jj,nen))**2
           dcr = dm(nen)*dsqrt(2.d0/ener(nen))

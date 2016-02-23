@@ -322,8 +322,8 @@ C*****end of propagation by dt/2
 17      continue
 C  MAIN TIME LOOP
 *******************************************************
-      ! do 400 k=0,ntfinpulse
-      do 400 k=0,500
+      do 400 k=0,ntfinpulse
+      ! do 400 k=0,500
         nreach = nreach0 + int(dble(k)*dble(nx-nreach0)/dble(ntfinal))
 !         nreach= nreach0+
 !     >        int(dble(k)*dt*2.d0*sqrt(2.d0*max(ww1,ww2,ww3))/ch)
