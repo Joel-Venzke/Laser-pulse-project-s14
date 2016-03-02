@@ -315,30 +315,31 @@ c$omp end parallel do
 C*****end of propagation by dt/2
 
 ! reset coefficients to allow for steps of dt by the diagonal term
+        call setupMatrix(1)
 
-       if (ns.ne.-1) then 
-         a(1:ns-1) = -cst1
-         a(ns)     = -cst5/(cone+chfrac)
-         a(ns+1:)  = -cst1out
-         c(1:ns-1) = -cst1
-         c(ns)     = -cst5/((cone+chfrac)*chfrac)
-         c(ns+1:)  = -cst1out
-         a(1) = czero
-         c(nx-1) = czero
-         bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
-         bb(ns,:)        = cone + cst*v(ns,:) + cst5ns
-         bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
-         ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
-         ff(ns,:)        = cone - cst*v(ns,:) - cst5ns
-         ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
-       else
-         a = -cst1
-         c = -cst1
-         a(1) = czero
-         c(nx-1) = czero
-         bb = cone + cst*v + cst5
-         ff = cone - cst*v - cst5
-       endif
+       ! if (ns.ne.-1) then 
+       !   a(1:ns-1) = -cst1
+       !   a(ns)     = -cst5/(cone+chfrac)
+       !   a(ns+1:)  = -cst1out
+       !   c(1:ns-1) = -cst1
+       !   c(ns)     = -cst5/((cone+chfrac)*chfrac)
+       !   c(ns+1:)  = -cst1out
+       !   a(1) = czero
+       !   c(nx-1) = czero
+       !   bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
+       !   bb(ns,:)        = cone + cst*v(ns,:) + cst5ns
+       !   bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) + cst5out
+       !   ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
+       !   ff(ns,:)        = cone - cst*v(ns,:) - cst5ns
+       !   ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) - cst5out
+       ! else
+       !   a = -cst1
+       !   c = -cst1
+       !   a(1) = czero
+       !   c(nx-1) = czero
+       !   bb = cone + cst*v + cst5
+       !   ff = cone - cst*v - cst5
+       ! endif
 !!SETTING GAMMA AND BETA
        do 17 jj=0,nc
           beta(1,jj)=bb(1,jj)
@@ -422,29 +423,31 @@ C***PRINTOUT FOR TIME LOOP WITH NUMBER nprint*N (N=1,2,...)
 
 ! This is just for the last time step of the main loop, where the step is dt/2
 500   continue
-      if (ns.ne.-1) then 
-	     a(1:ns-1) = -cst2
-         a(ns)     = -cst5/((cone+chfrac)*ctwo) 
-         a(ns+1:)  = -cst2out
-         c(1:ns-1) = -cst2
-         c(ns)     = -cst5/((cone+chfrac)*chfrac*ctwo) 
-         c(ns+1:)  = -cst2out
-         a(1) = czero
-         c(nx-1) = czero
-         bb(0:ns-1,:)    = cone + cst3*v(0:ns-1,:) + cst1 
-         bb(ns,:)        = cone + cst3*v(ns,:) + cst1ns ! change this
-         bb(ns+1:nx+1,:) = cone + cst3*v(ns+1:nx+1,:) + cst1out ! change this
-         ff(0:ns-1,:)    = cone - cst3*v(0:ns-1,:) - cst1 
-         ff(ns,:)        = cone - cst3*v(ns,:) - cst1ns ! change this
-         ff(ns+1:nx+1,:) = cone - cst3*v(ns+1:nx+1,:) - cst1out ! change this
-      else 
-         a = -cst2
-         c = -cst2
-         a(1) = czero
-         c(nx-1) = czero
-         bb = cone + cst3*v + cst1
-         ff = cone - cst3*v - cst1  
-      endif
+      
+      call setupMatrix(2)
+      ! if (ns.ne.-1) then 
+       ! a(1:ns-1) = -cst2
+      !    a(ns)     = -cst5/((cone+chfrac)*ctwo) 
+      !    a(ns+1:)  = -cst2out
+      !    c(1:ns-1) = -cst2
+      !    c(ns)     = -cst5/((cone+chfrac)*chfrac*ctwo) 
+      !    c(ns+1:)  = -cst2out
+      !    a(1) = czero
+      !    c(nx-1) = czero
+      !    bb(0:ns-1,:)    = cone + cst3*v(0:ns-1,:) + cst1 
+      !    bb(ns,:)        = cone + cst3*v(ns,:) + cst1ns ! change this
+      !    bb(ns+1:nx+1,:) = cone + cst3*v(ns+1:nx+1,:) + cst1out ! change this
+      !    ff(0:ns-1,:)    = cone - cst3*v(0:ns-1,:) - cst1 
+      !    ff(ns,:)        = cone - cst3*v(ns,:) - cst1ns ! change this
+      !    ff(ns+1:nx+1,:) = cone - cst3*v(ns+1:nx+1,:) - cst1out ! change this
+      ! else 
+      !    a = -cst2
+      !    c = -cst2
+      !    a(1) = czero
+      !    c(nx-1) = czero
+      !    bb = cone + cst3*v + cst1
+      !    ff = cone - cst3*v - cst1  
+      ! endif
 c$omp parallel do private(jj,j,bet,u,gam)
       do 600 jj=0,nc
         bet=bb(1,jj)
@@ -581,6 +584,75 @@ C*****end of propagation
         call arsimd(ns,del,a(1:ns),r1)
         call arsimd(n-ns-1,hout,a(ns:n-1),r)
         r = r+r1
+      endif
+      return
+      end
+
+*************************************
+* Written by Joel (Feb 2016)
+* prepares arrays for propagation
+* if step = 1, dt is used
+* if step = 2, dt/2 is used
+      subroutine setupMatrix(step)
+      use cmplxconstants
+      use realconstants1
+      use complexarray1
+      use complexarray3
+      integer*4 step
+      if (step==1) then
+        if (ns.ne.-1) then 
+          a(1:ns-1) = -cst1
+          a(ns)     = -cst5/(cone+chfrac)
+          a(ns+1:)  = -cst/(ctwo*chout*chout)
+          c(1:ns-1) = -cst1
+          c(ns)     = -cst5/((cone+chfrac)*chfrac)
+          c(ns+1:)  = -cst/(ctwo*chout*chout)
+          a(1) = czero
+          c(nx-1) = czero
+          bb(0:ns-1,:)    = cone + cst*v(0:ns-1,:) + cst5
+          bb(ns,:)        = cone + cst*v(ns,:) + cst5/chfrac
+          bb(ns+1:nx+1,:) = cone + cst*v(ns+1:nx+1,:) 
+     >                     + cst/(chout*chout)
+          ff(0:ns-1,:)    = cone - cst*v(0:ns-1,:) - cst5
+          ff(ns,:)        = cone - cst*v(ns,:) - cst5/chfrac
+          ff(ns+1:nx+1,:) = cone - cst*v(ns+1:nx+1,:) 
+     >                      - cst/(chout*chout)
+        else
+          a = -cst1
+          c = -cst1
+          a(1) = czero
+          c(nx-1) = czero
+          bb = cone + cst*v + cst5
+          ff = cone - cst*v - cst5
+        endif
+      else if (step == 2) then
+        if (ns.ne.-1) then 
+          a(1:ns-1) = -cst2
+          a(ns)     = -cst5/((cone+chfrac)*ctwo) 
+          a(ns+1:)  = -cst/(chout*chout)
+          c(1:ns-1) = -cst2
+          c(ns)     = -cst5/((cone+chfrac)*chfrac*ctwo) 
+          c(ns+1:)  = -cst/(chout*chout)
+          a(1) = czero
+          c(nx-1) = czero
+          bb(0:ns-1,:)    = cone + cst3*v(0:ns-1,:) + cst1 
+          bb(ns,:)        = cone + cst3*v(ns,:) + cst1/chfrac 
+          bb(ns+1:nx+1,:) = cone + cst3*v(ns+1:nx+1,:)
+     >                      + cst/(ctwo*chout*chout) 
+          ff(0:ns-1,:)    = cone - cst3*v(0:ns-1,:) - cst1 
+          ff(ns,:)        = cone - cst3*v(ns,:) - cst1/chfrac 
+          ff(ns+1:nx+1,:) = cone - cst3*v(ns+1:nx+1,:) 
+     >                      - cst/(ctwo*chout*chout)
+        else 
+          a = -cst2
+          c = -cst2
+          a(1) = czero
+          c(nx-1) = czero
+          bb = cone + cst3*v + cst1
+          ff = cone - cst3*v - cst1  
+        endif
+      else
+      print *, 'ERROR: subroutine setupMatrix needs step set to 1 or 2'
       endif
       return
       end
